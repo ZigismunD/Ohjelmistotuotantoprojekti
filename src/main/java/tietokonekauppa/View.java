@@ -84,7 +84,7 @@ public class View extends Application {
             tabPane.getTabs().add(tab4);
 
             scene = new Scene(tabPane, 1900, 1000);
-            scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+          //  scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -480,9 +480,6 @@ public class View extends Application {
         tab4.setContent(grid4);
     }
 
-    private void pekka() {
-        int pekka;
-    }
     
     private void showSalesChart() {
         final CategoryAxis xAxis = new CategoryAxis();
