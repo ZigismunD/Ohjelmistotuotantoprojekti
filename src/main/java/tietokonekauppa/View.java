@@ -36,6 +36,7 @@ import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
 
 public class View extends Application {
+    private int tulos;
 
     // yleiset
     Scene scene;
@@ -84,7 +85,7 @@ public class View extends Application {
             tabPane.getTabs().add(tab4);
 
             scene = new Scene(tabPane, 1900, 1000);
-            scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+            //scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -467,8 +468,8 @@ public class View extends Application {
         btnPurchases.setPrefSize(200, 100);
      /*   btnPurchases.setOnAction((event) -> {
             showPurchasesChart();
-        });*/
-        grid4.add(btnPurchases, 0, 1);
+        });
+        grid4.add(btnPurchases, 0, 1);*/
 
         Button btnSummary = new Button();
         btnSummary.setText("Yhteenveto ja budjetti");
@@ -550,6 +551,18 @@ public class View extends Application {
         lineChart.setPadding(new Insets(20, 20, 20, 20));
         grid4.add(lineChart, 1, 1, 7, 7);
         tab4.setContent(grid4);
+    }
+    
+    public void init() {
+        tulos = 1;
+    }
+    
+    public void nollaaTulos() {
+        tulos = 0;
+    }
+    
+    public int getTulos() {
+        return this.tulos;
     }
 
     public static void main(String[] args) {
