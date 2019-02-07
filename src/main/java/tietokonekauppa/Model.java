@@ -15,6 +15,20 @@ public class Model {
     private String osanNimi;
     private int hinta;
     
+    
+    //TESTIÄ VARTEN
+    private int tulos = 1;
+    
+    public Model() {
+    }
+    
+    public void init() {  // Nollaa tulosmuuttuja
+        tulos = 0;
+    }
+        public int annatulos(){       
+        return tulos;
+    }
+    
     public Model(Controller cont) {
         this.cont = cont;
     }
