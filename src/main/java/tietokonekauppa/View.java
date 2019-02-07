@@ -85,7 +85,11 @@ public class View extends Application {
             tabPane.getTabs().add(tab4);
 
             scene = new Scene(tabPane, 1900, 1000);
+<<<<<<< HEAD
             //scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+=======
+          //  scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+>>>>>>> c1a6c915db2780fa11a61001a366b39cbabc161d
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -481,9 +485,6 @@ public class View extends Application {
         tab4.setContent(grid4);
     }
 
-    private void pekka() {
-        int pekka;
-    }
     
     private void showSalesChart() {
         final CategoryAxis xAxis = new CategoryAxis();
@@ -552,6 +553,7 @@ public class View extends Application {
         grid4.add(lineChart, 1, 1, 7, 7);
         tab4.setContent(grid4);
     }
+<<<<<<< HEAD
     
     public void init() {
         tulos = 1;
@@ -563,6 +565,10 @@ public class View extends Application {
     
     public int getTulos() {
         return this.tulos;
+=======
+    public void jarmo(){
+    int jarmo;
+>>>>>>> c1a6c915db2780fa11a61001a366b39cbabc161d
     }
 
     public static void main(String[] args) {
