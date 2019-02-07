@@ -548,6 +548,9 @@ public class View extends Application {
         grid4.add(lineChart, 1, 1, 7, 7);
         tab4.setContent(grid4);
     }
+    public void jarmo(){
+    int jarmo;
+    }
 
     public static void main(String[] args) {
         launch(args);
