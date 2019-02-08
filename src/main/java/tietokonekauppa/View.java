@@ -58,6 +58,9 @@ public class View extends Application {
     //Taloustietosivu
     private GridPane grid4;
     private Tab tab4;
+    
+    private GridPane grid5;
+    private Tab tab5;
 
     //nappuloita
     private Button btnAddproduct;
@@ -77,12 +80,14 @@ public class View extends Application {
             createTab2();
             createTab3();
             createTab4();
+            createTab5();
 
             //Tabit tabpanee , tää ehkä pois 
             tabPane.getTabs().add(tab1);
             tabPane.getTabs().add(tab2);
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
+            tabPane.getTabs().add(tab5);
 
             scene = new Scene(tabPane, 1900, 1000);
             //scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
@@ -480,7 +485,18 @@ public class View extends Application {
 
         tab4.setContent(grid4);
     }
+    private void createTab5() {
+        tab5 = new Tab();
+        tab5.setText("Kirjautuminen");
 
+        grid5 = new GridPane();
+        grid5.setHgap(20); // Horizontal gap
+        grid5.setVgap(0); // Vertical gap
+
+        
+
+        tab5.setContent(grid5);
+    }
     
     private void showSalesChart() {
         final CategoryAxis xAxis = new CategoryAxis();
