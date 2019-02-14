@@ -10,9 +10,12 @@ import  javax.persistence.*;
 /**
  *
  * @author vadimzubchenko
+ * 
+ * 
+ * TÄMÄ ON PEKKA TESTI DEVELOPMENT HAARAAN
  */
-@ Entity
-@ Table (name="HENKILOSTO")
+@Entity
+@Table (name="HENKILOSTO")
 public class Henkilosto {
     private int henkiloId;
     private String nimi;
