@@ -463,18 +463,19 @@ public class View extends Application {
         Button btnSales = new Button();
         btnSales.setText("Myynti");
         btnSales.setPrefSize(200, 100);
-       /* btnSales.setOnAction((event) -> {
+        btnSales.setOnAction((event) -> {
             showSalesChart();
-        });*/
+        });
         grid4.add(btnSales, 0, 0);
         
         Button btnPurchases = new Button();
         btnPurchases.setText("Osto");
         btnPurchases.setPrefSize(200, 100);
-     /*   btnPurchases.setOnAction((event) -> {
+     
+        btnPurchases.setOnAction((event) -> {
             showPurchasesChart();
         });
-        grid4.add(btnPurchases, 0, 1);*/
+        grid4.add(btnPurchases, 0, 1);
 
         Button btnSummary = new Button();
         btnSummary.setText("Yhteenveto ja budjetti");
@@ -576,10 +577,6 @@ public class View extends Application {
     
     public int getTulos() {
         return this.tulos;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
