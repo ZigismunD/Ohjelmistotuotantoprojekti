@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tietokonekauppa;
+package view;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -90,7 +90,7 @@ public class View extends Application {
             tabPane.getTabs().add(tab5);
 
             scene = new Scene(tabPane, 1900, 1000);
-            //scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+            scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
