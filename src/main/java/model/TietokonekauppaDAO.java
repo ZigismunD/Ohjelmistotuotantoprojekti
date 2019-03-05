@@ -50,7 +50,6 @@ public class TietokonekauppaDAO {
 		// TODO Auto-generated method stub
 		ArrayList<Paketti> paketit = new ArrayList<>();
 		Session istunto = istuntotehdas.openSession();
-                System.out.println("pöö");
 		try  {
 			Transaction transaction = istunto.beginTransaction();
 			//@SuppressWarnings("unchecked")
@@ -65,7 +64,6 @@ public class TietokonekauppaDAO {
                             System.out.println(paketti.getPaketinNimi());
                         
                     }
-                        System.out.println("pää");
 			return paketit.toArray(new Paketti[paketit.size()]);
 		} catch (Exception e) {
                     e.printStackTrace();
