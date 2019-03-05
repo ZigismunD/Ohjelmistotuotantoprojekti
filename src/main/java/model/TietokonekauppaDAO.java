@@ -62,7 +62,7 @@ public class TietokonekauppaDAO {
 
                         
                         for (Paketti paketti : result) {
-                            System.out.println(paketti.getPaketinViite());
+                            System.out.println(paketti.getPaketinNimi());
                         
                     }
                         System.out.println("pää");
