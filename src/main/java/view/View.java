@@ -34,9 +34,11 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
+import model.TietokonekauppaDAO;
 
 public class View extends Application {
     private int tulos;
+    private TietokonekauppaDAO dao;
 
     // yleiset
     Scene scene;
@@ -67,7 +69,8 @@ public class View extends Application {
     private Button btnSend;
 
     public void start(Stage primaryStage) {
-
+        dao = new TietokonekauppaDAO();
+        dao.readPaketit();
         // Käyttöliittymän rakentaminen
         try {
             tabPane = new TabPane();
@@ -90,7 +93,7 @@ public class View extends Application {
             tabPane.getTabs().add(tab5);
 
             scene = new Scene(tabPane, 1900, 1000);
-            scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
+            //scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
