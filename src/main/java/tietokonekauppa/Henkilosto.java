@@ -21,13 +21,14 @@ public class Henkilosto {
     private String nimi;
     private String rooli;
     
-    public Henkilosto( int henkoloId, String nimi, String rooli) {
+    public Henkilosto( int henkiloId, String nimi, String rooli) {
+        this.henkiloId = henkiloId;
         this.nimi = nimi;
         this.rooli = rooli;
     }
     public Henkilosto(){
-        
     }
+    
     @Id 
     @GeneratedValue
     @Column(name="HenkiloID")
@@ -38,7 +39,7 @@ public class Henkilosto {
     public void setHenkiloId(int henkiloId) {
         this.henkiloId = henkiloId;
     }
-    
+    @Column(name="Nimi")
     public String getNimi() {
         return nimi;
     }
@@ -46,7 +47,7 @@ public class Henkilosto {
     public void setNimi(String nimi) {
         this.nimi = nimi;
     }
-
+    @Column(name="Rooli")
     public String getRooli() {
         return rooli;
     }
