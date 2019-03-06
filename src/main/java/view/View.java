@@ -41,6 +41,8 @@ public class View extends Application {
     private int tulos;
     private TietokonekauppaDAO dao;
     private Controller controller;
+    private ComboBox<Integer> orderAmount;
+    private ComboBox<String> productsdrop;
 
     // yleiset
     Scene scene;
@@ -148,19 +150,24 @@ public class View extends Application {
         TextField PriceTxt = new TextField();
 
         // ComboboXXX
-        ComboBox productsdrop = new ComboBox();
+        productsdrop = new ComboBox();
         controller.getAllComputerNames(productsdrop);
         
    
-        ComboBox orderAmount = new ComboBox();
+        orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
-                "1",
-                "2",
-                "3",
-                "4",
-                "5"
+                1,
+                2,
+                3,
+                4,
+                5
         );
-
+        orderAmount.getSelectionModel().selectFirst();
+        
+        orderAmount.setOnAction(e-> {
+            controller.getPrice(UnitPriceTxt);
+        });
+        
         Text lblAddproduct = new Text("LISÄÄ TUOTE:");
         lblAddproduct.setFont(Font.font(null, 15));
         lblAddproduct.setFill(Color.BLACK);
@@ -578,6 +585,14 @@ public class View extends Application {
     
     public int getTulos() {
         return this.tulos;
+    }
+    
+    public int getOrderAmount() {
+        return orderAmount.getSelectionModel().getSelectedItem();
+    }
+    
+    public String getValittuPaketti() {
+        return productsdrop.getSelectionModel().getSelectedItem();
     }
 
 }

@@ -6,6 +6,8 @@
 package controller;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import model.Paketti;
 import model.TietokonekauppaDAO;
 import view.View;
@@ -27,6 +29,7 @@ public class Controller {
         for (Paketti paketti : dao.readPaketit()) {
             box.getItems().add(paketti.getPaketinNimi());
         }
+        box.getSelectionModel().selectFirst();
     }
     
     public void createComputer() {
@@ -35,6 +38,13 @@ public class Controller {
     
     public void createOrder() {
         
+    }
+    
+
+    public void getPrice(TextField PriceTxt) {
+        Double hinta = dao.haePaketinHinta(2);
+        
+       PriceTxt.setText("" + hinta * gui.getOrderAmount());
     }
     
 }
