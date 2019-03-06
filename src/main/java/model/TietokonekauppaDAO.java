@@ -46,7 +46,7 @@ public class TietokonekauppaDAO {
     
     
     
-	public Paketti[] readPaketit() {
+	public List<Paketti> readPaketit() {
 		// TODO Auto-generated method stub
 		ArrayList<Paketti> paketit = new ArrayList<>();
 		Session istunto = istuntotehdas.openSession();
@@ -54,9 +54,9 @@ public class TietokonekauppaDAO {
 			Transaction transaction = istunto.beginTransaction();
 			//@SuppressWarnings("unchecked")
 			List<Paketti> result = istunto.createQuery("from Paketti").list();
-			/*for (Paketti v : result) {
+			for (Paketti v : result) {
 				paketit.add(new Paketti(v.getPaketinNimi(), v.getPaketinHinta()));
-			}*/
+			}
 			transaction.commit();
 
                         
@@ -64,7 +64,7 @@ public class TietokonekauppaDAO {
                             System.out.println(paketti.getPaketinNimi());
                         
                     }
-			return paketit.toArray(new Paketti[paketit.size()]);
+			return result;
 		} catch (Exception e) {
                     e.printStackTrace();
 			

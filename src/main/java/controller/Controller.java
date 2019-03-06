@@ -5,6 +5,9 @@
  */
 package controller;
 
+import javafx.scene.control.ComboBox;
+import model.Paketti;
+import model.TietokonekauppaDAO;
 import view.View;
 
 /**
@@ -13,13 +16,17 @@ import view.View;
  */
 public class Controller {
     View gui;
+    TietokonekauppaDAO dao;
     
     public Controller(View gui) {
         this.gui = gui;
+        this.dao = new TietokonekauppaDAO();
     }
     
-    public String getAllComputerNames() {
-        return null;
+    public void getAllComputerNames(ComboBox box) {
+        for (Paketti paketti : dao.readPaketit()) {
+            box.getItems().add(paketti.getPaketinNimi());
+        }
     }
     
     public void createComputer() {

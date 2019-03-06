@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Controller;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
@@ -39,6 +40,7 @@ import model.TietokonekauppaDAO;
 public class View extends Application {
     private int tulos;
     private TietokonekauppaDAO dao;
+    private Controller controller;
 
     // yleiset
     Scene scene;
@@ -69,8 +71,8 @@ public class View extends Application {
     private Button btnSend;
 
     public void start(Stage primaryStage) {
-        dao = new TietokonekauppaDAO();
-        dao.readPaketit();
+        controller =  new Controller(this);
+        
         // Käyttöliittymän rakentaminen
         try {
             tabPane = new TabPane();
@@ -147,13 +149,9 @@ public class View extends Application {
 
         // ComboboXXX
         ComboBox productsdrop = new ComboBox();
-        productsdrop.getItems().addAll(
-                "SUPER PC3000-MASTERRACE 353225 HYPERSPEED",
-                "Tietsikka2",
-                "Tietsikka3",
-                "Tietsikka4",
-                "Tietsikka5"
-        );
+        controller.getAllComputerNames(productsdrop);
+        
+   
         ComboBox orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
                 "1",
