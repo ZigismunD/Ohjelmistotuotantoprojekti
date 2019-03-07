@@ -42,6 +42,12 @@ public class Paketti {
         this.paketinNimi = merkkijono;
         this.paketinHinta = numero;
     }
+    
+    public Paketti(int id, String merkkijono, double numero) {
+        this.paketinId = id;
+        this.paketinNimi = merkkijono;
+        this.paketinHinta = numero;
+    }
    
 
     public int getPaketinId() {

@@ -152,7 +152,9 @@ public class View extends Application {
         // ComboboXXX
         productsdrop = new ComboBox();
         controller.getAllComputerNames(productsdrop);
-        
+        productsdrop.setOnAction(e-> {
+            controller.getPrice(UnitPriceTxt);
+        });
    
         orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
@@ -163,6 +165,7 @@ public class View extends Application {
                 5
         );
         orderAmount.getSelectionModel().selectFirst();
+        controller.getPrice(UnitPriceTxt);
         
         orderAmount.setOnAction(e-> {
             controller.getPrice(UnitPriceTxt);
@@ -593,6 +596,10 @@ public class View extends Application {
     
     public String getValittuPaketti() {
         return productsdrop.getSelectionModel().getSelectedItem();
+    }
+    
+    public int getValitunPaketinIndex() {
+        return productsdrop.getSelectionModel().getSelectedIndex();
     }
 
 }
