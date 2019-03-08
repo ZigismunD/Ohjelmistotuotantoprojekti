@@ -42,7 +42,7 @@ public class Controller {
     
 
     public void getPrice(TextField PriceTxt) {
-        Double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 2);
+        Double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
         System.out.println(gui.getValitunPaketinIndex());
         
        PriceTxt.setText("" + hinta * gui.getOrderAmount());

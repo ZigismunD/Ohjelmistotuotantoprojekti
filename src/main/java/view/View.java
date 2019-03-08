@@ -6,8 +6,13 @@
 package view;
 
 import controller.Controller;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,8 +40,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
+import model.Paketti;
 import model.TietokonekauppaDAO;
 import view.loginView;
+import model.TilausRivi;
 
 public class View extends Application {
     private int tulos;
@@ -44,14 +51,19 @@ public class View extends Application {
     private Controller controller;
     private ComboBox<Integer> orderAmount;
     private ComboBox<String> productsdrop;
-
+    private TextField UnitPriceTxt;
+    
     // yleiset
     Scene scene;
     TabPane tabPane;
+    ObservableList<Paketti> data;
+    List<Paketti> tilausrivit;
+
 
     // ekasivu
     private Tab tab1;
     private GridPane grid1;
+    private TableView tableTemp;
     //tokasivu
     private GridPane grid2;
     private Tab tab2;
@@ -60,7 +72,7 @@ public class View extends Application {
     // kolmassivu
     private GridPane grid3;
     private Tab tab3;
-    private TableView table;
+    private TableView tableOrders;
 
     //Taloustietosivu
     private GridPane grid4;
@@ -110,7 +122,7 @@ public class View extends Application {
             }
             */
             scene = new Scene(tabPane, 1900, 1000);
-            //scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
+          //  scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -205,7 +217,9 @@ public class View extends Application {
         TextField otherTxt = new TextField();
 
         // Tilaus taulukko
-        table = new TableView();
+        tilausrivit = new ArrayList<Paketti>();
+        tableTemp = new TableView();      
+        
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
@@ -214,28 +228,45 @@ public class View extends Application {
         otsikko.setFont(Font.font(null, FontWeight.BOLD, 30));
         otsikko.setFill(Color.rgb(255, 255, 255));
 
-        table.setEditable(true);
+        tableTemp.setEditable(true);
 
         TableColumn productCol = new TableColumn("Tuote");
         productCol.setStyle("-fx-font-size: 14pt;");
         productCol.setMinWidth(200);
+        productCol.setCellValueFactory(
+            new PropertyValueFactory<Paketti, String>("paketinNimi"));
+
 
         TableColumn amountCol = new TableColumn("Määrä");
         amountCol.setStyle("-fx-font-size: 14pt;");
         amountCol.setMinWidth(200);
+        amountCol.setCellValueFactory(
+            new PropertyValueFactory<Paketti, String>("paketinHinta"));
 
         TableColumn priceCol = new TableColumn("Hinta");
         priceCol.setStyle("-fx-font-size: 14pt;");
         priceCol.setMinWidth(200);
+        priceCol.setCellValueFactory(
+            new PropertyValueFactory<Paketti, String>("paketinViite"));
 
-        table.getColumns().addAll(productCol, amountCol, priceCol);
-        table.setPrefHeight(250);
+        tableTemp.getColumns().addAll(productCol, amountCol, priceCol);
+        tableTemp.setPrefHeight(250);
 
         //Taulikon Vbox
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(otsikko, table);
+        vbox.getChildren().addAll(otsikko, tableTemp);
+        
+         btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                tilausrivit.add(new Paketti(getValittuPaketti(),getOrderAmount(),getValitunPaketinIndex()));
+                data = FXCollections.observableArrayList(tilausrivit);
+                tableTemp.setItems(data);
+                UnitPriceTxt.clear();
+            }
+        });   
 
         // LISÄYKSET GRIDII
         grid1.add(lblSales, 2, 1, 4, 2);
@@ -416,7 +447,7 @@ public class View extends Application {
         btnAllEvents.setPrefSize(200, 100);
         grid3.add(btnAllEvents, 0, 2);
 
-        TableView tableOrders = new TableView();
+        tableOrders = new TableView();
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
@@ -614,5 +645,7 @@ public class View extends Application {
     public int getValitunPaketinIndex() {
         return productsdrop.getSelectionModel().getSelectedIndex();
     }
-
+   /* public double getHinta(){
+        return Double.parseDouble(UnitPriceTxt.getText());
+    }*/
 }
