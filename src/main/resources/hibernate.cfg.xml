@@ -47,5 +47,6 @@ Contributor(s):
     <property name="hibernate.connection.username">Kouhia</property>
     <property name="hibernate.connection.password">84EltB</property>
     <mapping class="model.Paketti"/>
+    <mapping class="model.TilausRivi"/>
   </session-factory>
 </hibernate-configuration>
