@@ -17,12 +17,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Paketti")
-public class Paketti {
+public class PakettiOLD {
     public int pakettiID;
     public String pakettiNimi;
     public double pakettiHinta;
 
-    public Paketti() {
+    public PakettiOLD() {
     }
     
     @Id

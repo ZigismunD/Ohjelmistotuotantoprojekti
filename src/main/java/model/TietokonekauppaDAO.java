@@ -71,11 +71,11 @@ public class TietokonekauppaDAO {
 
     }
 
-    public Paketti readPaketti(String nimi) {
+    public Paketti readPaketti(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
             Paketti pak = new Paketti();
-            istunto.load(pak, nimi);
+            istunto.load(pak, id);
             return new Paketti(pak.getPaketinNimi(), pak.getPaketinHinta(), pak.getPaketinViite());
         } catch (Exception e) {
             return null;

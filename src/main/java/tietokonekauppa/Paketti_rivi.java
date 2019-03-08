@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "PAKETTI_RIVI")
 public class Paketti_rivi {
     public int paketti_riviID;
-    public Paketti pakettiID;
+    public PakettiOLD pakettiID;
     public Osa osaID;
 
     public Paketti_rivi() {
@@ -50,11 +50,11 @@ public class Paketti_rivi {
     }
     @ManyToOne
     @JoinColumn(name = "Paketti")
-    public Paketti getPakettiID() {
+    public PakettiOLD getPakettiID() {
         return pakettiID;
     }
 
-    public void setPakettiID(Paketti pakettiID) {
+    public void setPakettiID(PakettiOLD pakettiID) {
         this.pakettiID = pakettiID;
     }
     
