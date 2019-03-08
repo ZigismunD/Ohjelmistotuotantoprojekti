@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -36,13 +37,15 @@ public class loginView extends Application {
         try {
             primaryStage.setTitle("Kirjaudu järjestelmään");
             
-            TextField user = new TextField("Käyttäjätili");
+            Label userlabel = new Label("Käyttäjänimi");
+            TextField user = new TextField();
             user.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
-            TextField password = new TextField("Salasana");
+            Label passlabel = new Label("Salasana");
+            PasswordField password = new PasswordField();
             password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
-            final Label lblMessage = new Label();
+            Label lblMessage = new Label();
             
             Button loginBtn = new Button();
             loginBtn.setText("Kirjaudu");
@@ -50,7 +53,7 @@ public class loginView extends Application {
                 public void handle(ActionEvent ae) {
                     checkUser = user.getText().toString();
                     checkPw = password.getText().toString();
-                    if (checkUser.equals(user1) && checkPw.equals(pw1)) {
+                    if (checkUser.equals(user1) && checkPw.equals(pw1)) { //equals(get.userhibernatesta)
                         Stage Viewclass = new Stage();
                         new View().start(Viewclass);
                     } else {
@@ -69,12 +72,15 @@ public class loginView extends Application {
 	        grid.setVgap(20);
 	        grid.setHgap(10);
 
-	        grid.add(user, 0, 0);            // sarake, rivi
-	        grid.add(password, 1, 0);
-	        grid.add(loginBtn,0, 1);            // sarake, rivi
-                grid.add(lblMessage, 1, 1);
+                grid.add(userlabel, 1, 0);
+                grid.add(passlabel, 2, 0);
+	        grid.add(user, 1, 1);            // sarake, rivi
+	        grid.add(password, 2, 1);
+	        grid.add(loginBtn,1, 2);            // sarake, rivi
+                grid.add(lblMessage, 2, 2);
+                
 
-	        Scene scene = new Scene(grid, 500, 400);
+	        Scene scene = new Scene(grid, 550, 400);
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 

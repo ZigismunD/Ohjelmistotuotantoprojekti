@@ -36,6 +36,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
 import model.TietokonekauppaDAO;
+import view.loginView;
 
 public class View extends Application {
     private int tulos;
@@ -95,7 +96,19 @@ public class View extends Application {
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
             tabPane.getTabs().add(tab5);
-
+            
+            // KIRJAUTUMISTA
+            /*
+            if (checkUser.equals(user1) && checkPw.equals(pw1)){
+                tabPane.getTabs().add(tab1);
+            }           
+            else if(role.equals("varastomies")){
+                tabPane.getTabs().add(tab2);
+            }
+            else if (role.equals("staff")){
+                tabPane.getTabs().add(tab3);
+            }
+            */
             scene = new Scene(tabPane, 1900, 1000);
             //scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
