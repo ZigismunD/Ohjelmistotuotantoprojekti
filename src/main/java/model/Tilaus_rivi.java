@@ -24,16 +24,16 @@ import model.Tilaus;
 @Table(name = "TILAUS_RIVI")
 public class Tilaus_rivi {
 
-    public int tilaus_riviID;
-    public Paketti pakettiID;
-    public Osa osaID;
-    public int maara;
-    public Tilaus tilausID;
+    private int Id;
+    private Paketti paketti;
+    private Osa osa;
+    private int maara;
+    private Tilaus tilaus;
 
-    public Tilaus_rivi(int tilaus_riviID, Tilaus tilausID, Paketti tilausPaketti, Osa tilausOsa, int maara) {
-        this.tilaus_riviID = tilaus_riviID;
-        this.pakettiID = tilausPaketti;
-        this.osaID = tilausOsa;
+    public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara) {
+        
+        this.paketti = paketti;
+        this.osa = osa;
         this.maara = maara;
     }
     
@@ -42,31 +42,31 @@ public class Tilaus_rivi {
 
     @Id
     @GeneratedValue
-    @Column(name = "Tilaus_riviID")
-    public int getTilaus_riviID() {
-        return tilaus_riviID;
+    @Column(name = "Id")
+    public int getTilaus_riviId() {
+        return Id;
     }
 
-    public void setTilaus_riviID(int tilaus_riviID) {
-        this.tilaus_riviID = tilaus_riviID;
+    public void setTilaus_riviId(int Id) {
+        this.Id = Id;
     }
     @ManyToOne
-    @JoinColumn(name = "TilausPaketti")
-    public Paketti getPakettiID() {
-        return pakettiID;
+    @JoinColumn(name = "Paketti")
+    public Paketti getPaketti() {
+        return paketti;
     }
 
-    public void setPakettiID(Paketti pakettiID) {
-        this.pakettiID = pakettiID;
+    public void setPaketti(Paketti paketti) {
+        this.paketti = paketti;
     }
     @ManyToOne
-    @JoinColumn(name = "TilausOsa")
-    public Osa getOsaID() {
-        return osaID;
+    @JoinColumn(name = "Osa")
+    public Osa getOsa() {
+        return osa;
     }
 
-    public void setOsaID(Osa osaID) {
-        this.osaID = osaID;
+    public void setOsa(Osa osa) {
+        this.osa = osa;
     }
     @Column(name = "Maara")
     public int getMaara() {
@@ -77,13 +77,13 @@ public class Tilaus_rivi {
         this.maara = maara;
     }
     @ManyToOne
-    @JoinColumn(name = "TilausID")
-    public Tilaus getTilausID() {
-        return tilausID;
+    @JoinColumn(name = "tilaus")
+    public Tilaus getTilaus() {
+        return tilaus;
     }
 
-    public void setTilausID(Tilaus tilausID) {
-        this.tilausID = tilausID;
+    public void setTilaus(Tilaus tilaus) {
+        this.tilaus = tilaus;
     }
 
    

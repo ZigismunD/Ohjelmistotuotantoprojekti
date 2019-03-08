@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model;
+
 import javax.persistence.*;
 
 /**
@@ -11,53 +12,36 @@ import javax.persistence.*;
  * @author zigis
  */
 @Entity
-@Table(name="PAKETTI")
+@Table(name = "PAKETTI")
 public class Paketti {
-    
+
+    private int Id;
+    private String paketinNimi;
+    private Double paketinHinta;
+
+    public Paketti() {
+
+    }
+
+    public Paketti(String paketinNimi, double pakettiHinta) {
+
+        this.paketinNimi = paketinNimi;
+        this.paketinHinta = pakettiHinta;
+
+    }
+
     @Id
     @GeneratedValue
-    @Column(name="id")
-    private int paketinId;
-    
-    @Column(name="nimi")
-    private String paketinNimi;
-    
-    @Column(name="hinta")
-    private Double paketinHinta;
-    
-    @Column(name="viite_osa")
-    private Integer paketinViite;
-    
-    public Paketti() {
-        
-    }
-    
-    public Paketti(String merkkijono, double numero, int viitenro) {
-        this.paketinNimi = merkkijono;
-        this.paketinHinta = numero;
-        this.paketinViite = viitenro;
-    }
-    
-    public Paketti(String merkkijono, double numero) {
-        this.paketinNimi = merkkijono;
-        this.paketinHinta = numero;
-    }
-    
-    public Paketti(int id, String merkkijono, double numero) {
-        this.paketinId = id;
-        this.paketinNimi = merkkijono;
-        this.paketinHinta = numero;
-    }
-   
-
-    public int getPaketinId() {
-        return paketinId;
+    @Column(name = "id")
+    public int getPakettiId() {
+        return Id;
     }
 
-    public void setPaketinId(int paketinId) {
-        this.paketinId = paketinId;
+    public void setPakettiId(int Id) {
+        this.Id = Id;
     }
 
+    @Column(name = "nimi")
     public String getPaketinNimi() {
         return paketinNimi;
     }
@@ -66,20 +50,13 @@ public class Paketti {
         this.paketinNimi = paketinNimi;
     }
 
-    public double getPaketinHinta() {
+    @Column(name = "hinta")
+    public Double getPaketinHinta() {
         return paketinHinta;
     }
 
-    public void setPaketinHinta(double paketinHinta) {
+    public void setPaketinHinta(Double paketinHinta) {
         this.paketinHinta = paketinHinta;
     }
 
-    public int getPaketinViite() {
-        return paketinViite;
-    }
-
-    public void setPaketinViite(int paketinViite) {
-        this.paketinViite = paketinViite;
-    }
-    
 }

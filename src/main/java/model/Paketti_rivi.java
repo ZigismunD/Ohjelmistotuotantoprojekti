@@ -23,41 +23,47 @@ import model.Paketti;
 @Entity
 @Table(name = "PAKETTI_RIVI")
 public class Paketti_rivi {
-    public int paketti_riviID;
-    public Paketti pakettiID;
-    public Osa osaID;
+    private int Id;
+    private Paketti paketti;
+    private Osa osa;
 
     public Paketti_rivi() {
         
     }
+
+    public Paketti_rivi(Paketti paketti, Osa osa) {
+        this.paketti = paketti;
+        this.osa = osa;
+    }
+    
     @Id
     @GeneratedValue
-    @Column(name = "Paketti_riviID")
-    public int getPaketti_riviID() {
-        return paketti_riviID;
+    @Column(name = "Id")
+    public int getPakettiId() {
+        return Id;
     }
 
-    public void setPaketti_riviID(int paketti_riviID) {
-        this.paketti_riviID = paketti_riviID;
+    public void setPakettiId(int Id) {
+        this.Id = Id;
     }
     
     @ManyToOne
-    @JoinColumn(name = "OsaID")
-    public Osa getOsaID() {
-        return osaID;
+    @JoinColumn(name = "Osa")
+    public Osa getOsa() {
+        return osa;
     }
 
-    public void setOsaID(Osa osaID) {
-        this.osaID = osaID;
+    public void setOsa(Osa osa) {
+        this.osa = osa;
     }
     @ManyToOne
     @JoinColumn(name = "Paketti")
-    public Paketti getPakettiID() {
-        return pakettiID;
+    public Paketti getPaketti() {
+        return paketti;
     }
 
-    public void setPakettiID(Paketti pakettiID) {
-        this.pakettiID = pakettiID;
+    public void setPaketti(Paketti paketti) {
+        this.paketti = paketti;
     }
     
     
