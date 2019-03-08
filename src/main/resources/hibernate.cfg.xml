@@ -46,10 +46,7 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:4444/Tietokonekauppa?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">Kouhia</property>
     <property name="hibernate.connection.password">84EltB</property>
-<<<<<<< HEAD
-    <mapping class="model.Paketti"/>
-=======
-    <property name="hbm2ddl.auto">create</property>
+    <property name="hbm2ddl.auto">validate</property>
     <property name="show_sql">true</property>
     <mapping class="model.Asiakas"/>
     <mapping class="model.Henkilosto"/>
@@ -57,7 +54,6 @@ Contributor(s):
     <mapping class="model.Paketti_rivi"/>    
     <mapping class="model.Tilaus"/>
     <mapping class="model.Tilaus_rivi"/>
-    
->>>>>>> e941759e9e79459b3d3bd58403c33ff6944131d8
-  </session-factory>
+    <mapping class="model.Paketti"/>
+      </session-factory>
 </hibernate-configuration>

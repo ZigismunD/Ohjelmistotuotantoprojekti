@@ -34,7 +34,7 @@ public class Osa {
     }
     @Id
     @GeneratedValue
-    @Column(name = "Osa")
+    @Column(name = "Id")
     public int getOsaId() {
         return Id;
     }
