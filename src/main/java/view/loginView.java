@@ -56,6 +56,7 @@ public class loginView extends Application {
                     if (checkUser.equals(user1) && checkPw.equals(pw1)) { //equals(get.userhibernatesta)
                         Stage Viewclass = new Stage();
                         new View().start(Viewclass);
+                        primaryStage.close();
                     } else {
                         lblMessage.setText("Salasana väärin.");
                         lblMessage.setTextFill(Color.RED);
