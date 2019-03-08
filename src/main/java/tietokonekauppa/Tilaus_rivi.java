@@ -22,12 +22,12 @@ import javax.persistence.Table;
 public class Tilaus_rivi {
 
     public int tilaus_riviID;
-    public Paketti pakettiID;
+    public PakettiOLD pakettiID;
     public Osa osaID;
     public int maara;
     public Tilaus tilausID;
 
-    public Tilaus_rivi(int tilaus_riviID, Tilaus tilausID, Paketti tilausPaketti, Osa tilausOsa, int maara) {
+    public Tilaus_rivi(int tilaus_riviID, Tilaus tilausID, PakettiOLD tilausPaketti, Osa tilausOsa, int maara) {
         this.tilaus_riviID = tilaus_riviID;
         this.pakettiID = tilausPaketti;
         this.osaID = tilausOsa;
@@ -49,11 +49,11 @@ public class Tilaus_rivi {
     }
     @ManyToOne
     @JoinColumn(name = "TilausPaketti")
-    public Paketti getPakettiID() {
+    public PakettiOLD getPakettiID() {
         return pakettiID;
     }
 
-    public void setPakettiID(Paketti pakettiID) {
+    public void setPakettiID(PakettiOLD pakettiID) {
         this.pakettiID = pakettiID;
     }
     @ManyToOne
