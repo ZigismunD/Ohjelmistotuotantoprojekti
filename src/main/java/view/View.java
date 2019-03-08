@@ -43,7 +43,7 @@ import javafx.event.EventHandler;
 import model.Paketti;
 import model.TietokonekauppaDAO;
 import view.loginView;
-import model.TilausRivi;
+import model.Tilaus_rivi;
 
 public class View extends Application {
     private int tulos;
@@ -261,7 +261,7 @@ public class View extends Application {
          btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                tilausrivit.add(new Paketti(getValittuPaketti(),getOrderAmount(),getValitunPaketinIndex()));
+                tilausrivit.add(new Paketti(getValittuPaketti(),getOrderAmount()));
                 data = FXCollections.observableArrayList(tilausrivit);
                 tableTemp.setItems(data);
                 UnitPriceTxt.clear();

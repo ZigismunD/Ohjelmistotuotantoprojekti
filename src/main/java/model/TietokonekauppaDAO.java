@@ -76,7 +76,7 @@ public class TietokonekauppaDAO {
             istunto.beginTransaction();
             Paketti pak = new Paketti();
             istunto.load(pak, id);
-            return new Paketti(pak.getPaketinNimi(), pak.getPaketinHinta(), pak.getPaketinViite());
+            return new Paketti(pak.getPaketinNimi(), pak.getPaketinHinta());
         } catch (Exception e) {
             return null;
         }

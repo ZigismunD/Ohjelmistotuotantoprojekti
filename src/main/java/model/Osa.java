@@ -18,44 +18,45 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "OSA")
 public class Osa {
-   public int osaID;
-   public char nimi;
-   public double hinta;
-   public int varastoMaara;
+   private int Id;
+   private String nimi;
+   private double hinta;
+   private int varastoMaara;
 
     public Osa() {
     }
 
-    public Osa(int osaID, char nimi, double hinta, int varastoMaara) {
-        this.osaID = osaID;
+    public Osa(String nimi, double hinta, int varastoMaara) {
+        
         this.nimi = nimi;
         this.hinta = hinta;
         this.varastoMaara = varastoMaara;
     }
     @Id
     @GeneratedValue
-    @Column(name = "OsaID")
-    public int getOsaID() {
-        return osaID;
+    @Column(name = "Osa")
+    public int getOsaId() {
+        return Id;
     }
 
-    public void setOsaID(int osaID) {
-        this.osaID = osaID;
+    public void setOsaId(int Id) {
+        this.Id = Id;
     }
     @Column(name = "Nimi")
-    public char getNimi() {
+    public String getOsaNimi() {
         return nimi;
     }
 
-    public void setNimi(char nimi) {
+    public void setOsaNimi(String nimi) {
         this.nimi = nimi;
     }
+    
     @Column(name = "Hinta")
-    public double getHinta() {
+    public double getOsaHinta() {
         return hinta;
     }
 
-    public void setHinta(double hinta) {
+    public void setOsaHinta(double hinta) {
         this.hinta = hinta;
     }
     @Column(name = "VarastoMaara")

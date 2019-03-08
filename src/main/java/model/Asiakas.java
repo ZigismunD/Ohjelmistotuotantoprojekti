@@ -21,16 +21,16 @@ import javax.persistence.Table;
 @Table(name = "ASIAKAS")
 public class Asiakas {
 
-    private int asiakasID;
-    private char nimi;
-    private char osoite;
-    private char email;
+    private int Id;
+    private String nimi;
+    private String osoite;
+    private String email;
 
     public Asiakas() {
     }
 
-    public Asiakas(int asiakasID, char nimi, char osoite, char email) {
-        this.asiakasID = asiakasID;
+    public Asiakas(String nimi, String osoite, String email) {
+        
         this.nimi = nimi;
         this.osoite = osoite;
         this.email = email;
@@ -38,39 +38,39 @@ public class Asiakas {
 
     @Id
     @GeneratedValue
-    @Column(name = "AsiakasID")
+    @Column(name = "Id")
     public int getAsiakasID() {
-        return asiakasID;
+        return Id;
     }
 
-    public void setAsiakasID(int asiakasID) {
-        this.asiakasID = asiakasID;
+    public void setAsiakasID(int Id) {
+        this.Id = Id;
     }
 
     @Column(name = "Nimi")
-    public char getNimi() {
+    public String getAsiakasNimi() {
         return nimi;
     }
 
-    public void setNimi(char nimi) {
+    public void setAsiakasNimi(String nimi) {
         this.nimi = nimi;
     }
 
     @Column(name = "Osoite")
-    public char getOsoite() {
+    public String getOsoite() {
         return osoite;
     }
 
-    public void setOsoite(char osoite) {
+    public void setOsoite(String osoite) {
         this.osoite = osoite;
     }
 
     @Column(name = "Email")
-    public char getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(char email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

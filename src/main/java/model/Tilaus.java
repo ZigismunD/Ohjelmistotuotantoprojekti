@@ -24,15 +24,15 @@ import javax.persistence.Table;
 @Table(name = "TILAUS")
 public class Tilaus {
 
-    private int tilausID;
-    private Asiakas asiakasID;
-    private Henkilosto henkilostoKasittelijaID;
+    private int Id;
+    private Asiakas asiakas;
+    private Henkilosto henkilosto;
     private double tilausPvm;
 
-    public Tilaus(int tilausID, Asiakas asiakasID, Henkilosto henkilostoKasittelijaID, double tilausPvm) {
-        this.tilausID = tilausID;
-        this.asiakasID = asiakasID;
-        this.henkilostoKasittelijaID = henkilostoKasittelijaID;
+    public Tilaus(Asiakas asiakas, Henkilosto henkilosto, double tilausPvm) {
+        
+        this.asiakas = asiakas;
+        this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
     }
 
@@ -41,33 +41,33 @@ public class Tilaus {
 
     @Id
     @GeneratedValue
-    @Column(name = "TilausID")
-    public int getTilausID() {
-        return tilausID;
+    @Column(name = "Id")
+    public int getTilausId() {
+        return Id;
     }
 
-    public void setTilausID(int tilausID) {
-        this.tilausID = tilausID;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "AsiakasID")
-    public Asiakas getAsiakasID() {
-        return asiakasID;
-    }
-
-    public void setAsiakasID(Asiakas asiakasID) {
-        this.asiakasID = asiakasID;
+    public void setTilausId(int Id) {
+        this.Id = Id;
     }
 
     @ManyToOne
-    @JoinColumn(name = "henkilostoKasittelijaID")
+    @JoinColumn(name = "Asiakas")
+    public Asiakas getAsiakas() {
+        return asiakas;
+    }
+
+    public void setAsiakas(Asiakas asiakas) {
+        this.asiakas = asiakas;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "henkilosto")
     public Henkilosto getHenkilosto() {
-        return henkilostoKasittelijaID;
+        return henkilosto;
     }
 
-    public void setHenkilostoKasittelijaID(Henkilosto henkilostoKasittelijaID) {
-        this.henkilostoKasittelijaID = henkilostoKasittelijaID;
+    public void setHenkilosto(Henkilosto henkilosto) {
+        this.henkilosto = henkilosto;
     }
 
     @Column(name = "TilausPvm")

@@ -17,12 +17,12 @@ import  javax.persistence.*;
 @Entity
 @Table (name="HENKILOSTO")
 public class Henkilosto {
-    private int henkiloId;
+    private int Id;
     private String nimi;
     private String rooli;
     
-    public Henkilosto( int henkiloId, String nimi, String rooli) {
-        this.henkiloId = henkiloId;
+    public Henkilosto(String nimi, String rooli) {
+        
         this.nimi = nimi;
         this.rooli = rooli;
     }
@@ -31,20 +31,20 @@ public class Henkilosto {
     
     @Id 
     @GeneratedValue
-    @Column(name="HenkiloID")
+    @Column(name="Id")
     public int getHenkiloId() {
-        return henkiloId;
+        return Id;
     } 
 
-    public void setHenkiloId(int henkiloId) {
-        this.henkiloId = henkiloId;
+    public void setHenkiloId(int Id) {
+        this.Id = Id;
     }
     @Column(name="Nimi")
-    public String getNimi() {
+    public String getHenkiloNimi() {
         return nimi;
     }
 
-    public void setNimi(String nimi) {
+    public void setHenkiloNimi(String nimi) {
         this.nimi = nimi;
     }
     @Column(name="Rooli")
