@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "OSA")
 public class Osa {
-   private int Id;
+   private int id;
    private String nimi;
    private double hinta;
    private int varastoMaara;
@@ -36,11 +36,11 @@ public class Osa {
     @GeneratedValue
     @Column(name = "Id")
     public int getOsaId() {
-        return Id;
+        return id;
     }
 
-    public void setOsaId(int Id) {
-        this.Id = Id;
+    public void setOsaId(int id) {
+        this.id = id;
     }
     @Column(name = "Nimi")
     public String getOsaNimi() {

@@ -38,13 +38,13 @@ public class Asiakas {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getAsiakasID() {
         return Id;
     }
 
-    public void setAsiakasID(int Id) {
-        this.Id = Id;
+    public void setAsiakasID(int id) {
+        this.Id = id;
     }
 
     @Column(name = "Nimi")

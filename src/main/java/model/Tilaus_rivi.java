@@ -24,7 +24,7 @@ import model.Tilaus;
 @Table(name = "TILAUS_RIVI")
 public class Tilaus_rivi {
 
-    private int Id;
+    private int id;
     private Paketti paketti;
     private Osa osa;
     private int maara;
@@ -42,13 +42,13 @@ public class Tilaus_rivi {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getTilaus_riviId() {
-        return Id;
+        return id;
     }
 
-    public void setTilaus_riviId(int Id) {
-        this.Id = Id;
+    public void setTilaus_riviId(int id) {
+        this.id = id;
     }
     @ManyToOne
     @JoinColumn(name = "Paketti")
