@@ -122,7 +122,7 @@ public class View extends Application {
             }
             */
             scene = new Scene(tabPane, 1900, 1000);
-          //  scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
+            scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());

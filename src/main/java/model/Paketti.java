@@ -17,7 +17,7 @@ public class Paketti {
 
     private int Id;
     private String paketinNimi;
-    private Double paketinHinta;
+    private double paketinHinta;
 
     public Paketti() {
 
