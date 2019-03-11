@@ -197,5 +197,15 @@ public class TietokonekauppaDAO {
             e.printStackTrace();
         }        
     }
+    
+    public List<Osa> getOsat(String tyyppi) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaktio = istunto.beginTransaction();
+            List<Osa> result = istunto.createQuery("from Osa where Tyyppi='" + tyyppi + "'").list();
+            transaktio.commit();
+            return result;
+            
+        }
+    }
 
 }

@@ -19,8 +19,8 @@ import javax.persistence.Table;
 @Table(name = "OSA")
 public class Osa {
    private int id;
-   private String nimi;
-   private double hinta;
+   private String osaNimi;
+   private double osaHinta;
    private int varastoMaara;
    private String tyyppi;
 
@@ -29,8 +29,8 @@ public class Osa {
 
     public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
         
-        this.nimi = nimi;
-        this.hinta = hinta;
+        this.osaNimi = nimi;
+        this.osaHinta = hinta;
         this.varastoMaara = varastoMaara;
         this.tyyppi = tyyppi;
     }
@@ -46,18 +46,18 @@ public class Osa {
     
     @Column(name = "Nimi")
     public String getOsaNimi() {
-        return nimi;
+        return osaNimi;
     }
     public void setOsaNimi(String nimi) {
-        this.nimi = nimi;
+        this.osaNimi = nimi;
     }
     
     @Column(name = "Hinta")
     public double getOsaHinta() {
-        return hinta;
+        return osaHinta;
     }
     public void setOsaHinta(double hinta) {
-        this.hinta = hinta;
+        this.osaHinta = hinta;
     }
     
     @Column(name = "VarastoMaara")

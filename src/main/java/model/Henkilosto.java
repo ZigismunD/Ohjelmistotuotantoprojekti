@@ -33,6 +33,10 @@ public class Henkilosto {
     public Henkilosto(){
     }
     
+    public Henkilosto(String nimi, String rooli) {
+        
+    }
+    
     @Id 
     @GeneratedValue
     @Column(name="Id")

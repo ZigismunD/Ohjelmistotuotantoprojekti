@@ -40,6 +40,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
+import model.Osa;
 import model.Paketti;
 import model.TietokonekauppaDAO;
 import view.loginView;
@@ -58,6 +59,8 @@ public class View extends Application {
     TabPane tabPane;
     ObservableList<Paketti> data;
     List<Paketti> tilausrivit;
+    List<Osa> osaLista;
+    ObservableList<Osa> osaData;
 
 
     // ekasivu
@@ -301,6 +304,7 @@ public class View extends Application {
     // Varastonäyttö
     private void createTab2() {
         tab2 = new Tab();
+        tilausrivit = new ArrayList<Paketti>();
         tab2.setText("Varasto");
 
         grid2 = new GridPane();
@@ -314,6 +318,11 @@ public class View extends Application {
         Button btnProcessors = new Button();
         btnProcessors.setText("Prosessorit");
         btnProcessors.setPrefSize(200, 100);
+        btnProcessors.setOnAction(e-> {
+            osaLista = controller.getOsat("Prosessori");
+            osaData = FXCollections.observableArrayList(osaLista);
+            tableVarasto.setItems(osaData);
+        });
         grid2.add(btnProcessors, 0, 0);
 
         // Nappula, josta saa emolevyt näkyviin
@@ -321,6 +330,11 @@ public class View extends Application {
         btnMotherboard.setText("Emolevyt");
         btnMotherboard.setPrefSize(200, 100);
         grid2.add(btnMotherboard, 0, 1);
+        btnMotherboard.setOnAction(e-> {
+            osaLista = controller.getOsat("Emolevy");
+            osaData = FXCollections.observableArrayList(osaLista);
+            tableVarasto.setItems(osaData);
+        });
 
         // Nappula, josta saa näytönohjaimet näkyviin
         Button btnGraphics = new Button();
@@ -373,18 +387,22 @@ public class View extends Application {
         TableColumn product = new TableColumn("Tuote");
         product.setStyle("-fx-font-size: 14pt;");
         product.setMinWidth(500);
+        product.setCellValueFactory(new PropertyValueFactory<Osa, String>("osaNimi"));
 
-        TableColumn arriveDate = new TableColumn("Saapunut");
+        TableColumn arriveDate = new TableColumn("Hinta (€)");
         arriveDate.setStyle("-fx-font-size: 14pt;");
         arriveDate.setMinWidth(200);
+        arriveDate.setCellValueFactory(new PropertyValueFactory<Osa, Double>("osaHinta"));
 
         TableColumn amount = new TableColumn("Määrä");
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
+        amount.setCellValueFactory(new PropertyValueFactory<Osa, Integer>("varastoMaara"));
 
         TableColumn additionalInfo = new TableColumn("HUOM");
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
+        additionalInfo.setCellValueFactory(new PropertyValueFactory<Osa, String>("tyyppi"));
 
         tableVarasto.getColumns().addAll(brand, product, arriveDate, amount, additionalInfo);
         tableVarasto.setPrefHeight(700);

@@ -5,11 +5,13 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Henkilosto;
+import model.Osa;
 import model.Paketti;
 import model.TietokonekauppaDAO;
 import model.Tilaus_rivi;
@@ -64,5 +66,15 @@ public class Controller {
         
        PriceTxt.setText("" + hinta * gui.getOrderAmount());
     }
+    
+    public ArrayList<Osa> getOsat(String tyyppi) {
+        ArrayList<Osa> osat = new ArrayList<>();
+        
+        for (Osa osa : dao.getOsat(tyyppi)) {
+            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi()));
+        }
+        return osat;
+    }
+
     
 }
