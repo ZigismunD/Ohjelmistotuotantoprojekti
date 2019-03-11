@@ -23,10 +23,12 @@ public class Henkilosto {
     private String salasana;
     private String kirjautumistunnus;
     
-    public Henkilosto(String nimi, String rooli) {
+    public Henkilosto(String nimi, String rooli, String salasana, String kirjautumistunnus) {
         
         this.nimi = nimi;
         this.rooli = rooli;
+        this.salasana = salasana;
+        this.kirjautumistunnus = kirjautumistunnus;
     }
     public Henkilosto(){
     }

@@ -67,7 +67,8 @@ public class Osa {
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
     }
-     @Column(name = "Tyyppi")
+    
+    @Column(name = "Tyyppi")
     public String getTyyppi() {
         return tyyppi;
     }
