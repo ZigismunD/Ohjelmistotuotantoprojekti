@@ -22,15 +22,17 @@ public class Osa {
    private String nimi;
    private double hinta;
    private int varastoMaara;
+   private String tyyppi;
 
     public Osa() {
     }
 
-    public Osa(String nimi, double hinta, int varastoMaara) {
+    public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
         
         this.nimi = nimi;
         this.hinta = hinta;
         this.varastoMaara = varastoMaara;
+        this.tyyppi = tyyppi;
     }
     @Id
     @GeneratedValue
@@ -38,15 +40,14 @@ public class Osa {
     public int getOsaId() {
         return id;
     }
-
     public void setOsaId(int id) {
         this.id = id;
     }
+    
     @Column(name = "Nimi")
     public String getOsaNimi() {
         return nimi;
     }
-
     public void setOsaNimi(String nimi) {
         this.nimi = nimi;
     }
@@ -55,17 +56,23 @@ public class Osa {
     public double getOsaHinta() {
         return hinta;
     }
-
     public void setOsaHinta(double hinta) {
         this.hinta = hinta;
     }
+    
     @Column(name = "VarastoMaara")
     public int getVarastoMaara() {
         return varastoMaara;
     }
-
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
+    }
+     @Column(name = "Tyyppi")
+    public String getTyyppi() {
+        return tyyppi;
+    }
+    public void setTyyppi(String tyyppi) {
+        this.tyyppi = tyyppi;
     }
     
     

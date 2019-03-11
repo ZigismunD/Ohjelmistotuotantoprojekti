@@ -29,12 +29,14 @@ public class Tilaus_rivi {
     private Osa osa;
     private int maara;
     private Tilaus tilaus;
+    private double hinta;
 
-    public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara) {
+    public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara, double hinta) {
         
         this.paketti = paketti;
         this.osa = osa;
         this.maara = maara;
+        this.hinta = hinta;
     }
     
     public Tilaus_rivi() {
@@ -46,44 +48,51 @@ public class Tilaus_rivi {
     public int getTilaus_riviId() {
         return id;
     }
-
     public void setTilaus_riviId(int id) {
         this.id = id;
     }
+    
     @ManyToOne
     @JoinColumn(name = "Paketti")
     public Paketti getPaketti() {
         return paketti;
     }
-
     public void setPaketti(Paketti paketti) {
         this.paketti = paketti;
     }
+    
     @ManyToOne
     @JoinColumn(name = "Osa")
     public Osa getOsa() {
         return osa;
     }
-
     public void setOsa(Osa osa) {
         this.osa = osa;
     }
+    
     @Column(name = "Maara")
     public int getMaara() {
         return maara;
     }
-
     public void setMaara(int maara) {
         this.maara = maara;
     }
+    
     @ManyToOne
     @JoinColumn(name = "tilaus")
     public Tilaus getTilaus() {
         return tilaus;
     }
-
     public void setTilaus(Tilaus tilaus) {
         this.tilaus = tilaus;
+    }
+    
+    @Column(name = "Hinta")
+    public double getHinta() {
+        return hinta;
+    }
+    public void setHinta(double hinta) {
+        this.hinta = hinta;
     }
 
    
