@@ -24,7 +24,6 @@ public class Henkilosto {
     private String kirjautumistunnus;
     
     public Henkilosto(String nimi, String rooli, String salasana, String kirjautumistunnus) {
-        
         this.nimi = nimi;
         this.rooli = rooli;
         this.salasana = salasana;
