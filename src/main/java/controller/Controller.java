@@ -45,7 +45,11 @@ public class Controller {
         
     }
     
-    public void createOrder(List<Tilaus_rivi> tilaukset) {
+    
+    public void createOrder() {
+        //Luo Tilaus_rivi lista productista
+        List<Tilaus_rivi> tilaukset = gui.getTilaukset();
+        
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
@@ -75,6 +79,5 @@ public class Controller {
         }
         return osat;
     }
-
     
 }

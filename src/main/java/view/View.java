@@ -663,6 +663,16 @@ public class View extends Application {
     public double getHinta(){
         return Double.parseDouble(UnitPriceTxt.getText());
     }*/
+    public List<Tilaus_rivi> getTilaukset() {
+        List<Tilaus_rivi> prodTilaukset = null;
+
+        //Loop Product table
+        for (Product prod : tilausrivit) {
+            prodTilaukset.add(prod.getTilaus_rivi());
+        }
+
+        return prodTilaukset;
+    }
     
         public static class Product {
  
@@ -703,5 +713,10 @@ public class View extends Application {
         public void setPrice(double Sprice) {
             this.price = Sprice;
         }
+        
+        public Tilaus_rivi getTilaus_rivi() {
+            return tilausrivi;
+        }
+        
     }
 }
