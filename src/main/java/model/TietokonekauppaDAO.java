@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -175,18 +176,13 @@ public class TietokonekauppaDAO {
             istunto.beginTransaction();
             
             //Luo Tilaus olio
-            Tilaus tilaus = new Tilaus();
-            //tilaus.setAsiakas(asiakasID);
-            //tilaus.setPvm(dDate);
+            Tilaus tilaus = new Tilaus(null, new Henkilosto("Seppo", "Varasto"), new Date());
             istunto.saveOrUpdate(tilaus);
-    
-            //Tarkista Tilauksen id
-            int tilausID = tilaus.getTilausId();
             
             //Looppaa tilaus rivejä
             for (Tilaus_rivi tilaus_rivi : tilaukset) {
                 //Aseta viiteavain
-                tilaus_rivi.setTilaus_riviId(tilausID);
+                tilaus_rivi.setTilaus(tilaus);
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
             }
