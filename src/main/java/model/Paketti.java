@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "PAKETTI")
 public class Paketti {
 
-    private int Id;
+    private int id;
     private String paketinNimi;
     private double paketinHinta;
 
@@ -34,11 +34,11 @@ public class Paketti {
     @GeneratedValue
     @Column(name = "id")
     public int getPakettiId() {
-        return Id;
+        return id;
     }
 
     public void setPakettiId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     @Column(name = "nimi")

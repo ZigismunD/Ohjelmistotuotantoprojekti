@@ -18,54 +18,62 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "OSA")
 public class Osa {
-   private int Id;
-   private String nimi;
-   private double hinta;
+   private int id;
+   private String osaNimi;
+   private double osaHinta;
    private int varastoMaara;
+   private String tyyppi;
 
     public Osa() {
     }
 
-    public Osa(String nimi, double hinta, int varastoMaara) {
+    public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
         
-        this.nimi = nimi;
-        this.hinta = hinta;
+        this.osaNimi = nimi;
+        this.osaHinta = hinta;
         this.varastoMaara = varastoMaara;
+        this.tyyppi = tyyppi;
     }
     @Id
     @GeneratedValue
     @Column(name = "Id")
     public int getOsaId() {
-        return Id;
+        return id;
     }
-
-    public void setOsaId(int Id) {
-        this.Id = Id;
+    public void setOsaId(int id) {
+        this.id = id;
     }
+    
     @Column(name = "Nimi")
     public String getOsaNimi() {
-        return nimi;
+        return osaNimi;
     }
-
     public void setOsaNimi(String nimi) {
-        this.nimi = nimi;
+        this.osaNimi = nimi;
     }
     
     @Column(name = "Hinta")
     public double getOsaHinta() {
-        return hinta;
+        return osaHinta;
     }
-
     public void setOsaHinta(double hinta) {
-        this.hinta = hinta;
+        this.osaHinta = hinta;
     }
+    
     @Column(name = "VarastoMaara")
     public int getVarastoMaara() {
         return varastoMaara;
     }
-
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
+    }
+    
+    @Column(name = "Tyyppi")
+    public String getTyyppi() {
+        return tyyppi;
+    }
+    public void setTyyppi(String tyyppi) {
+        this.tyyppi = tyyppi;
     }
     
     

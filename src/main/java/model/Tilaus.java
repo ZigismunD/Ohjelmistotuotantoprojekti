@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "TILAUS")
 public class Tilaus {
 
-    private int Id;
+    private int id;
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private double tilausPvm;
@@ -41,13 +41,13 @@ public class Tilaus {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getTilausId() {
-        return Id;
+        return id;
     }
 
     public void setTilausId(int Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     @ManyToOne

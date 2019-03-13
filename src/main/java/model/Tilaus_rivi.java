@@ -24,7 +24,7 @@ import model.Tilaus;
 @Table(name = "TILAUS_RIVI")
 public class Tilaus_rivi {
 
-    private int Id;
+    private int id;
     private Paketti paketti;
     private Osa osa;
     private int maara;
@@ -49,48 +49,55 @@ public class Tilaus_rivi {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getTilaus_riviId() {
-        return Id;
+        return id;
     }
-
-    public void setTilaus_riviId(int Id) {
-        this.Id = Id;
+    public void setTilaus_riviId(int id) {
+        this.id = id;
     }
+    
     @ManyToOne
     @JoinColumn(name = "Paketti")
     public Paketti getPaketti() {
         return paketti;
     }
-
     public void setPaketti(Paketti paketti) {
         this.paketti = paketti;
     }
+    
     @ManyToOne
     @JoinColumn(name = "Osa")
     public Osa getOsa() {
         return osa;
     }
-
     public void setOsa(Osa osa) {
         this.osa = osa;
     }
+    
     @Column(name = "Maara")
     public int getMaara() {
         return maara;
     }
-
     public void setMaara(int maara) {
         this.maara = maara;
     }
+    
     @ManyToOne
     @JoinColumn(name = "tilaus")
     public Tilaus getTilaus() {
         return tilaus;
     }
-
     public void setTilaus(Tilaus tilaus) {
         this.tilaus = tilaus;
+    }
+    
+    @Column(name = "Hinta")
+    public double getHinta() {
+        return hinta;
+    }
+    public void setHinta(double hinta) {
+        this.hinta = hinta;
     }
 
 }

@@ -23,7 +23,7 @@ import model.Paketti;
 @Entity
 @Table(name = "PAKETTI_RIVI")
 public class Paketti_rivi {
-    private int Id;
+    private int id;
     private Paketti paketti;
     private Osa osa;
 
@@ -38,13 +38,13 @@ public class Paketti_rivi {
     
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getPakettiId() {
-        return Id;
+        return id;
     }
 
-    public void setPakettiId(int Id) {
-        this.Id = Id;
+    public void setPakettiId(int id) {
+        this.id = id;
     }
     
     @ManyToOne
