@@ -7,6 +7,7 @@ package view;
 
 import controller.Controller;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -41,6 +42,7 @@ import javafx.event.EventHandler;
 import model.Osa;
 import model.Paketti;
 import model.TietokonekauppaDAO;
+import model.Tilaus;
 import model.Tilaus_rivi;
 
 public class View extends Application {
@@ -58,6 +60,8 @@ public class View extends Application {
     List<Product> tilausrivit;
     List<Osa> osaLista;
     ObservableList<Osa> osaData;
+    List<Tilaus> tilausLista;
+    ObservableList<Tilaus> tilausData;
 
 
     // ekasivu
@@ -163,7 +167,7 @@ public class View extends Application {
         lblOrderAmount.setFont(Font.font(null, 15));
         lblOrderAmount.setFill(Color.BLACK);
 
-        Text lblUnitPrice = new Text("HINTA:");
+        Text lblUnitPrice = new Text("YKSIKKÖHINTA:");
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
         TextField UnitPriceTxt = new TextField();
@@ -204,6 +208,10 @@ public class View extends Application {
         btnAddproduct.setText("Lisää");
         btnAddproduct.setPrefSize(100, 50);
         //btnAddproduct.setStyle("-fx-background-image: url('')");
+        btnSend = new Button();
+        btnSend.setText("Luo tilaus");
+        btnSend.setId("btnSend");
+        btnSend.setPrefSize(250, 200);
 
         Text lblCompany = new Text("Yritys:");
         TextField companyTxt = new TextField();
@@ -243,7 +251,7 @@ public class View extends Application {
         amountCol.setCellValueFactory(
             new PropertyValueFactory<Product, Integer>("amount"));
 
-        TableColumn priceCol = new TableColumn("Hinta");
+        TableColumn priceCol = new TableColumn("Hinta(kpl)");
         priceCol.setStyle("-fx-font-size: 14pt;");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(
@@ -261,13 +269,18 @@ public class View extends Application {
          btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
+            //    Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
                 tilausrivit.add(new Product(getValittuPaketti() , getOrderAmount()));
                 //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
                 data = FXCollections.observableArrayList(tilausrivit);
                 tableTemp.setItems(data);
             }
         });   
+        /*  btnSend.setOnAction(e-> {
+            tilausLista = controller.getTilaukset("Tilaukset");
+            tilausData = FXCollections.observableArrayList(tilausLista);
+            tableOrders.setItems(tilausData);
+        });   */
 
         // LISÄYKSET GRIDII
         grid1.add(lblSales, 2, 1, 4, 2);
@@ -296,7 +309,7 @@ public class View extends Application {
         grid1.add(vbox, 2, 10, 10, 1);
         grid1.add(lblPrice, 2, 11);
         grid1.add(PriceTxt, 3, 11);
-
+        grid1.add(btnSend, 12,10 );
     }
 
     // Varastonäyttö
@@ -469,9 +482,10 @@ public class View extends Application {
 
         tableOrders.setEditable(true);
 
-        TableColumn brand = new TableColumn("Merkki");
+        TableColumn brand = new TableColumn("Tilaus ID");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
+        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
 
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
@@ -480,6 +494,8 @@ public class View extends Application {
         TableColumn orderDate = new TableColumn("Tilauspvm");
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
+        orderDate.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("tilausPvm"));
+
 
         TableColumn amount = new TableColumn("Summa (€)");
         amount.setStyle("-fx-font-size: 14pt;");
@@ -676,7 +692,7 @@ public class View extends Application {
             this.paketti = Tpaketti;
             this.tuote1 = paketti.getPaketinNimi();
             this.amount = Samount;
-            this.price = paketti.getPaketinHinta() * Samount; 
+            this.price = paketti.getPaketinHinta(); 
             this.tilausrivi = new Tilaus_rivi(paketti, Samount);
         }
  

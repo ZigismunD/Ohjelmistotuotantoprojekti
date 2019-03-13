@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.Date;
 import model.Asiakas;
 import model.Henkilosto;
 import javax.persistence.Column;
@@ -27,9 +28,9 @@ public class Tilaus {
     private int id;
     private Asiakas asiakas;
     private Henkilosto henkilosto;
-    private double tilausPvm;
+    private Date tilausPvm;
 
-    public Tilaus(Asiakas asiakas, Henkilosto henkilosto, double tilausPvm) {
+    public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm) {
         
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
@@ -71,11 +72,11 @@ public class Tilaus {
     }
 
     @Column(name = "TilausPvm")
-    public double getTilausPvm() {
+    public Date getTilausPvm() {
         return tilausPvm;
     }
 
-    public void setTilausPvm(double tilausPvm) {
+    public void setTilausPvm(Date tilausPvm) {
         this.tilausPvm = tilausPvm;
     }
 
