@@ -69,6 +69,28 @@ public class TietokonekauppaDAO {
         }
 
     }
+    
+    public List<Tilaus> readTilaukset() {
+        // TODO Auto-generated method stub
+        ArrayList<Tilaus> tilaukset = new ArrayList<>();
+        Session istunto = istuntotehdas.openSession();
+        try {
+            Transaction transaction = istunto.beginTransaction();
+            //@SuppressWarnings("unchecked")
+            List<Tilaus> result = istunto.createQuery("from Tilaus").list();
+            
+            transaction.commit();
+            
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        } finally {
+            istunto.close();
+        }
+
+    }
 
     public Paketti readPaketti(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -176,7 +198,7 @@ public class TietokonekauppaDAO {
             istunto.beginTransaction();
             
             //Luo Tilaus olio
-            Tilaus tilaus = new Tilaus(null, new Henkilosto("Seppo", "Varasto"), new Date());
+            Tilaus tilaus = new Tilaus(null, null, new Date());
             istunto.saveOrUpdate(tilaus);
             
             //Looppaa tilaus rivejä

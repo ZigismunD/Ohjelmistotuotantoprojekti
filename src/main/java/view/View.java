@@ -276,11 +276,10 @@ public class View extends Application {
                 tableTemp.setItems(data);
             }
         });   
-        /*  btnSend.setOnAction(e-> {
-            tilausLista = controller.getTilaukset("Tilaukset");
-            tilausData = FXCollections.observableArrayList(tilausLista);
-            tableOrders.setItems(tilausData);
-        });   */
+        btnSend.setOnAction(e-> {
+            controller.createOrder();
+            //Product taulun tyhjennys ja ilmoitus että homma onnistui
+        });
 
         // LISÄYKSET GRIDII
         grid1.add(lblSales, 2, 1, 4, 2);
@@ -463,6 +462,11 @@ public class View extends Application {
         Button btnOrders = new Button();
         btnOrders.setText("Tilaukset");
         btnOrders.setPrefSize(200, 100);
+        btnOrders.setOnAction(e-> {
+            tilausLista = controller.getTilaukset();
+            tilausData = FXCollections.observableArrayList(tilausLista);
+            tableOrders.setItems(tilausData);
+        });        
         grid3.add(btnOrders, 0, 0);
 
         Button btnPurchases = new Button();
@@ -679,13 +683,13 @@ public class View extends Application {
     public double getHinta(){
         return Double.parseDouble(UnitPriceTxt.getText());
     }*/
-    public List<Tilaus_rivi> getTilaukset() {
-        List<Tilaus_rivi> prodTilaukset = null;
+    public ArrayList<Tilaus_rivi> getTilaukset() {
+        ArrayList<Tilaus_rivi> prodTilaukset = new ArrayList<>();
 
         //Loop Product table
-        for (Product prod : tilausrivit) {
+        tilausrivit.forEach((prod) -> {
             prodTilaukset.add(prod.getTilaus_rivi());
-        }
+        });
 
         return prodTilaukset;
     }

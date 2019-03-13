@@ -14,6 +14,7 @@ import model.Henkilosto;
 import model.Osa;
 import model.Paketti;
 import model.TietokonekauppaDAO;
+import model.Tilaus;
 import model.Tilaus_rivi;
 import view.View;
 
@@ -78,6 +79,15 @@ public class Controller {
             osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi()));
         }
         return osat;
+    }
+    
+    public ArrayList<Tilaus> getTilaukset() {
+        ArrayList<Tilaus> tilaukset = new ArrayList<>();
+        
+        for (Tilaus tilaus : dao.readTilaukset()) {
+            tilaukset.add(tilaus);
+        }
+        return tilaukset;
     }
     
 }
