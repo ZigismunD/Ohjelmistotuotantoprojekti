@@ -68,7 +68,7 @@ public class Controller {
         double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
         System.out.println(gui.getValitunPaketinIndex());
         
-       PriceTxt.setText("" + hinta * gui.getOrderAmount());
+       PriceTxt.setText("" + hinta);
     }
     
     public ArrayList<Osa> getOsat(String tyyppi) {
