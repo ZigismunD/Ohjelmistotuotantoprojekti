@@ -92,14 +92,5 @@ public class Tilaus_rivi {
     public void setTilaus(Tilaus tilaus) {
         this.tilaus = tilaus;
     }
-  /*
-    @Column(name = "hinta")
-    public double getHinta() {
-        return paketti.getPaketinHinta();
-    }
 
-    public void setHinta(double hinta) {
-        this.hinta = hinta;
-    }
-   */
 }
