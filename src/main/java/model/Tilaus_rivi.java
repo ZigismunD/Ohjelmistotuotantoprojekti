@@ -29,15 +29,22 @@ public class Tilaus_rivi {
     private Osa osa;
     private int maara;
     private Tilaus tilaus;
+    private double hinta;
 
-    public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara) {
+    public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara, double hinta) {
         
         this.paketti = paketti;
         this.osa = osa;
         this.maara = maara;
+        this.hinta = hinta;
     }
     
     public Tilaus_rivi() {
+    }
+
+    public Tilaus_rivi(Paketti paketti, int orderAmount) {
+        this.paketti = paketti;
+        this.maara = orderAmount;
     }
 
     @Id
@@ -85,7 +92,14 @@ public class Tilaus_rivi {
     public void setTilaus(Tilaus tilaus) {
         this.tilaus = tilaus;
     }
+  /*
+    @Column(name = "hinta")
+    public double getHinta() {
+        return paketti.getPaketinHinta();
+    }
 
-   
-
+    public void setHinta(double hinta) {
+        this.hinta = hinta;
+    }
+   */
 }

@@ -27,7 +27,7 @@ public class Controller {
     
     public void getAllComputerNames(ComboBox box) {
         for (Paketti paketti : dao.readPaketit()) {
-            box.getItems().add(paketti.getPaketinNimi());
+            box.getItems().add(paketti);
         }
         box.getSelectionModel().selectFirst();
     }
@@ -42,7 +42,7 @@ public class Controller {
     
 
     public void getPrice(TextField PriceTxt) {
-        Double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
+        double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
         System.out.println(gui.getValitunPaketinIndex());
         
        PriceTxt.setText("" + hinta * gui.getOrderAmount());

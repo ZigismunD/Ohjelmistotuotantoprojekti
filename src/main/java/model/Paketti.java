@@ -23,9 +23,9 @@ public class Paketti {
 
     }
 
-    public Paketti(String paketinNimi, double pakettiHinta) {
+    public Paketti(String pakettiNimi, double pakettiHinta) {
 
-        this.paketinNimi = paketinNimi;
+        this.paketinNimi = pakettiNimi;
         this.paketinHinta = pakettiHinta;
 
     }
@@ -51,12 +51,15 @@ public class Paketti {
     }
 
     @Column(name = "hinta")
-    public Double getPaketinHinta() {
+    public double getPaketinHinta() {
         return paketinHinta;
     }
 
-    public void setPaketinHinta(Double paketinHinta) {
+    public void setPaketinHinta(double paketinHinta) {
         this.paketinHinta = paketinHinta;
     }
-
+    
+    public String toString(){
+        return this.paketinNimi;
+    }
 }

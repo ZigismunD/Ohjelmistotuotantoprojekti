@@ -50,14 +50,14 @@ public class View extends Application {
     private TietokonekauppaDAO dao;
     private Controller controller;
     private ComboBox<Integer> orderAmount;
-    private ComboBox<String> productsdrop;
+    private ComboBox<Paketti> productsdrop;
     private TextField UnitPriceTxt;
     
     // yleiset
     Scene scene;
     TabPane tabPane;
-    ObservableList<Paketti> data;
-    List<Paketti> tilausrivit;
+    ObservableList<Product> data;
+    List<Product> tilausrivit;
 
 
     // ekasivu
@@ -217,7 +217,7 @@ public class View extends Application {
         TextField otherTxt = new TextField();
 
         // Tilaus taulukko
-        tilausrivit = new ArrayList<Paketti>();
+        tilausrivit = new ArrayList<Product>();
         tableTemp = new TableView();      
         
         InnerShadow is = new InnerShadow();
@@ -234,20 +234,20 @@ public class View extends Application {
         productCol.setStyle("-fx-font-size: 14pt;");
         productCol.setMinWidth(200);
         productCol.setCellValueFactory(
-            new PropertyValueFactory<Paketti, String>("paketinNimi"));
+            new PropertyValueFactory<Product, String>("tuote1"));
 
 
         TableColumn amountCol = new TableColumn("Määrä");
         amountCol.setStyle("-fx-font-size: 14pt;");
         amountCol.setMinWidth(200);
         amountCol.setCellValueFactory(
-            new PropertyValueFactory<Paketti, String>("paketinHinta"));
+            new PropertyValueFactory<Product, Integer>("amount"));
 
         TableColumn priceCol = new TableColumn("Hinta");
         priceCol.setStyle("-fx-font-size: 14pt;");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(
-            new PropertyValueFactory<Paketti, String>("paketinViite"));
+            new PropertyValueFactory<Product, Double>("price"));
 
         tableTemp.getColumns().addAll(productCol, amountCol, priceCol);
         tableTemp.setPrefHeight(250);
@@ -261,10 +261,11 @@ public class View extends Application {
          btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                tilausrivit.add(new Paketti(getValittuPaketti(),getOrderAmount()));
+                Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
+                tilausrivit.add(new Product(getValittuPaketti() , getOrderAmount()));
+                //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
                 data = FXCollections.observableArrayList(tilausrivit);
                 tableTemp.setItems(data);
-                UnitPriceTxt.clear();
             }
         });   
 
@@ -638,14 +639,55 @@ public class View extends Application {
         return orderAmount.getSelectionModel().getSelectedItem();
     }
     
-    public String getValittuPaketti() {
+    public Paketti getValittuPaketti() {
         return productsdrop.getSelectionModel().getSelectedItem();
     }
     
     public int getValitunPaketinIndex() {
         return productsdrop.getSelectionModel().getSelectedIndex();
-    }
-   /* public double getHinta(){
+    }/*
+    public double getHinta(){
         return Double.parseDouble(UnitPriceTxt.getText());
     }*/
+    
+        public static class Product {
+ 
+        Paketti paketti;
+        private String tuote1;
+        private int amount;
+        private double price;
+        private Tilaus_rivi tilausrivi;
+ 
+        public Product(Paketti Tpaketti, int Samount) {
+            this.paketti = Tpaketti;
+            this.tuote1 = paketti.getPaketinNimi();
+            this.amount = Samount;
+            this.price = paketti.getPaketinHinta() * Samount; 
+            this.tilausrivi = new Tilaus_rivi(paketti, Samount);
+        }
+ 
+        public String getTuote1() {
+            return tuote1;
+        }
+ 
+        public void setTuote1(String tuote1) {
+            this.tuote1 = tuote1;
+        }
+ 
+        public int getAmount() {
+            return amount;
+        }
+ 
+        public void setAmount(int Samount) {
+            this.amount = Samount;
+        }
+ 
+        public double getPrice() {
+            return price;
+        }
+ 
+        public void setPrice(double Sprice) {
+            this.price = Sprice;
+        }
+    }
 }
