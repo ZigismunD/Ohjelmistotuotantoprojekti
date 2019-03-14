@@ -21,10 +21,6 @@ GridPane {
     -fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png');
 }
 
-#Varasto {
-    -fx-background-image: url('https://images.pexels.com/photos/1020315/pexels-photo-1020315.jpeg?cs=srgb&dl=abstract-art-artistic-1020315.jpg&fm=jpg');
-}
-
 Button:hover {
     -fx-background-color: #383838;
     -fx-scale-y: 1.1;
