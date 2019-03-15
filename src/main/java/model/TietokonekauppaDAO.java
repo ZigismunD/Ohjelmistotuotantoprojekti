@@ -17,7 +17,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 
 public class TietokonekauppaDAO {
-
+    
     SessionFactory istuntotehdas = null;
     final StandardServiceRegistry registry;
     
