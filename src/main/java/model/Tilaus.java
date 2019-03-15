@@ -36,6 +36,7 @@ public class Tilaus {
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
     }
+    
 
     public Tilaus() {
     }

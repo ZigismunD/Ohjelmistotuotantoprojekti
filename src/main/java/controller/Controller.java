@@ -19,13 +19,23 @@ import model.Tilaus_rivi;
 import view.View;
 
 /**
- *
- * @author zigis
+ * 
+ * @author Sami Sikkilä
  */
 public class Controller {
+    /**
+     * Käyttöliittymä
+     */
     View gui;
+    /**
+     * Tietokannan kanssa asioiva DataAccesObject
+     */
     TietokonekauppaDAO dao;
     
+    /**
+     * Konstruktori
+     * @param gui Ohjemiston käyttöliittymäluokka
+     */
     public Controller(View gui) {
         this.gui = gui;
         this.dao = new TietokonekauppaDAO();
@@ -35,6 +45,10 @@ public class Controller {
         this.dao = new TietokonekauppaDAO();
     }
     
+    /**
+     * Hae tietokoneiden nimet ComboBoxiin
+     * @param box ComboBox, johon nimet halutaan tuoda
+     */
     public void getAllComputerNames(ComboBox box) {
         for (Paketti paketti : dao.readPaketit()) {
             box.getItems().add(paketti);
@@ -42,11 +56,10 @@ public class Controller {
         box.getSelectionModel().selectFirst();
     }
     
-    public void createComputer() {
-        
-    }
     
-    
+    /**
+     * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
+     */
     public void createOrder() {
         //Luo Tilaus_rivi lista productista
         List<Tilaus_rivi> tilaukset = gui.getTilaukset();
@@ -61,10 +74,18 @@ public class Controller {
 
     }
     
+    /**
+     * Luo ohjelmistoon käyttäjä
+     * @param henkilo  Henkilö, joka halutaan luoda
+     */
     public void createUser(Henkilosto henkilo) {
         dao.luoHenkilo(henkilo);
     }
     
+    /**
+     * Hakee käyttöliittymästä valitun paketin ja hakee tietokannasta haluttuun tekstikenttään kyseisen paketin hinnan
+     * @param PriceTxt Tekstikenttä johon hinta halutaan tuoda
+     */
     public void getPrice(TextField PriceTxt) {
         double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
         System.out.println(gui.getValitunPaketinIndex());
@@ -72,6 +93,11 @@ public class Controller {
        PriceTxt.setText("" + hinta);
     }
     
+    /**
+     * Hakee tietokannasta kaikki tiettyä tyyppiä vastaavat osat
+     * @param tyyppi Osat jotka tietokannasta halutaan hakea
+     * @return Lista halutuista osista
+     */
     public ArrayList<Osa> getOsat(String tyyppi) {
         ArrayList<Osa> osat = new ArrayList<>();
         
@@ -81,6 +107,10 @@ public class Controller {
         return osat;
     }
     
+    /**
+     * Hae tilaukset tietokannasta
+     * @return Lista kaikista tietokannassa olevista tilauksista
+     */
     public ArrayList<Tilaus> getTilaukset() {
         ArrayList<Tilaus> tilaukset = new ArrayList<>();
         

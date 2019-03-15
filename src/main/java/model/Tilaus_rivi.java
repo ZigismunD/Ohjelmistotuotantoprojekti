@@ -32,7 +32,7 @@ public class Tilaus_rivi {
     private double hinta;
 
     public Tilaus_rivi(Tilaus tilaus, Paketti paketti, Osa osa, int maara, double hinta) {
-        
+        this.tilaus = tilaus;
         this.paketti = paketti;
         this.osa = osa;
         this.maara = maara;
