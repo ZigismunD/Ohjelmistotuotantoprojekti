@@ -41,6 +41,7 @@ import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
 import model.Osa;
 import model.Paketti;
+import model.Product;
 import model.TietokonekauppaDAO;
 import model.Tilaus;
 import model.Tilaus_rivi;
@@ -63,7 +64,6 @@ public class View extends Application {
     List<Tilaus> tilausLista;
     ObservableList<Tilaus> tilausData;
 
-
     // ekasivu
     private Tab tab1;
     private GridPane grid1;
@@ -82,13 +82,19 @@ public class View extends Application {
     private GridPane grid4;
     private Tab tab4;
     
-    private GridPane grid5;
-    private Tab tab5;
-
     //nappuloita
     private Button btnAddproduct;
     private Button btnSend;
-
+    
+    /**
+     * Luo käyttöliittymä näkymä.<br>
+     * Käyttöliittymässä on sivut:<br>
+     * Varasto: Pakettien ja Osien käsittely<br>
+     * Myynti: Tilauksien käsittely<br>
+     * Taloustiedot: Tilauksien ja myyntien tarkastelu<br>
+     * 
+     * @param primaryStage 
+     */
     public void start(Stage primaryStage) {
         controller =  new Controller(this);
         
@@ -104,14 +110,12 @@ public class View extends Application {
             createTab2();
             createTab3();
             createTab4();
-            createTab5();
-
+            
             //Tabit tabpanee , tää ehkä pois 
             tabPane.getTabs().add(tab1);
             tabPane.getTabs().add(tab2);
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
-            tabPane.getTabs().add(tab5);
             
             // KIRJAUTUMISTA
             /*
@@ -125,6 +129,7 @@ public class View extends Application {
                 tabPane.getTabs().add(tab3);
             }
             */
+            
             scene = new Scene(tabPane, 1900, 1000);
             scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
@@ -137,14 +142,19 @@ public class View extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    ;
-	
-    // Myyntinäyttö
+    };
+    
+    /**
+     * Rakentaa käyttöliittymän Myynti sivun
+     * Sivulla luodaan asiakkaan tilauksia.
+     * 1. Valitse paketti/osa
+     * 2. Valitse kappalemäärä
+     * 3. Paina Lisää painiketta, Tilaukset listaan syntyy rivi
+     * 4. Paina Lähetä painiketta, Tilaukset listan riveistä luodaan uusi tilaus tietokantaan
+     */
     private void createTab1() {
         tab1 = new Tab();
-        tab1.setText("Päävalikko");
+        tab1.setText("Myynti");
 
         grid1 = new GridPane();
         grid1.setHgap(30); // Horizontal gap
@@ -311,7 +321,11 @@ public class View extends Application {
         grid1.add(btnSend, 12,10 );
     }
 
-    // Varastonäyttö
+    /**
+     * Rakentaa käyttöliittymän Varasto sivun
+     * Sivulla tarkastellaan varaston paketteja ja osia.
+     * Painiketta painamalla voi näyttää tietokannasta paketit tai halutun tyyppisen osan
+     */
     private void createTab2() {
         tab2 = new Tab();
         tab2.setText("Varasto");
@@ -321,7 +335,7 @@ public class View extends Application {
         grid2.setHgap(0); // Horizontal gap
         grid2.setVgap(0); // Vertical gap
         //grid2.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
-
+        
         //Text lblexample = new Text("esimerkki");
         // Nappula, josta saa prosessorit näkyviin
         Button btnProcessors = new Button();
@@ -448,8 +462,13 @@ public class View extends Application {
         tab2.setContent(grid2);
 
     }
-
-    // Myyntinäyttö
+    
+    /**
+     * Rakentaa käyttöliittymän Tilaukset sivun
+     * Sivulla tarkastellaan luotuja tilauksia ja niiden tilaus rivejä.
+     * Tilaukset näkyvät listassa. Listaa painamalla kaikki tilauksen tilaus rivit näytetään toisessa listassa.
+     * Luotuja tilauksia ja niiden tilaus rivejä voi muuttaa tai poistaa.
+     */
     private void createTab3() {
         tab3 = new Tab();
         tab3.setText("Tilaukset");
@@ -541,7 +560,11 @@ public class View extends Application {
         tab3.setContent(grid3);
 
     }
-
+    
+    /**
+     * Rakentaa käyttöliittymän Taloustiedot sivun
+     * Sivulla tarkastellaan myyntien ja tilauksien tietoja.
+     */
     private void createTab4() {
         tab4 = new Tab();
         tab4.setText("Taloustiedot");
@@ -575,18 +598,6 @@ public class View extends Application {
         
 
         tab4.setContent(grid4);
-    }
-    private void createTab5() {
-        tab5 = new Tab();
-        tab5.setText("Kirjautuminen");
-
-        grid5 = new GridPane();
-        grid5.setHgap(20); // Horizontal gap
-        grid5.setVgap(0); // Vertical gap
-
-        
-
-        tab5.setContent(grid5);
     }
     
     private void showSalesChart() {
@@ -673,16 +684,22 @@ public class View extends Application {
         return orderAmount.getSelectionModel().getSelectedItem();
     }
     
+    /**
+     * Palauttaa pudotusvalikosta valitun paketin
+     * @return 
+     */
     public Paketti getValittuPaketti() {
         return productsdrop.getSelectionModel().getSelectedItem();
     }
     
     public int getValitunPaketinIndex() {
         return productsdrop.getSelectionModel().getSelectedIndex();
-    }/*
-    public double getHinta(){
-        return Double.parseDouble(UnitPriceTxt.getText());
-    }*/
+    }
+    
+    /**
+     * Palauttaa taulukosta valitut paketit ja osat
+     * @return 
+     */
     public ArrayList<Tilaus_rivi> getTilaukset() {
         ArrayList<Tilaus_rivi> prodTilaukset = new ArrayList<>();
 
@@ -694,49 +711,4 @@ public class View extends Application {
         return prodTilaukset;
     }
     
-        public static class Product {
- 
-        Paketti paketti;
-        private String tuote1;
-        private int amount;
-        private double price;
-        private Tilaus_rivi tilausrivi;
- 
-        public Product(Paketti Tpaketti, int Samount) {
-            this.paketti = Tpaketti;
-            this.tuote1 = paketti.getPaketinNimi();
-            this.amount = Samount;
-            this.price = paketti.getPaketinHinta(); 
-            this.tilausrivi = new Tilaus_rivi(paketti, Samount);
-        }
- 
-        public String getTuote1() {
-            return tuote1;
-        }
- 
-        public void setTuote1(String tuote1) {
-            this.tuote1 = tuote1;
-        }
- 
-        public int getAmount() {
-            return amount;
-        }
- 
-        public void setAmount(int Samount) {
-            this.amount = Samount;
-        }
- 
-        public double getPrice() {
-            return price;
-        }
- 
-        public void setPrice(double Sprice) {
-            this.price = Sprice;
-        }
-        
-        public Tilaus_rivi getTilaus_rivi() {
-            return tilausrivi;
-        }
-        
-    }
 }

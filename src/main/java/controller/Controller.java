@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import model.Henkilosto;
 import model.Osa;
 import model.Paketti;
