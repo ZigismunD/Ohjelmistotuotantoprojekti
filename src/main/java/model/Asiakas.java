@@ -28,7 +28,7 @@ public class Asiakas {
 
     public Asiakas() {
     }
-
+    
     public Asiakas(String nimi, String osoite, String email) {
         
         this.nimi = nimi;

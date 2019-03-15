@@ -15,15 +15,15 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-/**
- *
- * @author zigis
- */
+
 public class TietokonekauppaDAO {
 
     SessionFactory istuntotehdas = null;
     final StandardServiceRegistry registry;
     
+    /**
+    * Konstruktori
+    */
     public TietokonekauppaDAO() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -42,7 +42,11 @@ public class TietokonekauppaDAO {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Palauttaa listan kaikista Paketti riveistä
+     * @return 
+     */
     public List<Paketti> readPaketit() {
         // TODO Auto-generated method stub
         ArrayList<Paketti> paketit = new ArrayList<>();
@@ -70,6 +74,9 @@ public class TietokonekauppaDAO {
 
     }
     
+    /**
+     * Palauttaa listan kaikista Tilaus riveistä
+     */
     public List<Tilaus> readTilaukset() {
         // TODO Auto-generated method stub
         ArrayList<Tilaus> tilaukset = new ArrayList<>();
@@ -91,7 +98,12 @@ public class TietokonekauppaDAO {
         }
 
     }
-
+    
+    /**
+     * Palauttaa paketti olion haetun id:n perusteella
+     * @param id
+     * @return 
+     */
     public Paketti readPaketti(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -103,6 +115,11 @@ public class TietokonekauppaDAO {
         }
     }
     
+    /**
+     * Palauttaa paketin hinnan haetun id:n perusteella
+     * @param id
+     * @return 
+     */
     public Double haePaketinHinta(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -114,6 +131,10 @@ public class TietokonekauppaDAO {
         }
     }
     
+    /**
+     * Palauttaa listan Henkilosto taulun riveistä
+     * @return 
+     */
     public List<Henkilosto> haeHenkilosto() {
         // TODO Auto-generated method stub
         ArrayList<Henkilosto> henkilosto = new ArrayList<>();
@@ -126,21 +147,20 @@ public class TietokonekauppaDAO {
                 henkilosto.add(new Henkilosto(v.getHenkiloNimi(), v.getRooli()));
             }
             transaction.commit();
-            /*
-            for (Paketti paketti : result) {
-                System.out.println(paketti.getPaketinNimi());
-            }
-            */
             return henkilosto;
         } catch (Exception e) {
             e.printStackTrace();
-
             return null;
         } finally {
             istunto.close();
         }
     }
     
+    /**
+     * Palauttaa Henkilosto rivin haetun nimen perusteella
+     * @param nimi
+     * @return 
+     */
     public Henkilosto haeKayttaja(String nimi) {
         Henkilosto henkilo = new Henkilosto();
         Session istunto = istuntotehdas.openSession();
@@ -161,6 +181,11 @@ public class TietokonekauppaDAO {
         }
     }
     
+    /**
+     * Luo Henkilosto rivin tietokantaan annetusta Henkilosto oliosta
+     * @param henkilo
+     * @return 
+     */
     public int luoHenkilo(Henkilosto henkilo) {
         int id = 0;
         
@@ -178,6 +203,10 @@ public class TietokonekauppaDAO {
         return id;
     }
     
+    /**
+     * Poistaa rivin Henkilosto taulusta annetun Henkilosto olion perusteella
+     * @param henkilo 
+     */
     public void poistaHenkilo(Henkilosto henkilo) {
         try (Session istunto = istuntotehdas.openSession()) {
             Transaction transaktio = istunto.beginTransaction();
@@ -189,10 +218,12 @@ public class TietokonekauppaDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
     }
     
+    /**
+     * Luo Tilaus rivin, ja asettaa annetun Tilaus_rivi listan oliot viittaamaan siihen
+     * @param tilaukset 
+     */
     public void luoTilaus(List<Tilaus_rivi> tilaukset) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -216,6 +247,11 @@ public class TietokonekauppaDAO {
         }        
     }
     
+    /**
+     * Palauttaa listan Osa taulun riveistä joiden tyyppi on sama kuin annettulla String muuttujalla
+     * @param tyyppi
+     * @return 
+     */
     public List<Osa> getOsat(String tyyppi) {
         try (Session istunto = istuntotehdas.openSession()) {
             Transaction transaktio = istunto.beginTransaction();
