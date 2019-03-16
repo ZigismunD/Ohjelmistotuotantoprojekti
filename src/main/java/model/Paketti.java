@@ -43,7 +43,7 @@ public class Paketti {
     }
     /**
      * luodaan tauluun perusavaimen ja sen kentän Id
-     * @return Id palauttaa taulun tietokannan generoiman avainarvon
+     * @return id palauttaa taulun tietokannan generoiman avainarvon
      */
     @Id
     @GeneratedValue
@@ -53,7 +53,7 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoiman id olioon
+     * @param Id asentaa tietokannan generoiman id olioon
      */
     public void setPakettiId(int Id) {
         this.id = Id;
@@ -68,7 +68,7 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoiman id olioon
+     * @param paketinNimi  asentaa tietokannan generoiman id olioon
      */
     public void setPaketinNimi(String paketinNimi) {
         this.paketinNimi = paketinNimi;
@@ -83,7 +83,7 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoiman id olioon
+     * @param paketinHinta  asentaa tietokannan generoiman id olioon
      */
     public void setPaketinHinta(double paketinHinta) {
         this.paketinHinta = paketinHinta;
