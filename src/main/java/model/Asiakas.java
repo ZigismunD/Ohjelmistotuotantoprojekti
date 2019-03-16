@@ -47,7 +47,7 @@ public class Asiakas {
         this.email = email;
     }
     /**
-     * luodaan tauluun perusavaimen ja sen kenttä
+     * luodaan tauluun perusavaimen ja id kentän
      * @return Id palauttaa taulun tietokannan generoiman avainarvon 
      */
     @Id
@@ -64,7 +64,7 @@ public class Asiakas {
         this.Id = id;
     }
     /**
-     * luodaan tauluun kentän Nimi
+     * luodaan tauluun Nimi kentän 
      * @return nimi palauttaa asiakkaan antaman nimen
      */
     @Column(name = "Nimi")
@@ -79,7 +79,7 @@ public class Asiakas {
         this.nimi = nimi;
     }
     /**
-     * luodaan tauluun kentän Osoite
+     * luodaan tauluun Osoite kentän 
      * @return asiakkaan antaman osoitteen
      */
     @Column(name = "Osoite")
@@ -94,7 +94,7 @@ public class Asiakas {
         this.osoite = osoite;
     }
     /**
-     * luodaan tauluun kentän Email
+     * luodaan tauluun Email kentän 
      * @return palauttaa asiakkaan antaman email
      */
     @Column(name = "Email")
