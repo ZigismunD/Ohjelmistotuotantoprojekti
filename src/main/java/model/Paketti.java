@@ -25,7 +25,7 @@ public class Paketti {
     private String paketinNimi;
     private double paketinHinta;
     /**
-     * luodaan tyhjä parametriton konstruktori
+     * luodaan tyhjän parametriton konstruktori
      */
     public Paketti() {
 
