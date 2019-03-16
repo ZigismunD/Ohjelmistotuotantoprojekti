@@ -11,18 +11,35 @@ import  javax.persistence.*;
  *
  * @author vadimzubchenko
  * 
- * 
- * TÄMÄ ON PEKKA TESTI DEVELOPMENT HAARAAN
+ */
+/**
+ * Luodaan olio HENKILOSTO
+ * ja uusi tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
  */
 @Entity
 @Table (name="HENKILOSTO")
 public class Henkilosto {
+    /**
+     * luodaan olion muuttujat
+     */
     private int id;
     private String nimi;
     private String rooli;
     private String salasana;
     private String kirjautumistunnus;
     
+     /**
+     * luodaan tyhjä parametriton konstruktori
+     */
+    public Henkilosto(){
+    }
+    /**
+     *  luodaan konstruktori 4-lla parametrilla
+     * @param nimi luo työntekijan nimi
+     * @param rooli luo työntekijan käyttöoikeuet toimistossa
+     * @param salasana luo työntekijan järjestelemään sisäänpääsyn salasanan 
+     * @param kirjautumistunnus luo työntekijan järjestelemään sisäänpääsyn tunnus
+     */
     public Henkilosto(String nimi, String rooli, String salasana, String kirjautumistunnus) {
         
         this.nimi = nimi;
@@ -30,51 +47,89 @@ public class Henkilosto {
         this.salasana = salasana;
         this.kirjautumistunnus = kirjautumistunnus;
     }
-    public Henkilosto(){
+    /**
+     *  luodaan konstruktori 2-lla parametrilla
+     * @param henkiloNimi luo työntekijan nimi
+     * @param rooli luo työntekijan käyttöoikeuet toimistossa
+     */
+    public Henkilosto(String henkiloNimi, String rooli) {
+        this.nimi = henkiloNimi;
+        this.rooli = rooli;
     }
-    
-    public Henkilosto(String nimi, String rooli) {
-        
-    }
-    
+    /**
+     * luodaan tauluun perusavain ja sen kenttä
+     * @return Id palauttaa taulun tietokannan generoiman avainarvon;
+     */
     @Id 
     @GeneratedValue
     @Column(name="Id")
     public int getHenkiloId() {
         return id;
-    } 
+    }
+    /**
+     * 
+     * @param id asentaa tietokannan generoima id olioon
+     */
     public void setHenkiloId(int id) {
         this.id = id;
     }
-    
+     /**
+     * luodaan tauluun kenttä Nimi
+     * @return nimi palauttaa työntekijän nimen
+     */
     @Column(name="Nimi")
     public String getHenkiloNimi() {
         return nimi;
     }
+    /**
+     * 
+     * @param nimi asentaa työntekijän nimen olioon
+     */
     public void setHenkiloNimi(String nimi) {
         this.nimi = nimi;
     }
-    
+    /**
+     * luodaan tauluun kenttä Rooli
+     * @return rooli palauttaa työntekijan käyttöoikeudet toimistossa
+     */
     @Column(name="Rooli")
     public String getRooli() {
         return rooli;
     }
+    /**
+     * 
+     * @param rooli asentaa työntekijän läyttöoikeudet toimistossa olioon
+     */
     public void setRooli(String rooli) {
         this.rooli = rooli;
     }
-    
+    /**
+     * luodaan tauluun kenttä Salasana
+     * @return salasana palauttaa työntekjän järjestelmään sisäänpääsyn salasanan
+     */
     @Column(name="Salasana")
     public String getSalasana() {
         return salasana;
     }
+    /**
+     * 
+     * @param salasana asentaa työntekjän järjestelmään sisäänpääsyn salasanan
+     */
     public void setSalasana(String salasana) {
         this.salasana = salasana;
     }
-    
+    /**
+     * luodaan tauluun kenttä Kirjautumistunnus
+     * @return kirjautumistunnus palauttaa työntekijan järjestelemään sisäänpääsyn tunnuksen
+     */
     @Column(name="Kirjautumistunnus")
     public String getKirjoitumistunnus() {
         return kirjautumistunnus;
     }
+    /**
+     * 
+     * @param kirjautumistunnus asentaa työntekijan järjestelemään sisäänpääsyn tunnus olioon
+     */
     public void setKirjoitumistunnus(String kirjautumistunnus) {
         this.kirjautumistunnus = kirjautumistunnus;
     }

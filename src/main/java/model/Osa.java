@@ -15,18 +15,33 @@ import javax.persistence.Table;
  *
  * @author vadimzubchenko
  */
+/**
+ * Luodaan olio OSA
+ * ja uusi tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
+ */
 @Entity
 @Table(name = "OSA")
 public class Osa {
+   /**
+   * luodaan olion muuttujat
+   */
    private int id;
    private String osaNimi;
    private double osaHinta;
    private int varastoMaara;
    private String tyyppi;
-
+    /**
+     * luodaan tyhjä parametriton konstruktori
+     */
     public Osa() {
     }
-
+    /**
+     * luodaan konstruktori 4-lla parametrilla
+     * @param nimi luo tuotteen nimem
+     * @param hinta luo tuotteen hinnan 
+     * @param varastoMaara luoo tuotteen määrän varastossa
+     * @param tyyppi luo tuotteen tyypi (paketti tai osa)
+     */
     public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
         
         this.osaNimi = nimi;
@@ -34,44 +49,80 @@ public class Osa {
         this.varastoMaara = varastoMaara;
         this.tyyppi = tyyppi;
     }
+    /**
+     * luodaan tauluun perusavain ja sen kenttä Id
+     * @return Id palauttaa taulun tietokannan generoiman avainarvon;
+     */
     @Id
     @GeneratedValue
     @Column(name = "Id")
     public int getOsaId() {
         return id;
     }
+    /**
+     * 
+     * @param id asentaa tietokannan generoima id olioon
+     */
     public void setOsaId(int id) {
         this.id = id;
     }
-    
+    /**
+     * luodaan tauluun kenttä Nimi
+     * @return nimi palauttaa tuotteen nimen
+     */
     @Column(name = "Nimi")
     public String getOsaNimi() {
         return osaNimi;
     }
+    /**
+     * 
+     * @param nimi asentaa tuotteen nimen olioon
+     */
     public void setOsaNimi(String nimi) {
         this.osaNimi = nimi;
     }
-    
+    /**
+     * luodaan tauluun kenttä Hinta
+     * @return osaHinta palauttaa tuotteen hinnan
+     */
     @Column(name = "Hinta")
     public double getOsaHinta() {
         return osaHinta;
     }
+    /**
+     * 
+     * @param hinta asentaa tuotteen hinnan olioon
+     */
     public void setOsaHinta(double hinta) {
         this.osaHinta = hinta;
     }
-    
+    /**
+     * luodaan tauluun kenttä Nimi
+     * @return nimi palauttaa asiakkaan antaman nimen
+     */
     @Column(name = "VarastoMaara")
     public int getVarastoMaara() {
         return varastoMaara;
     }
+    /**
+     * 
+     * @param varastoMaara asentaa tuotteen määrän varastossa olioon
+     */
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
     }
-    
+    /**
+     * luodaan tauluun kenttä Tyyppi
+     * @return tyyppi palauttaa tuotteen tyypin 
+     */
     @Column(name = "Tyyppi")
     public String getTyyppi() {
         return tyyppi;
     }
+    /**
+     * 
+     * @param tyyppi asentaa tuotteen tyyypin (paketti tai osa) olioon
+     */
     public void setTyyppi(String tyyppi) {
         this.tyyppi = tyyppi;
     }
