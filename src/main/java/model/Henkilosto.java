@@ -13,8 +13,8 @@ import  javax.persistence.*;
  * 
  */
 /**
- * Luodaan olio HENKILOSTO
- * ja uusi tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
+ * Luodaan olion HENKILOSTO
+ * ja uusi tietokantataulun olio-relaatiomuunnoksen annotaatiolla.
  */
 @Entity
 @Table (name="HENKILOSTO")
@@ -29,7 +29,7 @@ public class Henkilosto {
     private String kirjautumistunnus;
     
      /**
-     * luodaan tyhjä parametriton konstruktori
+     * luodaan tyhjän parametriton konstruktorin
      */
     public Henkilosto(){
     }
@@ -38,7 +38,7 @@ public class Henkilosto {
      * @param nimi luo työntekijan nimi
      * @param rooli luo työntekijan käyttöoikeuet toimistossa
      * @param salasana luo työntekijan järjestelemään sisäänpääsyn salasanan 
-     * @param kirjautumistunnus luo työntekijan järjestelemään sisäänpääsyn tunnus
+     * @param kirjautumistunnus luo työntekijan järjestelemään sisäänpääsyn tunnuksen
      */
     public Henkilosto(String nimi, String rooli, String salasana, String kirjautumistunnus) {
         
@@ -48,16 +48,16 @@ public class Henkilosto {
         this.kirjautumistunnus = kirjautumistunnus;
     }
     /**
-     *  luodaan konstruktori 2-lla parametrilla
-     * @param henkiloNimi luo työntekijan nimi
-     * @param rooli luo työntekijan käyttöoikeuet toimistossa
+     *  luodaan konstruktorin 2-lla parametrilla
+     * @param henkiloNimi luo työntekijan nimen
+     * @param rooli luo työntekijan käyttöoikeudet toimistossa
      */
     public Henkilosto(String henkiloNimi, String rooli) {
         this.nimi = henkiloNimi;
         this.rooli = rooli;
     }
     /**
-     * luodaan tauluun perusavain ja sen kenttä
+     * luodaan tauluun perusavaimen ja sen kentän
      * @return Id palauttaa taulun tietokannan generoiman avainarvon;
      */
     @Id 
@@ -68,13 +68,13 @@ public class Henkilosto {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoima id olioon
+     * @param id asentaa tietokannan generoiman id olioon
      */
     public void setHenkiloId(int id) {
         this.id = id;
     }
      /**
-     * luodaan tauluun kenttä Nimi
+     * luodaan tauluun kentän Nimi
      * @return nimi palauttaa työntekijän nimen
      */
     @Column(name="Nimi")
@@ -89,7 +89,7 @@ public class Henkilosto {
         this.nimi = nimi;
     }
     /**
-     * luodaan tauluun kenttä Rooli
+     * luodaan tauluun kentän Rooli
      * @return rooli palauttaa työntekijan käyttöoikeudet toimistossa
      */
     @Column(name="Rooli")
@@ -119,7 +119,7 @@ public class Henkilosto {
         this.salasana = salasana;
     }
     /**
-     * luodaan tauluun kenttä Kirjautumistunnus
+     * luodaan tauluun kentän Kirjautumistunnuksen
      * @return kirjautumistunnus palauttaa työntekijan järjestelemään sisäänpääsyn tunnuksen
      */
     @Column(name="Kirjautumistunnus")
@@ -128,7 +128,7 @@ public class Henkilosto {
     }
     /**
      * 
-     * @param kirjautumistunnus asentaa työntekijan järjestelemään sisäänpääsyn tunnus olioon
+     * @param kirjautumistunnus asentaa työntekijan järjestelemään sisäänpääsyn tunnuksen olioon
      */
     public void setKirjoitumistunnus(String kirjautumistunnus) {
         this.kirjautumistunnus = kirjautumistunnus;

@@ -12,8 +12,8 @@ import javax.persistence.*;
  * @author zigis
  */
 /**
- * Luodaan olio PAKETTI
- * ja uusi tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
+ * Luodaan olion PAKETTI
+ * ja uuden tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
  */
 @Entity
 @Table(name = "PAKETTI")
@@ -31,7 +31,7 @@ public class Paketti {
 
     }
     /**
-     * luodaan konstruktori 2-lla parametrilla
+     * luodaan konstruktorin 2-lla parametrilla
      * @param pakettiNimi luo paketin nimen 
      * @param pakettiHinta luo paketin hinnan 
      */
@@ -42,8 +42,8 @@ public class Paketti {
 
     }
     /**
-     * luodaan tauluun perusavain ja sen kenttä
-     * @return Id palauttaa taulun tietokannan generoiman avainarvon;
+     * luodaan tauluun perusavaimen ja sen kentän Id
+     * @return Id palauttaa taulun tietokannan generoiman avainarvon
      */
     @Id
     @GeneratedValue
@@ -53,13 +53,13 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoima id olioon
+     * @param id asentaa tietokannan generoiman id olioon
      */
     public void setPakettiId(int Id) {
         this.id = Id;
     }
     /**
-     * luodaan tauluun kenttä Nimi
+     * luodaan tauluun kentän "Nimi"
      * @return nimi palauttaa tuotteen nimen
      */
     @Column(name = "nimi")
@@ -68,14 +68,14 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoima id olioon
+     * @param id asentaa tietokannan generoiman id olioon
      */
     public void setPaketinNimi(String paketinNimi) {
         this.paketinNimi = paketinNimi;
     }
      /**
-     * luodaan tauluun kenttä "hinta"
-     * @return paketinHinta palauttaa paketin hinnan olioon
+     * luodaan tauluun kentän "hinta"
+     * @return paketinHinta palauttaa paketin hinnan
      */
     @Column(name = "hinta")
     public double getPaketinHinta() {
@@ -83,7 +83,7 @@ public class Paketti {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoima id olioon
+     * @param id asentaa tietokannan generoiman id olioon
      */
     public void setPaketinHinta(double paketinHinta) {
         this.paketinHinta = paketinHinta;

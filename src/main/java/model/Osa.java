@@ -16,8 +16,8 @@ import javax.persistence.Table;
  * @author vadimzubchenko
  */
 /**
- * Luodaan olio OSA
- * ja uusi tietokantataulu olio-relaatiomuunnoksen annotaatiolla.
+ * Luodaan olion OSA
+ * ja uuden tietokantataulun olio-relaatiomuunnoksen annotaatiolla.
  */
 @Entity
 @Table(name = "OSA")
@@ -31,12 +31,12 @@ public class Osa {
    private int varastoMaara;
    private String tyyppi;
     /**
-     * luodaan tyhjä parametriton konstruktori
+     * luodaan tyhjän parametriton konstruktorin
      */
     public Osa() {
     }
     /**
-     * luodaan konstruktori 4-lla parametrilla
+     * luodaan konstruktorin 4-lla parametrilla
      * @param nimi luo tuotteen nimem
      * @param hinta luo tuotteen hinnan 
      * @param varastoMaara luoo tuotteen määrän varastossa
@@ -50,8 +50,8 @@ public class Osa {
         this.tyyppi = tyyppi;
     }
     /**
-     * luodaan tauluun perusavain ja sen kenttä Id
-     * @return Id palauttaa taulun tietokannan generoiman avainarvon;
+     * 
+     * @return Id palauttaa taulun tietokannan generoiman avainarvon
      */
     @Id
     @GeneratedValue
@@ -61,13 +61,13 @@ public class Osa {
     }
     /**
      * 
-     * @param id asentaa tietokannan generoima id olioon
+     * @param id asentaa tietokannan generoiman id olioon
      */
     public void setOsaId(int id) {
         this.id = id;
     }
     /**
-     * luodaan tauluun kenttä Nimi
+     * luodaan tauluun kentän "Nimi"
      * @return nimi palauttaa tuotteen nimen
      */
     @Column(name = "Nimi")
@@ -82,7 +82,7 @@ public class Osa {
         this.osaNimi = nimi;
     }
     /**
-     * luodaan tauluun kenttä Hinta
+     * luodaan tauluun kentän "Hinta"
      * @return osaHinta palauttaa tuotteen hinnan
      */
     @Column(name = "Hinta")
@@ -97,7 +97,7 @@ public class Osa {
         this.osaHinta = hinta;
     }
     /**
-     * luodaan tauluun kenttä Nimi
+     * luodaan tauluun kentän "Nimi"
      * @return nimi palauttaa asiakkaan antaman nimen
      */
     @Column(name = "VarastoMaara")
@@ -112,7 +112,7 @@ public class Osa {
         this.varastoMaara = varastoMaara;
     }
     /**
-     * luodaan tauluun kenttä Tyyppi
+     * luodaan tauluun kentän "Tyyppi"
      * @return tyyppi palauttaa tuotteen tyypin 
      */
     @Column(name = "Tyyppi")
