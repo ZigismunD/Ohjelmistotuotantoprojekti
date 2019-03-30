@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tietokonekauppa;
+package view;
 
+import controller.Controller;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,17 +39,35 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
+import model.Osa;
+import model.Paketti;
+import model.Product;
+import model.TietokonekauppaDAO;
+import model.Tilaus;
+import model.Tilaus_rivi;
 
 public class View extends Application {
     private int tulos;
-
+    private TietokonekauppaDAO dao;
+    private Controller controller;
+    private ComboBox<Integer> orderAmount;
+    private ComboBox<Paketti> productsdrop;
+    private TextField UnitPriceTxt;
+    
     // yleiset
     Scene scene;
     TabPane tabPane;
+    ObservableList<Product> data;
+    List<Product> tilausrivit;
+    List<Osa> osaLista;
+    ObservableList<Osa> osaData;
+    List<Tilaus> tilausLista;
+    ObservableList<Tilaus> tilausData;
 
     // ekasivu
     private Tab tab1;
     private GridPane grid1;
+    private TableView tableTemp;
     //tokasivu
     private GridPane grid2;
     private Tab tab2;
@@ -53,21 +76,28 @@ public class View extends Application {
     // kolmassivu
     private GridPane grid3;
     private Tab tab3;
-    private TableView table;
+    private TableView tableOrders;
 
     //Taloustietosivu
     private GridPane grid4;
     private Tab tab4;
     
-    private GridPane grid5;
-    private Tab tab5;
-
     //nappuloita
     private Button btnAddproduct;
     private Button btnSend;
-
+    
+    /**
+     * Luo käyttöliittymä näkymä.<br>
+     * Käyttöliittymässä on sivut:<br>
+     * Varasto: Pakettien ja Osien käsittely<br>
+     * Myynti: Tilauksien käsittely<br>
+     * Taloustiedot: Tilauksien ja myyntien tarkastelu<br>
+     * 
+     * @param primaryStage 
+     */
     public void start(Stage primaryStage) {
-
+        controller =  new Controller(this);
+        
         // Käyttöliittymän rakentaminen
         try {
             tabPane = new TabPane();
@@ -80,17 +110,28 @@ public class View extends Application {
             createTab2();
             createTab3();
             createTab4();
-            createTab5();
-
+            
             //Tabit tabpanee , tää ehkä pois 
             tabPane.getTabs().add(tab1);
             tabPane.getTabs().add(tab2);
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
-            tabPane.getTabs().add(tab5);
-
+            
+            // KIRJAUTUMISTA
+            /*
+            if (checkUser.equals(user1) && checkPw.equals(pw1)){
+                tabPane.getTabs().add(tab1);
+            }           
+            else if(role.equals("varastomies")){
+                tabPane.getTabs().add(tab2);
+            }
+            else if (role.equals("staff")){
+                tabPane.getTabs().add(tab3);
+            }
+            */
+            
             scene = new Scene(tabPane, 1900, 1000);
-            //scene.getStylesheets().add(this.getClass().getResource("/cssStyles/stylesheet.css").toExternalForm());
+            scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -101,14 +142,19 @@ public class View extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    ;
-	
-    // Myyntinäyttö
+    };
+    
+    /**
+     * Rakentaa käyttöliittymän Myynti sivun
+     * Sivulla luodaan asiakkaan tilauksia.
+     * 1. Valitse paketti/osa
+     * 2. Valitse kappalemäärä
+     * 3. Paina Lisää painiketta, Tilaukset listaan syntyy rivi
+     * 4. Paina Lähetä painiketta, Tilaukset listan riveistä luodaan uusi tilaus tietokantaan
+     */
     private void createTab1() {
         tab1 = new Tab();
-        tab1.setText("Päävalikko");
+        tab1.setText("Myynti");
 
         grid1 = new GridPane();
         grid1.setHgap(30); // Horizontal gap
@@ -131,7 +177,7 @@ public class View extends Application {
         lblOrderAmount.setFont(Font.font(null, 15));
         lblOrderAmount.setFill(Color.BLACK);
 
-        Text lblUnitPrice = new Text("HINTA:");
+        Text lblUnitPrice = new Text("YKSIKKÖHINTA:");
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
         TextField UnitPriceTxt = new TextField();
@@ -143,23 +189,27 @@ public class View extends Application {
         TextField PriceTxt = new TextField();
 
         // ComboboXXX
-        ComboBox productsdrop = new ComboBox();
-        productsdrop.getItems().addAll(
-                "SUPER PC3000-MASTERRACE 353225 HYPERSPEED",
-                "Tietsikka2",
-                "Tietsikka3",
-                "Tietsikka4",
-                "Tietsikka5"
-        );
-        ComboBox orderAmount = new ComboBox();
+        productsdrop = new ComboBox();
+        controller.getAllComputerNames(productsdrop);
+        productsdrop.setOnAction(e-> {
+            controller.getPrice(UnitPriceTxt);
+        });
+   
+        orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
-                "1",
-                "2",
-                "3",
-                "4",
-                "5"
+                1,
+                2,
+                3,
+                4,
+                5
         );
-
+        orderAmount.getSelectionModel().selectFirst();
+        controller.getPrice(UnitPriceTxt);
+        
+        orderAmount.setOnAction(e-> {
+            controller.getPrice(UnitPriceTxt);
+        });
+        
         Text lblAddproduct = new Text("LISÄÄ TUOTE:");
         lblAddproduct.setFont(Font.font(null, 15));
         lblAddproduct.setFill(Color.BLACK);
@@ -168,6 +218,10 @@ public class View extends Application {
         btnAddproduct.setText("Lisää");
         btnAddproduct.setPrefSize(100, 50);
         //btnAddproduct.setStyle("-fx-background-image: url('')");
+        btnSend = new Button();
+        btnSend.setText("Luo tilaus");
+        btnSend.setId("btnSend");
+        btnSend.setPrefSize(250, 200);
 
         Text lblCompany = new Text("Yritys:");
         TextField companyTxt = new TextField();
@@ -181,7 +235,9 @@ public class View extends Application {
         TextField otherTxt = new TextField();
 
         // Tilaus taulukko
-        table = new TableView();
+        tilausrivit = new ArrayList<Product>();
+        tableTemp = new TableView();      
+        
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
@@ -190,28 +246,50 @@ public class View extends Application {
         otsikko.setFont(Font.font(null, FontWeight.BOLD, 30));
         otsikko.setFill(Color.rgb(255, 255, 255));
 
-        table.setEditable(true);
+        tableTemp.setEditable(true);
 
         TableColumn productCol = new TableColumn("Tuote");
         productCol.setStyle("-fx-font-size: 14pt;");
         productCol.setMinWidth(200);
+        productCol.setCellValueFactory(
+            new PropertyValueFactory<Product, String>("tuote1"));
+
 
         TableColumn amountCol = new TableColumn("Määrä");
         amountCol.setStyle("-fx-font-size: 14pt;");
         amountCol.setMinWidth(200);
+        amountCol.setCellValueFactory(
+            new PropertyValueFactory<Product, Integer>("amount"));
 
-        TableColumn priceCol = new TableColumn("Hinta");
+        TableColumn priceCol = new TableColumn("Hinta(kpl)");
         priceCol.setStyle("-fx-font-size: 14pt;");
         priceCol.setMinWidth(200);
+        priceCol.setCellValueFactory(
+            new PropertyValueFactory<Product, Double>("price"));
 
-        table.getColumns().addAll(productCol, amountCol, priceCol);
-        table.setPrefHeight(250);
+        tableTemp.getColumns().addAll(productCol, amountCol, priceCol);
+        tableTemp.setPrefHeight(250);
 
         //Taulikon Vbox
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(otsikko, table);
+        vbox.getChildren().addAll(otsikko, tableTemp);
+        
+         btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            //    Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
+                tilausrivit.add(new Product(getValittuPaketti() , getOrderAmount()));
+                //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
+                data = FXCollections.observableArrayList(tilausrivit);
+                tableTemp.setItems(data);
+            }
+        });   
+        btnSend.setOnAction(e-> {
+            controller.createOrder();
+            //Product taulun tyhjennys ja ilmoitus että homma onnistui
+        });
 
         // LISÄYKSET GRIDII
         grid1.add(lblSales, 2, 1, 4, 2);
@@ -240,10 +318,14 @@ public class View extends Application {
         grid1.add(vbox, 2, 10, 10, 1);
         grid1.add(lblPrice, 2, 11);
         grid1.add(PriceTxt, 3, 11);
-
+        grid1.add(btnSend, 12,10 );
     }
 
-    // Varastonäyttö
+    /**
+     * Rakentaa käyttöliittymän Varasto sivun
+     * Sivulla tarkastellaan varaston paketteja ja osia.
+     * Painiketta painamalla voi näyttää tietokannasta paketit tai halutun tyyppisen osan
+     */
     private void createTab2() {
         tab2 = new Tab();
         tab2.setText("Varasto");
@@ -253,12 +335,17 @@ public class View extends Application {
         grid2.setHgap(0); // Horizontal gap
         grid2.setVgap(0); // Vertical gap
         //grid2.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
-
+        
         //Text lblexample = new Text("esimerkki");
         // Nappula, josta saa prosessorit näkyviin
         Button btnProcessors = new Button();
         btnProcessors.setText("Prosessorit");
         btnProcessors.setPrefSize(200, 100);
+        btnProcessors.setOnAction(e-> {
+            osaLista = controller.getOsat("Prosessori");
+            osaData = FXCollections.observableArrayList(osaLista);
+            tableVarasto.setItems(osaData);
+        });
         grid2.add(btnProcessors, 0, 0);
 
         // Nappula, josta saa emolevyt näkyviin
@@ -266,6 +353,11 @@ public class View extends Application {
         btnMotherboard.setText("Emolevyt");
         btnMotherboard.setPrefSize(200, 100);
         grid2.add(btnMotherboard, 0, 1);
+        btnMotherboard.setOnAction(e-> {
+            osaLista = controller.getOsat("Emolevy");
+            osaData = FXCollections.observableArrayList(osaLista);
+            tableVarasto.setItems(osaData);
+        });
 
         // Nappula, josta saa näytönohjaimet näkyviin
         Button btnGraphics = new Button();
@@ -318,18 +410,22 @@ public class View extends Application {
         TableColumn product = new TableColumn("Tuote");
         product.setStyle("-fx-font-size: 14pt;");
         product.setMinWidth(500);
+        product.setCellValueFactory(new PropertyValueFactory<Osa, String>("osaNimi"));
 
-        TableColumn arriveDate = new TableColumn("Saapunut");
+        TableColumn arriveDate = new TableColumn("Hinta (€)");
         arriveDate.setStyle("-fx-font-size: 14pt;");
         arriveDate.setMinWidth(200);
+        arriveDate.setCellValueFactory(new PropertyValueFactory<Osa, Double>("osaHinta"));
 
         TableColumn amount = new TableColumn("Määrä");
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
+        amount.setCellValueFactory(new PropertyValueFactory<Osa, Integer>("varastoMaara"));
 
         TableColumn additionalInfo = new TableColumn("HUOM");
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
+        additionalInfo.setCellValueFactory(new PropertyValueFactory<Osa, String>("tyyppi"));
 
         tableVarasto.getColumns().addAll(brand, product, arriveDate, amount, additionalInfo);
         tableVarasto.setPrefHeight(700);
@@ -366,8 +462,13 @@ public class View extends Application {
         tab2.setContent(grid2);
 
     }
-
-    // Myyntinäyttö
+    
+    /**
+     * Rakentaa käyttöliittymän Tilaukset sivun
+     * Sivulla tarkastellaan luotuja tilauksia ja niiden tilaus rivejä.
+     * Tilaukset näkyvät listassa. Listaa painamalla kaikki tilauksen tilaus rivit näytetään toisessa listassa.
+     * Luotuja tilauksia ja niiden tilaus rivejä voi muuttaa tai poistaa.
+     */
     private void createTab3() {
         tab3 = new Tab();
         tab3.setText("Tilaukset");
@@ -380,6 +481,11 @@ public class View extends Application {
         Button btnOrders = new Button();
         btnOrders.setText("Tilaukset");
         btnOrders.setPrefSize(200, 100);
+        btnOrders.setOnAction(e-> {
+            tilausLista = controller.getTilaukset();
+            tilausData = FXCollections.observableArrayList(tilausLista);
+            tableOrders.setItems(tilausData);
+        });        
         grid3.add(btnOrders, 0, 0);
 
         Button btnPurchases = new Button();
@@ -392,16 +498,17 @@ public class View extends Application {
         btnAllEvents.setPrefSize(200, 100);
         grid3.add(btnAllEvents, 0, 2);
 
-        TableView tableOrders = new TableView();
+        tableOrders = new TableView();
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
         tableOrders.setEditable(true);
 
-        TableColumn brand = new TableColumn("Merkki");
+        TableColumn brand = new TableColumn("Tilaus ID");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
+        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
 
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
@@ -410,6 +517,8 @@ public class View extends Application {
         TableColumn orderDate = new TableColumn("Tilauspvm");
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
+        orderDate.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("tilausPvm"));
+
 
         TableColumn amount = new TableColumn("Summa (€)");
         amount.setStyle("-fx-font-size: 14pt;");
@@ -451,7 +560,11 @@ public class View extends Application {
         tab3.setContent(grid3);
 
     }
-
+    
+    /**
+     * Rakentaa käyttöliittymän Taloustiedot sivun
+     * Sivulla tarkastellaan myyntien ja tilauksien tietoja.
+     */
     private void createTab4() {
         tab4 = new Tab();
         tab4.setText("Taloustiedot");
@@ -485,18 +598,6 @@ public class View extends Application {
         
 
         tab4.setContent(grid4);
-    }
-    private void createTab5() {
-        tab5 = new Tab();
-        tab5.setText("Kirjautuminen");
-
-        grid5 = new GridPane();
-        grid5.setHgap(20); // Horizontal gap
-        grid5.setVgap(0); // Vertical gap
-
-        
-
-        tab5.setContent(grid5);
     }
     
     private void showSalesChart() {
@@ -578,5 +679,36 @@ public class View extends Application {
     public int getTulos() {
         return this.tulos;
     }
+    
+    public int getOrderAmount() {
+        return orderAmount.getSelectionModel().getSelectedItem();
+    }
+    
+    /**
+     * Palauttaa pudotusvalikosta valitun paketin
+     * @return 
+     */
+    public Paketti getValittuPaketti() {
+        return productsdrop.getSelectionModel().getSelectedItem();
+    }
+    
+    public int getValitunPaketinIndex() {
+        return productsdrop.getSelectionModel().getSelectedIndex();
+    }
+    
+    /**
+     * Palauttaa taulukosta valitut paketit ja osat
+     * @return 
+     */
+    public ArrayList<Tilaus_rivi> getTilaukset() {
+        ArrayList<Tilaus_rivi> prodTilaukset = new ArrayList<>();
 
+        //Loop Product table
+        tilausrivit.forEach((prod) -> {
+            prodTilaukset.add(prod.getTilaus_rivi());
+        });
+
+        return prodTilaukset;
+    }
+    
 }
