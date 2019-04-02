@@ -32,6 +32,11 @@ public class loginView extends Application {
     String pw1 = "salis";
     String checkUser, checkPw;
 
+    public loginView(){
+        
+    }
+
+
     public void start(Stage primaryStage) {
         // Käyttöliittymän rakentaminen
         try {
@@ -40,15 +45,17 @@ public class loginView extends Application {
             Label userlabel = new Label("Käyttäjänimi");
             TextField user = new TextField();
             user.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-
+            user.setId("user");
             Label passlabel = new Label("Salasana");
             PasswordField password = new PasswordField();
             password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            password.setId("password");
 
             Label lblMessage = new Label();
-            
+            lblMessage.setId("fail");
             Button loginBtn = new Button();
             loginBtn.setText("Kirjaudu");
+            loginBtn.setId("login");
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
                     checkUser = user.getText().toString();
@@ -66,7 +73,7 @@ public class loginView extends Application {
                 }
                      
                 });
-
+                
         
 	        GridPane grid = new GridPane();
 	        grid.setAlignment(Pos.CENTER);
