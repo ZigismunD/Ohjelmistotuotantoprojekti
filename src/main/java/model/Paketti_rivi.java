@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import model.Osa;
 import model.Paketti;
 
-
 /**
  *
  * @author vadimzubchenko
@@ -28,7 +27,6 @@ public class Paketti_rivi {
     private Osa osa;
 
     public Paketti_rivi() {
-        
     }
 
     public Paketti_rivi(Paketti paketti, Osa osa) {
