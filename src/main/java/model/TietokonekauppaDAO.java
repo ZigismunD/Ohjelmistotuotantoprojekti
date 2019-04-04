@@ -161,13 +161,13 @@ public class TietokonekauppaDAO {
      * @param nimi
      * @return 
      */
-    public Henkilosto haeKayttaja(String nimi) {
+    public Henkilosto haeKayttaja(String nimi, String salasana) {
         Henkilosto henkilo = new Henkilosto();
         Session istunto = istuntotehdas.openSession();
         try {
             Transaction transaction = istunto.beginTransaction();
             //@SuppressWarnings("unchecked")
-            List<Henkilosto> result = istunto.createQuery("from Henkilosto where nimi = '" + nimi + "'").list();
+            List<Henkilosto> result = istunto.createQuery("from Henkilosto where Kirjautumistunnus = '" + nimi + "' AND Salasana = '" + salasana + "'").list();
             henkilo = result.get(0);
             transaction.commit();
             

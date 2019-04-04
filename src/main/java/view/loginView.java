@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Controller;
 import view.View;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -31,8 +32,14 @@ public class loginView extends Application {
     String user1 = "Admin";
     String pw1 = "salis";
     String checkUser, checkPw;
+    
+    //HK 29.3.2019 tietokantayhteyden luominen jo kirjautumisessa
+    Controller controller;
+    loginView loginscreen = this;
 
     public void start(Stage primaryStage) {
+        //Luo tietokantayhteys
+        controller =  new Controller();
         // Käyttöliittymän rakentaminen
         try {
             primaryStage.setTitle("Kirjaudu järjestelmään");
@@ -51,11 +58,17 @@ public class loginView extends Application {
             loginBtn.setText("Kirjaudu");
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
+                    controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());
+                    
+                    /*
                     checkUser = user.getText().toString();
                     checkPw = password.getText().toString();
+                    
                     if (checkUser.equals(user1) && checkPw.equals(pw1)) { //equals(get.userhibernatesta)
                         Stage Viewclass = new Stage();
-                        new View().start(Viewclass);
+                        View v = new View(controller);
+                        controller.setGui(v);
+                        v.start(Viewclass);
                         primaryStage.close();
                     } else {
                         lblMessage.setText("Salasana väärin.");
@@ -63,38 +76,33 @@ public class loginView extends Application {
                     }
                     user.setText("");
                     password.setText("");
-                }
-                     
-                });
 
+                    */
+                }}
+            );
+
+            GridPane grid = new GridPane();
+            grid.setAlignment(Pos.CENTER);
+            grid.setVgap(20);
+            grid.setHgap(10);
+
+            grid.add(userlabel, 1, 0);
+            grid.add(passlabel, 2, 0);
+            grid.add(user, 1, 1);            // sarake, rivi
+            grid.add(password, 2, 1);
+            grid.add(loginBtn,1, 2);            // sarake, rivi
+            grid.add(lblMessage, 2, 2);
+
+            Scene scene = new Scene(grid, 550, 400);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
         
-	        GridPane grid = new GridPane();
-	        grid.setAlignment(Pos.CENTER);
-	        grid.setVgap(20);
-	        grid.setHgap(10);
-
-                grid.add(userlabel, 1, 0);
-                grid.add(passlabel, 2, 0);
-	        grid.add(user, 1, 1);            // sarake, rivi
-	        grid.add(password, 2, 1);
-	        grid.add(loginBtn,1, 2);            // sarake, rivi
-                grid.add(lblMessage, 2, 2);
-                
-
-	        Scene scene = new Scene(grid, 550, 400);
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-
-
-
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-        
-	public static void main(String[] args) {
-		launch(args);
-	}
-        
-
+    public static void main(String[] args) {
+            launch(args);
+    }
 }

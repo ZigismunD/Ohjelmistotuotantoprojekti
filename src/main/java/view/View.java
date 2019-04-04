@@ -86,6 +86,13 @@ public class View extends Application {
     private Button btnAddproduct;
     private Button btnSend;
     
+    public View() {
+    }
+    
+    public View(Controller tmpController) {
+        controller = tmpController;
+    }
+    
     /**
      * Luo käyttöliittymä näkymä.<br>
      * Käyttöliittymässä on sivut:<br>
@@ -96,7 +103,8 @@ public class View extends Application {
      * @param primaryStage 
      */
     public void start(Stage primaryStage) {
-        controller =  new Controller(this);
+        //Controller luodaan jo kirjautumisessa
+        //controller =  new Controller(this);
         
         // Käyttöliittymän rakentaminen
         try {
@@ -394,7 +402,7 @@ public class View extends Application {
         btnCase.setText("Kotelo");
         btnCase.setPrefSize(200, 100);
         grid2.add(btnCase, 0, 7);
-
+        
         //grid2.add(lblexample,15,11);
         tableVarasto = new TableView();
         InnerShadow is = new InnerShadow();

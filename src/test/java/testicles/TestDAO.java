@@ -33,8 +33,9 @@ public class TestDAO {
         */
                 
         //Hae henkilön rooli
-        String nimi = "pekka";
-        Henkilosto haeHenkilo = dao.haeKayttaja(nimi);
+        String nimi = "Admin";
+        String salasana = "salis";
+        Henkilosto haeHenkilo = dao.haeKayttaja(nimi, salasana);
         
         if (haeHenkilo == null) {
             System.out.println("Henkilö " + nimi + " ei löytynyt");
@@ -52,7 +53,7 @@ public class TestDAO {
             System.out.println("Henkilön " + nimi + " rooli on " + haeHenkilo.getRooli());
         }
         
-        haeHenkilo = dao.haeKayttaja(nimi);
+        haeHenkilo = dao.haeKayttaja(nimi, salasana);
         
         if (haeHenkilo == null) {
             System.out.println("Henkilö " + nimi + " ei löytynyt");
