@@ -29,14 +29,16 @@ import javafx.stage.Stage;
  */
 public class loginView extends Application {
 
-    String user1 = "Admin";
-    String pw1 = "salis";
-    String checkUser, checkPw;
-    
     //HK 29.3.2019 tietokantayhteyden luominen jo kirjautumisessa
     Controller controller;
     loginView loginscreen = this;
-
+    Button loginBtn;
+    Label lblMessage = new Label();
+    Label userlabel;
+    Label passlabel;
+    TextField user = new TextField();
+    PasswordField password = new PasswordField();
+    
     public void start(Stage primaryStage) {
         //Luo tietokantayhteys
         controller =  new Controller();
@@ -44,40 +46,21 @@ public class loginView extends Application {
         try {
             primaryStage.setTitle("Kirjaudu järjestelmään");
             
-            Label userlabel = new Label("Käyttäjänimi");
-            TextField user = new TextField();
+            userlabel = new Label("Käyttäjänimi");
+            
             user.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
-            Label passlabel = new Label("Salasana");
-            PasswordField password = new PasswordField();
-            password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-
-            Label lblMessage = new Label();
+            passlabel = new Label("Salasana");
             
-            Button loginBtn = new Button();
+            password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            
+            lblMessage.setTextFill(Color.RED);
+                
+            loginBtn = new Button();
             loginBtn.setText("Kirjaudu");
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
                     controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());
-                    
-                    /*
-                    checkUser = user.getText().toString();
-                    checkPw = password.getText().toString();
-                    
-                    if (checkUser.equals(user1) && checkPw.equals(pw1)) { //equals(get.userhibernatesta)
-                        Stage Viewclass = new Stage();
-                        View v = new View(controller);
-                        controller.setGui(v);
-                        v.start(Viewclass);
-                        primaryStage.close();
-                    } else {
-                        lblMessage.setText("Salasana väärin.");
-                        lblMessage.setTextFill(Color.RED);
-                    }
-                    user.setText("");
-                    password.setText("");
-
-                    */
                 }}
             );
 
@@ -100,6 +83,13 @@ public class loginView extends Application {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void setErrorMessage(String message) {
+        lblMessage.setText(message);
+        
+        user.setText("");
+        password.setText("");
     }
         
     public static void main(String[] args) {

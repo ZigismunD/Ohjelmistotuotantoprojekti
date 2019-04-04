@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Henkilosto;
 import model.Osa;
@@ -59,9 +60,8 @@ public class Controller {
         
         //Kirjautuminen epäonnistui
         if (user == null) {
-            //Ilmoita virheestä
-            //user.setText("");
-            //password.setText("");    
+            //Ilmoita virheestä ja tyhjennä tekstikentät
+            loginscreen.setErrorMessage("Salasana väärin.");
         } else {
             
             //Luo view
