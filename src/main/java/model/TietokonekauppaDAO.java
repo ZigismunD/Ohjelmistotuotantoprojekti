@@ -44,8 +44,8 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa listan kaikista Paketti riveistä
-     * @return 
+     * 
+     * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
         // TODO Auto-generated method stub
@@ -75,7 +75,8 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa listan kaikista Tilaus riveistä
+     * 
+     * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
         // TODO Auto-generated method stub
@@ -100,9 +101,9 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa paketti olion haetun id:n perusteella
-     * @param id
-     * @return 
+     * 
+     * @param id - olion haetun id
+     * @return result palauttaa paketti olion haetun id:n perusteella
      */
     public Paketti readPaketti(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -116,9 +117,9 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa paketin hinnan haetun id:n perusteella
-     * @param id
-     * @return 
+     * 
+     * @param id 
+     * @return result palauttaa paketin hinnan haetun id:n perusteella
      */
     public Double haePaketinHinta(int id) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -132,8 +133,8 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa listan Henkilosto taulun riveistä
-     * @return 
+     * 
+     * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
         // TODO Auto-generated method stub
@@ -157,9 +158,9 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Palauttaa Henkilosto rivin haetun nimen perusteella
-     * @param nimi
-     * @return 
+     * 
+     * @param nimi - työntekijän nimi
+     * @return henkilo palauttaa Henkilosto rivin haetun nimen perusteella
      */
     public Henkilosto haeKayttaja(String nimi, String salasana) {
         Henkilosto henkilo = new Henkilosto();
@@ -182,9 +183,9 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * Luo Henkilosto rivin tietokantaan annetusta Henkilosto oliosta
-     * @param henkilo
-     * @return 
+     * Luo Henkilosto rivin tietokantaan annetusta Henkilosto-oliosta
+     * @param henkilo työntekijän nimi
+     * @return id palauttaaa työntekijän parametrit Henkilosto-oliosta
      */
     public int luoHenkilo(Henkilosto henkilo) {
         int id = 0;
@@ -205,7 +206,7 @@ public class TietokonekauppaDAO {
     
     /**
      * Poistaa rivin Henkilosto taulusta annetun Henkilosto olion perusteella
-     * @param henkilo 
+     * @param henkilo työnkekijän nimi
      */
     public void poistaHenkilo(Henkilosto henkilo) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -222,7 +223,7 @@ public class TietokonekauppaDAO {
     
     /**
      * Luo Tilaus rivin, ja asettaa annetun Tilaus_rivi listan oliot viittaamaan siihen
-     * @param tilaukset 
+     * @param tilaukset - asikkaiden valmiit tilaukset
      */
     public void luoTilaus(List<Tilaus_rivi> tilaukset) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -249,8 +250,8 @@ public class TietokonekauppaDAO {
     
     /**
      * Palauttaa listan Osa taulun riveistä joiden tyyppi on sama kuin annettulla String muuttujalla
-     * @param tyyppi
-     * @return 
+     * @param tyyppi tilauksen tyypi osa tai paketti
+     * @return result palauttaa listan Osa taulun riveistä 
      */
     public List<Osa> getOsat(String tyyppi) {
         try (Session istunto = istuntotehdas.openSession()) {
