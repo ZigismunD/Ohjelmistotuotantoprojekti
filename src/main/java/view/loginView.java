@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Controller;
 import view.View;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -28,80 +29,70 @@ import javafx.stage.Stage;
  */
 public class loginView extends Application {
 
-    String user1 = "Admin";
-    String pw1 = "salis";
-    String checkUser, checkPw;
-
-    public loginView(){
-        
-    }
-
-
+    Controller controller;
+    loginView loginscreen = this;
+    Button loginBtn;
+    Label lblMessage = new Label();
+    Label userlabel;
+    Label passlabel;
+    TextField user = new TextField();
+    PasswordField password = new PasswordField();
+    
     public void start(Stage primaryStage) {
+        //Luo tietokantayhteys
+        controller =  new Controller();
         // Käyttöliittymän rakentaminen
         try {
             primaryStage.setTitle("Kirjaudu järjestelmään");
             
-            Label userlabel = new Label("Käyttäjänimi");
-            TextField user = new TextField();
+            userlabel = new Label("Käyttäjänimi");
+            
             user.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            user.setId("user");
-            Label passlabel = new Label("Salasana");
-            PasswordField password = new PasswordField();
-            password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            password.setId("password");
 
-            Label lblMessage = new Label();
-            lblMessage.setId("fail");
-            Button loginBtn = new Button();
+            passlabel = new Label("Salasana");
+            
+            password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            
+            lblMessage.setTextFill(Color.RED);
+                
+            loginBtn = new Button();
             loginBtn.setText("Kirjaudu");
             loginBtn.setId("login");
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
-                    checkUser = user.getText().toString();
-                    checkPw = password.getText().toString();
-                    if (checkUser.equals(user1) && checkPw.equals(pw1)) { //equals(get.userhibernatesta)
-                        Stage Viewclass = new Stage();
-                        new View().start(Viewclass);
-                        primaryStage.close();
-                    } else {
-                        lblMessage.setText("Salasana väärin.");
-                        lblMessage.setTextFill(Color.RED);
-                    }
-                    user.setText("");
-                    password.setText("");
-                }
-                     
-                });
-                
+                    controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());
+                }}
+            );
+
+            GridPane grid = new GridPane();
+            grid.setAlignment(Pos.CENTER);
+            grid.setVgap(20);
+            grid.setHgap(10);
+
+            grid.add(userlabel, 1, 0);
+            grid.add(passlabel, 2, 0);
+            grid.add(user, 1, 1);            // sarake, rivi
+            grid.add(password, 2, 1);
+            grid.add(loginBtn,1, 2);            // sarake, rivi
+            grid.add(lblMessage, 2, 2);
+
+            Scene scene = new Scene(grid, 550, 400);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void setErrorMessage(String message) {
+        lblMessage.setText(message);
         
-	        GridPane grid = new GridPane();
-	        grid.setAlignment(Pos.CENTER);
-	        grid.setVgap(20);
-	        grid.setHgap(10);
-
-                grid.add(userlabel, 1, 0);
-                grid.add(passlabel, 2, 0);
-	        grid.add(user, 1, 1);            // sarake, rivi
-	        grid.add(password, 2, 1);
-	        grid.add(loginBtn,1, 2);            // sarake, rivi
-                grid.add(lblMessage, 2, 2);
-                
-
-	        Scene scene = new Scene(grid, 550, 400);
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-
-
-
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+        user.setText("");
+        password.setText("");
+    }
         
-	public static void main(String[] args) {
-		launch(args);
-	}
-        
-
+    public static void main(String[] args) {
+            launch(args);
+    }
 }

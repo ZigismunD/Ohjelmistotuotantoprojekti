@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import model.Osa;
 import model.Paketti;
 
-
 /**
  *
  * @author vadimzubchenko
@@ -37,7 +36,6 @@ public class Paketti_rivi {
      * luodaan parametriton konstruktorin
      */
     public Paketti_rivi() {
-        
     }
     /**
      * luodaan konstruktorin 2-parametrilla

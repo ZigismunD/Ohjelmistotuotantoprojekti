@@ -7,8 +7,12 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import model.Henkilosto;
 import model.Osa;
 import model.Paketti;
@@ -16,6 +20,7 @@ import model.TietokonekauppaDAO;
 import model.Tilaus;
 import model.Tilaus_rivi;
 import view.View;
+import view.loginView;
 
 /**
  * 
@@ -42,6 +47,30 @@ public class Controller {
     
     public Controller() {
         this.dao = new TietokonekauppaDAO();
+    }
+    
+    public void setGui(View gui) {
+        this.gui = gui;
+    }
+    
+    public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
+        Henkilosto user = dao.haeKayttaja(nimi, salasana);
+        
+        //user.getRooli();
+        
+        //Kirjautuminen epäonnistui
+        if (user == null) {
+            //Ilmoita virheestä ja tyhjennä tekstikentät
+            loginscreen.setErrorMessage("Salasana väärin.");
+        } else {
+            
+            //Luo view
+            Stage Viewclass = new Stage();
+            View v = new View(this);
+            setGui(v);
+            v.start(Viewclass);
+            primaryStage.close();
+        }
     }
     
     /**
@@ -118,5 +147,4 @@ public class Controller {
         }
         return tilaukset;
     }
-    
 }

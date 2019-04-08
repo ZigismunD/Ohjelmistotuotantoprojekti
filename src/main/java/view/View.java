@@ -7,38 +7,24 @@ package view;
 
 import controller.Controller;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.event.EventHandler;
 import model.Osa;
 import model.Paketti;
 import model.Product;
@@ -87,6 +73,13 @@ public class View extends Application {
     private Button btnAddproduct;
     private Button btnSend;
     
+    public View() {
+    }
+    
+    public View(Controller tmpController) {
+        controller = tmpController;
+    }
+    
     /**
      * Luo käyttöliittymä näkymä.<br>
      * Käyttöliittymässä on sivut:<br>
@@ -97,8 +90,7 @@ public class View extends Application {
      * @param primaryStage 
      */
     public void start(Stage primaryStage) {
-        //controller =  new Controller(this);
-        
+
         // Käyttöliittymän rakentaminen
         try {
             tabPane = new TabPane();
@@ -145,7 +137,6 @@ public class View extends Application {
             e.printStackTrace();
         }
     };
-    
 
     private void showSalesChart() {
         final CategoryAxis xAxis = new CategoryAxis();
@@ -214,18 +205,6 @@ public class View extends Application {
         grid4.add(lineChart, 1, 1, 7, 7);
         tab4.setContent(grid4);
     }
-    
-    public void init() {
-        tulos = 1;
-    }
-    
-    public void nollaaTulos() {
-        tulos = 0;
-    }
-    
-  //  public int getTulos() {
-  //      return this.tulos;
-  //  }
     
     public int getOrderAmount() {
         return salesTab.orderAmount.getSelectionModel().getSelectedItem();
