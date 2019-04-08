@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -53,17 +52,12 @@ public class View extends Application {
     // ekasivu
     private Tab1 salesTab;
     private Tab tab1;
-    private GridPane grid1;
-    private TableView tableTemp;
+
     //tokasivu
-    private GridPane grid2;
     private Tab tab2;
-    private TableView tableVarasto;
 
     // kolmassivu
-    private GridPane grid3;
     private Tab tab3;
-    private TableView tableOrders;
 
     //Taloustietosivu
     private GridPane grid4;
