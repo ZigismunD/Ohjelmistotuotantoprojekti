@@ -223,9 +223,9 @@ public class View extends Application {
         tulos = 0;
     }
     
-    public int getTulos() {
-        return this.tulos;
-    }
+  //  public int getTulos() {
+  //      return this.tulos;
+  //  }
     
     public int getOrderAmount() {
         return salesTab.orderAmount.getSelectionModel().getSelectedItem();

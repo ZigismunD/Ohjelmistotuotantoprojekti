@@ -51,12 +51,12 @@ import model.Tilaus_rivi;
 
 
 public class Tab1 extends Tab {
-   private int tulos;
     private TietokonekauppaDAO dao;
-    public Controller controller;
+    Controller controller = new Controller();
     public ComboBox<Integer> orderAmount;
     public ComboBox<Paketti> productsdrop;
     public TextField UnitPriceTxt;
+    View gui;
     
     // yleiset
     Scene scene;
@@ -118,10 +118,10 @@ public class Tab1 extends Tab {
 
         // ComboboXXX
         ComboBox productsdrop = new ComboBox();
-      //  controller.getAllComputerNames(productsdrop);
-       // productsdrop.setOnAction(e-> {
-       //     controller.getPrice(UnitPriceTxt);
-  //      });
+        controller.getAllComputerNames(productsdrop);
+        productsdrop.setOnAction(e-> {
+            controller.getPrice(UnitPriceTxt);
+        });
    
         ComboBox orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
@@ -132,10 +132,10 @@ public class Tab1 extends Tab {
                 5
         );
         orderAmount.getSelectionModel().selectFirst();
-//        controller.getPrice(UnitPriceTxt);
+      //  controller.getPrice(UnitPriceTxt);
         
         orderAmount.setOnAction(e-> {
-  //      controller.getPrice(UnitPriceTxt);
+      //  controller.getPrice(UnitPriceTxt);
         });
         
         Text lblAddproduct = new Text("LISÄÄ TUOTE:");
@@ -207,15 +207,15 @@ public class Tab1 extends Tab {
          btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-            //    Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
-               // tilausrivit.add(new Product(getValittuPaketti() , getOrderAmount()));
+                //Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
+                tilausrivit.add(new Product(gui.getValittuPaketti() , gui.getOrderAmount()));
                 //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
-               // data = FXCollections.observableArrayList(tilausrivit);
-               // tableTemp.setItems(data);
+                data = FXCollections.observableArrayList(tilausrivit);
+                tableTemp.setItems(data);
             }
         });   
         btnSend.setOnAction(e-> {
-          //  controller.createOrder();
+            controller.createOrder();
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
 

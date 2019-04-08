@@ -5,8 +5,10 @@
  */
 package view;
 
+import controller.Controller;
 import java.util.Date;
 import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -41,8 +43,8 @@ public class Tab3 extends Tab {
     private GridPane grid3;
    // private Tab tab3;
     private TableView tableOrders;
-    
-      Scene scene;
+    Controller controller = new Controller();
+    Scene scene;
     TabPane tabPane;
     ObservableList<Product> data;
     List<Product> tilausrivit;
@@ -70,9 +72,9 @@ public class Tab3 extends Tab {
         btnOrders.setText("Tilaukset");
         btnOrders.setPrefSize(200, 100);
         btnOrders.setOnAction(e-> {
-    //        tilausLista = controller.getTilaukset();
-    //        tilausData = FXCollections.observableArrayList(tilausLista);
-     //       tableOrders.setItems(tilausData);
+            tilausLista = controller.getTilaukset();
+            tilausData = FXCollections.observableArrayList(tilausLista);
+            tableOrders.setItems(tilausData);
         });        
         grid3.add(btnOrders, 0, 0);
 

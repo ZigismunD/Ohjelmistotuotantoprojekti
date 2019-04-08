@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Controller;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,8 @@ import model.Osa;
 import model.Product;
 import model.Tilaus;
 
+
+
 /**
  *
  * @author RJulin
@@ -42,7 +45,6 @@ public class Tab2 extends Tab {
     private GridPane grid2;
     //private Tab tab2;
     private TableView tableVarasto;
-    
     Scene scene;
     TabPane tabPane;
     ObservableList<Product> data;
@@ -51,7 +53,7 @@ public class Tab2 extends Tab {
     ObservableList<Osa> osaData;
     List<Tilaus> tilausLista;
     ObservableList<Tilaus> tilausData;
-   
+   Controller controller = new Controller();
     public Tab2(){
     createTab2();
     }
@@ -72,7 +74,7 @@ public class Tab2 extends Tab {
         btnProcessors.setText("Prosessorit");
         btnProcessors.setPrefSize(200, 100);
         btnProcessors.setOnAction(e-> {
-       //     osaLista = controller.getOsat("Prosessori");
+            osaLista = controller.getOsat("Prosessori");
             osaData = FXCollections.observableArrayList(osaLista);
             tableVarasto.setItems(osaData);
         });
@@ -84,7 +86,7 @@ public class Tab2 extends Tab {
         btnMotherboard.setPrefSize(200, 100);
         grid2.add(btnMotherboard, 0, 1);
         btnMotherboard.setOnAction(e-> {
-       //     osaLista = controller.getOsat("Emolevy");
+            osaLista = controller.getOsat("Emolevy");
             osaData = FXCollections.observableArrayList(osaLista);
             tableVarasto.setItems(osaData);
         });
