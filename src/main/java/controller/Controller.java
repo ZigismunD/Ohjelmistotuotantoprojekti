@@ -147,4 +147,8 @@ public class Controller {
         }
         return tilaukset;
     }
+
+    public void luoOsa(Osa osa) {
+        dao.luoOsa(osa);
+    }
 }

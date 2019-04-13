@@ -203,6 +203,16 @@ public class TietokonekauppaDAO {
         }
         return id;
     }
+
+    public void luoOsa(Osa osa) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaktio = istunto.beginTransaction();
+            istunto.save(osa);
+            transaktio.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Poistaa rivin Henkilosto taulusta annetun Henkilosto olion perusteella
