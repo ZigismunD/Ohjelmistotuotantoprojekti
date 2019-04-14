@@ -39,6 +39,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.event.EventHandler;
+import model.Localization;
 import model.Osa;
 import model.Paketti;
 import model.Product;
@@ -48,7 +49,6 @@ import model.Tilaus_rivi;
 
 public class View extends Application {
     private int tulos;
-    private TietokonekauppaDAO dao;
     private Controller controller;
     private ComboBox<Integer> orderAmount;
     private ComboBox<Paketti> productsdrop;
@@ -56,7 +56,7 @@ public class View extends Application {
     
     // yleiset
     Scene scene;
-    TabPane tabPane;
+    TabPane tabPane = new TabPane();
     ObservableList<Product> data;
     List<Product> tilausrivit;
     List<Osa> osaLista;
@@ -65,26 +65,67 @@ public class View extends Application {
     ObservableList<Tilaus> tilausData;
 
     // ekasivu
-    private Tab tab1;
-    private GridPane grid1;
-    private TableView tableTemp;
+    private final Text lblSales = new Text();
+    private final Tab tab1 = new Tab();
+    private final GridPane grid1 = new GridPane();
+    private final TableView tableTemp = new TableView();
+    private final TextField PriceTxt = new TextField();
+    private final Text lblOrder = new Text();
+    private final Text lblProduct = new Text();
+    private final Text lblOrderAmount = new Text();
+    private final Text lblUnitPrice = new Text();
+    private final Text lblPrice = new Text();
+    private final Text lblAddproduct = new Text();
+    private final Text lblCompany = new Text();
+    private final Text lblCustomer = new Text();
+    private final Text lblAddress = new Text();
+    private final Text lblBilling = new Text();
+    private final Text lblOther = new Text();
+    private final Text otsikko = new Text();
+    private final TextField companyTxt = new TextField();
+    private final TextField customerTxt = new TextField();
+    private final TextField addressTxt = new TextField();
+    private final TextField billingTxt = new TextField();
+    private final TextField otherTxt = new TextField();
     //tokasivu
-    private GridPane grid2;
-    private Tab tab2;
-    private TableView tableVarasto;
-
+    private final GridPane grid2 = new GridPane();
+    private final Tab tab2 = new Tab();
+    private final TableView tableVarasto = new TableView();
+    private final Button btnMotherboard = new Button();
+    private final Button btnProcessors = new Button();
+    private final Button btnGraphics = new Button();
+    private final Button btnRam = new Button();
+    private final Button btnPower = new Button();
+    private final Button btnSsd = new Button();
+    private final Button btnHdd = new Button();
+    private final Button btnCase = new Button();
+    private final Button btnAddProduct = new Button();
+    private final Button btnDeleteProduct = new Button();
+    private final Button btnAlterProduct = new Button();
+        
     // kolmassivu
-    private GridPane grid3;
-    private Tab tab3;
-    private TableView tableOrders;
-
+    private final GridPane grid3 = new GridPane();
+    private final Tab tab3 = new Tab();
+    private final TableView tableOrders = new TableView();
+    private final Button btnOrders = new Button();
+    private final Button btnPurchases = new Button();
+    private final Button btnAllEvents = new Button();
+    private final Button btnAlterOrder = new Button();
+    private final Button btnRemoveOrder = new Button();
+    
     //Taloustietosivu
-    private GridPane grid4;
-    private Tab tab4;
+    private final GridPane grid4 = new GridPane();
+    private final Tab tab4 = new Tab();
+    private final Button btnSales = new Button();
+    private final Button btnSalesPurchases = new Button();
+    private final Button btnSummary = new Button();
     
     //nappuloita
-    private Button btnAddproduct;
-    private Button btnSend;
+    private final Button btnAddproduct = new Button();
+    private final Button btnSend = new Button();
+    
+    //Lokalisointi
+    Localization localization = Localization.getInstance();
     
     public View() {
     }
@@ -108,7 +149,6 @@ public class View extends Application {
         
         // Käyttöliittymän rakentaminen
         try {
-            tabPane = new TabPane();
             tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
             BorderPane borderPane = new BorderPane();
@@ -143,7 +183,10 @@ public class View extends Application {
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
             borderPane.prefWidthProperty().bind(scene.widthProperty());
-
+            
+            //Lokalisointi
+            localizationSetText();
+            
             primaryStage.setScene(scene);
             primaryStage.show();
 
@@ -161,36 +204,26 @@ public class View extends Application {
      * 4. Paina Lähetä painiketta, Tilaukset listan riveistä luodaan uusi tilaus tietokantaan
      */
     private void createTab1() {
-        tab1 = new Tab();
-        tab1.setText("Myynti");
-
-        grid1 = new GridPane();
         grid1.setHgap(30); // Horizontal gap
         grid1.setVgap(30); // Vertical gap
 
         // SIVUSTON KOMPONENTIT
-        Text lblSales = new Text("MYYNTISIVU");
         lblSales.setFont(Font.font(null, FontWeight.BOLD, 60));
         lblSales.setFill(Color.BLACK);
 
-        Text lblOrder = new Text("TILAUS");
         lblOrder.setFont(Font.font(null, FontWeight.BOLD, 25));
         lblOrder.setFill(Color.BLACK);
 
-        Text lblProduct = new Text("TUOTE:");
         lblProduct.setFont(Font.font(null, 15));
         lblProduct.setFill(Color.BLACK);
 
-        Text lblOrderAmount = new Text("MÄÄRÄ:");
         lblOrderAmount.setFont(Font.font(null, 15));
         lblOrderAmount.setFill(Color.BLACK);
 
-        Text lblUnitPrice = new Text("YKSIKKÖHINTA:");
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
         TextField UnitPriceTxt = new TextField();
 
-        Text lblPrice = new Text("HINTA YHTEENSÄ:");
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
 
@@ -218,39 +251,21 @@ public class View extends Application {
             controller.getPrice(UnitPriceTxt);
         });
         
-        Text lblAddproduct = new Text("LISÄÄ TUOTE:");
         lblAddproduct.setFont(Font.font(null, 15));
         lblAddproduct.setFill(Color.BLACK);
 
-        btnAddproduct = new Button();
-        btnAddproduct.setText("Lisää");
         btnAddproduct.setPrefSize(100, 50);
         //btnAddproduct.setStyle("-fx-background-image: url('')");
-        btnSend = new Button();
-        btnSend.setText("Luo tilaus");
         btnSend.setId("btnSend");
         btnSend.setPrefSize(250, 200);
 
-        Text lblCompany = new Text("Yritys:");
-        TextField companyTxt = new TextField();
-        Text lblCustomer = new Text("Yhteyshenkilö:");
-        TextField customerTxt = new TextField();
-        Text lblAddress = new Text("Postiosoite:");
-        TextField addressTxt = new TextField();
-        Text lblBilling = new Text("Laskutusosoite:");
-        TextField billingTxt = new TextField();
-        Text lblOther = new Text("Erityishuomiot:");
-        TextField otherTxt = new TextField();
-
         // Tilaus taulukko
         tilausrivit = new ArrayList<Product>();
-        tableTemp = new TableView();      
         
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
-        Text otsikko = new Text("TILAUKSESI:");
         otsikko.setFont(Font.font(null, FontWeight.BOLD, 30));
         otsikko.setFill(Color.rgb(255, 255, 255));
 
@@ -278,7 +293,7 @@ public class View extends Application {
         tableTemp.getColumns().addAll(productCol, amountCol, priceCol);
         tableTemp.setPrefHeight(250);
 
-        //Taulikon Vbox
+        //Taulukon Vbox
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
@@ -335,19 +350,12 @@ public class View extends Application {
      * Painiketta painamalla voi näyttää tietokannasta paketit tai halutun tyyppisen osan
      */
     private void createTab2() {
-        tab2 = new Tab();
-        tab2.setText("Varasto");
-
-        grid2 = new GridPane();
         grid2.setId("Varasto");
         grid2.setHgap(0); // Horizontal gap
         grid2.setVgap(0); // Vertical gap
         //grid2.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
         
-        //Text lblexample = new Text("esimerkki");
         // Nappula, josta saa prosessorit näkyviin
-        Button btnProcessors = new Button();
-        btnProcessors.setText("Prosessorit");
         btnProcessors.setPrefSize(200, 100);
         btnProcessors.setOnAction(e-> {
             osaLista = controller.getOsat("Prosessori");
@@ -357,8 +365,6 @@ public class View extends Application {
         grid2.add(btnProcessors, 0, 0);
 
         // Nappula, josta saa emolevyt näkyviin
-        Button btnMotherboard = new Button();
-        btnMotherboard.setText("Emolevyt");
         btnMotherboard.setPrefSize(200, 100);
         grid2.add(btnMotherboard, 0, 1);
         btnMotherboard.setOnAction(e-> {
@@ -368,43 +374,29 @@ public class View extends Application {
         });
 
         // Nappula, josta saa näytönohjaimet näkyviin
-        Button btnGraphics = new Button();
-        btnGraphics.setText("Näytönohjaimet");
         btnGraphics.setPrefSize(200, 100);
         grid2.add(btnGraphics, 0, 2);
 
         // Nappula, josta saa muistit näkyviin
-        Button btnRam = new Button();
-        btnRam.setText("RAM");
         btnRam.setPrefSize(200, 100);
         grid2.add(btnRam, 0, 3);
 
         // Nappula, josta saa virtalähteet näkyviin
-        Button btnPower = new Button();
-        btnPower.setText("Virtalähteet");
         btnPower.setPrefSize(200, 100);
         grid2.add(btnPower, 0, 4);
 
         // Nappula, josta saa SSD:t näkyviin
-        Button btnSsd = new Button();
-        btnSsd.setText("SSD");
         btnSsd.setPrefSize(200, 100);
         grid2.add(btnSsd, 0, 5);
 
         // Nappula, josta saa HDD:t näkyviin
-        Button btnHdd = new Button();
-        btnHdd.setText("HHD");
         btnHdd.setPrefSize(200, 100);
         grid2.add(btnHdd, 0, 6);
 
         // Nappula, josta saa HDD:t näkyviin
-        Button btnCase = new Button();
-        btnCase.setText("Kotelo");
         btnCase.setPrefSize(200, 100);
         grid2.add(btnCase, 0, 7);
         
-        //grid2.add(lblexample,15,11);
-        tableVarasto = new TableView();
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
@@ -444,27 +436,17 @@ public class View extends Application {
         vboxVarasto.setPadding(new Insets(0, 0, 0, 20));
         vboxVarasto.getChildren().addAll(tableVarasto);
 
-        // gridin paikka
-        grid2.add(vboxVarasto, 1, 0, 7, 7);
-
-        Button btnAddProduct = new Button();
-        btnAddProduct.setText("Lisää Tuote");
         btnAddProduct.setPrefSize(200, 100);
-
-        Button btnDeleteProduct = new Button();
-        btnDeleteProduct.setText("Poista Tuote");
         btnDeleteProduct.setPrefSize(200, 100);
-
-        Button btnAlterProduct = new Button();
-        btnAlterProduct.setText("Lisää Tuote");
         btnAlterProduct.setPrefSize(200, 100);
-        //grid2.add(btnAddProduct, 2, 7);
-
+        
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
         buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct, btnAlterProduct);
+        
+        grid2.add(vboxVarasto, 1, 0, 7, 7);
         grid2.add(buttonsBox, 7, 8, 7, 10);
 
         tab2.setContent(grid2);
@@ -478,16 +460,10 @@ public class View extends Application {
      * Luotuja tilauksia ja niiden tilaus rivejä voi muuttaa tai poistaa.
      */
     private void createTab3() {
-        tab3 = new Tab();
-        tab3.setText("Tilaukset");
-
-        grid3 = new GridPane();
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
         //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
 
-        Button btnOrders = new Button();
-        btnOrders.setText("Tilaukset");
         btnOrders.setPrefSize(200, 100);
         btnOrders.setOnAction(e-> {
             tilausLista = controller.getTilaukset();
@@ -496,17 +472,12 @@ public class View extends Application {
         });        
         grid3.add(btnOrders, 0, 0);
 
-        Button btnPurchases = new Button();
-        btnPurchases.setText("Ostot");
         btnPurchases.setPrefSize(200, 100);
         grid3.add(btnPurchases, 0, 1);
 
-        Button btnAllEvents = new Button();
-        btnAllEvents.setText("Kaikki Tapahtumat");
         btnAllEvents.setPrefSize(200, 100);
         grid3.add(btnAllEvents, 0, 2);
 
-        tableOrders = new TableView();
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
@@ -526,8 +497,7 @@ public class View extends Application {
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
         orderDate.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("tilausPvm"));
-
-
+        
         TableColumn amount = new TableColumn("Summa (€)");
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
@@ -547,24 +517,18 @@ public class View extends Application {
 
         grid3.add(vboxOrders, 1, 0, 7, 7);
 
-        Button btnAlterOrder = new Button();
         btnAlterOrder.setId("alterOrder");
-        btnAlterOrder.setText("Lisää Tuote");
         btnAlterOrder.setPrefSize(200, 100);
 
-        Button btnRemoveOrder = new Button();
-        btnRemoveOrder.setText("Lisää Tuote");
         btnRemoveOrder.setPrefSize(200, 100);
-        //grid2.add(btnAddProduct, 2, 7);
-
+        
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
         buttonsBox.getChildren().addAll(btnAlterOrder, btnRemoveOrder);
         grid3.add(buttonsBox, 7, 8, 7, 10);
-
-        //grid3.add(lblWarehouse,15,11);
+        
         tab3.setContent(grid3);
 
     }
@@ -574,36 +538,24 @@ public class View extends Application {
      * Sivulla tarkastellaan myyntien ja tilauksien tietoja.
      */
     private void createTab4() {
-        tab4 = new Tab();
-        tab4.setText("Taloustiedot");
-
-        grid4 = new GridPane();
         grid4.setHgap(20); // Horizontal gap
         grid4.setVgap(0); // Vertical gap
 
-        Button btnSales = new Button();
-        btnSales.setText("Myynti");
         btnSales.setPrefSize(200, 100);
         btnSales.setOnAction((event) -> {
             showSalesChart();
         });
         grid4.add(btnSales, 0, 0);
         
-        Button btnPurchases = new Button();
-        btnPurchases.setText("Osto");
-        btnPurchases.setPrefSize(200, 100);
+        btnSalesPurchases.setPrefSize(200, 100);
      
-        btnPurchases.setOnAction((event) -> {
+        btnSalesPurchases.setOnAction((event) -> {
             showPurchasesChart();
         });
-        grid4.add(btnPurchases, 0, 1);
+        grid4.add(btnSalesPurchases, 0, 1);
 
-        Button btnSummary = new Button();
-        btnSummary.setText("Yhteenveto ja budjetti");
         btnSummary.setPrefSize(200, 100);
         grid4.add(btnSummary, 0, 2);
-
-        
 
         tab4.setContent(grid4);
     }
@@ -717,6 +669,72 @@ public class View extends Application {
         });
 
         return prodTilaukset;
+    }
+    
+    public void localizationSetText() {
+        //Aseta tekstikenttien teksti uudelleen
+        
+        //Yleiset
+        tab1.setText(localization.getBundle().getString("tab_sales"));
+        tab2.setText(localization.getBundle().getString("tab_warehouse"));
+        tab3.setText(localization.getBundle().getString("tab_orders"));
+        tab4.setText(localization.getBundle().getString("tab_finance"));
+        
+        //Myyntisivu
+        lblSales.setText(localization.getBundle().getString("lbl_page_header"));  // ("MYYNTISIVU");
+        lblOrder.setText(localization.getBundle().getString("lbl_page_order"));  // ("TILAUS");
+        lblProduct.setText(localization.getBundle().getString("lbl_product"));  //  ("TUOTE:");
+        lblOrderAmount.setText(localization.getBundle().getString("lbl_product_quantity"));  //  ("MÄÄRÄ:");
+        lblUnitPrice.setText(localization.getBundle().getString("lbl_product_unit_price"));  //  ("YKSIKKÖHINTA:");
+        lblPrice.setText(localization.getBundle().getString("lbl_order_total_price"));  //  ("HINTA YHTEENSÄ:");
+        btnAddproduct.setText(localization.getBundle().getString("btn_add_product"));  // = ("Lisää");
+        btnSend.setText(localization.getBundle().getString("btn_send_order"));  // = ("Luo tilaus");
+        lblAddproduct.setText(localization.getBundle().getString("lbl_product_add"));  // = ("LISÄÄ TUOTE:");
+        lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
+        lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
+        lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
+        lblBilling.setText(localization.getBundle().getString("lbl_customer_billing_address"));  // = ("Laskutusosoite:");
+        lblOther.setText(localization.getBundle().getString("lbl_customer_extra"));  // = ("Erityishuomiot:");
+        otsikko.setText(localization.getBundle().getString("lbl_order"));  // = ("TILAUKSESI:");
+        //tbl_col_order_name
+        //tbl_col_order_quantity
+        //tbl_col_order_unit_price
+        
+        //Varastosivu
+        btnProcessors.setText(localization.getBundle().getString("btn_processor"));  // = .setText("Prosessorit");
+        btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));  // = .setText("Emolevyt");
+        btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));  // = .setText("Näytönohjaimet");
+        btnRam.setText(localization.getBundle().getString("btn_ram"));  // = .setText("RAM");
+        btnPower.setText(localization.getBundle().getString("btn_power_source"));  // = .setText("Virtalähteet");
+        btnSsd.setText(localization.getBundle().getString("btn_ssd"));  // = .setText("SSD");
+        btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
+        btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
+        btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
+        btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
+        //tbl_col_type
+        //tbl_col_name
+        //tbl_col_unit_price
+        //tbl_col_quantity
+        //tbl_extra
+        
+        //Tilaukset
+        btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
+        btnPurchases.setText(localization.getBundle().getString("btn_purchases"));  // = .setText("Ostot");
+        btnAllEvents.setText(localization.getBundle().getString("btn_all_transactions"));  // = .setText("Kaikki Tapahtumat");
+        btnAlterOrder.setText(localization.getBundle().getString("btn_add_product"));  // = .setText("Lisää Tuote");
+        btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Lisää Tuote");
+        
+        //Myynti
+        btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
+        btnSalesPurchases.setText(localization.getBundle().getString("btn_sales_purchases"));  // = .setText("Osto");
+        btnSummary.setText(localization.getBundle().getString("btn_summary"));  // = .setText("Yhteenveto ja budjetti");
+        
+        //lineChart.setTitle("Myyntitiedot");
+        //series.setName("Myynnit");
+        
+        //series.setName("Ostot");
+        //lineChart.setTitle("Ostotiedot");
+        
     }
     
 }

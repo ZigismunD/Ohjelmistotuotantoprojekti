@@ -27,6 +27,7 @@ import view.loginView;
  * @author Sami Sikkilä
  */
 public class Controller {
+    private static Controller INSTANCE = null;
     /**
      * Käyttöliittymä
      */
@@ -36,21 +37,40 @@ public class Controller {
      */
     TietokonekauppaDAO dao;
     
+    private Controller() {
+        this.dao = new TietokonekauppaDAO();
+    }
+    
     /**
      * Konstruktori
      * @param gui Ohjemiston käyttöliittymäluokka
      */
+    /*
     public Controller(View gui) {
         this.gui = gui;
         this.dao = new TietokonekauppaDAO();
     }
+    */
     
-    public Controller() {
-        this.dao = new TietokonekauppaDAO();
+    public static synchronized Controller getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Controller();
+        }
+        return INSTANCE;
     }
     
     public void setGui(View gui) {
         this.gui = gui;
+    }
+    
+    public void reconnectDAO() {
+        this.dao = new TietokonekauppaDAO();
+    }
+    
+    public void enableLoginScreen(loginView loginscreen) {
+        Boolean bTemp = this.dao.isSessionFactoryConnected();
+        //Disabloi painikkeet jos tietokantayhteyttä ei ole luotu
+        //btnLogin.setEnabled(bTemp);
     }
     
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
@@ -84,7 +104,6 @@ public class Controller {
         box.getSelectionModel().selectFirst();
     }
     
-    
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
@@ -99,7 +118,6 @@ public class Controller {
         } else {
             dao.luoTilaus(tilaukset);
         }
-
     }
     
     /**
@@ -118,7 +136,7 @@ public class Controller {
         double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
         System.out.println(gui.getValitunPaketinIndex());
         
-       PriceTxt.setText("" + hinta);
+        PriceTxt.setText("" + hinta);
     }
     
     /**

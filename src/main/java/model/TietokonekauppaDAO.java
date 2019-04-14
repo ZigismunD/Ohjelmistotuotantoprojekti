@@ -15,7 +15,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-
 public class TietokonekauppaDAO {
     
     SessionFactory istuntotehdas = null;
@@ -40,6 +39,14 @@ public class TietokonekauppaDAO {
             System.out.println("Istuntotehtaan luonti epäonnistui");
             StandardServiceRegistryBuilder.destroy(registry);
             e.printStackTrace();
+        }
+    }
+    
+    public boolean isSessionFactoryConnected() {
+        if (istuntotehdas != null) {
+            return true;
+        } else {
+            return false;   
         }
     }
     
