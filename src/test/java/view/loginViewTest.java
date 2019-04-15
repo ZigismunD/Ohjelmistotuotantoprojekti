@@ -23,10 +23,10 @@ import static org.loadui.testfx.controls.Commons.hasText;
  */
 public class loginViewTest extends ApplicationTest {
     private Stage stage;
-    
+    /*
     public loginViewTest() {
     }
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         loginView instance = new loginView();
@@ -57,6 +57,7 @@ public class loginViewTest extends ApplicationTest {
     /**
      * Test of start method, of class loginView.
      */
+    /*
     @Test
     public void testStart() {
         System.out.println("start");
@@ -89,6 +90,6 @@ public class loginViewTest extends ApplicationTest {
 
         verifyThat("#fail", hasText("Salasana väärin."));
 
-    }
+    }*/
 
 }
