@@ -86,7 +86,7 @@ public class Controller {
             
             //Luo view
             Stage Viewclass = new Stage();
-            View v = new View(this);
+            View v = new View();
             setGui(v);
             v.start(Viewclass);
             primaryStage.close();
@@ -164,5 +164,9 @@ public class Controller {
             tilaukset.add(tilaus);
         }
         return tilaukset;
+    }
+
+    public void luoOsa(Osa osa) {
+        dao.luoOsa(osa);
     }
 }

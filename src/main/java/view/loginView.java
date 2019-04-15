@@ -34,7 +34,7 @@ import model.Localization;
 public class loginView extends Application {
     
     //HK 29.3.2019 tietokantayhteyden luominen jo kirjautumisessa
-    Controller controller = Controller.getInstance();;
+    Controller controller = Controller.getInstance();
     loginView loginscreen = this;
     public Button loginBtn = new Button();
     Button reconnectBtn = new Button();
@@ -55,9 +55,13 @@ public class loginView extends Application {
         try {
             loginPrimaryStage = primaryStage;
             
+            user.setId("user");
             user.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            
+            password.setId("password");
             password.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             
+            lblMessage.setId("fail");
             lblMessage.setTextFill(Color.RED);
             
             ComboBox<String> localeList = new ComboBox();
@@ -70,6 +74,7 @@ public class loginView extends Application {
                 localizationSetText();
             });
             
+            loginBtn.setId("login");
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
                     controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());

@@ -35,11 +35,6 @@ public class Tests {
         gui = new View();
     }
     
-    @Test
-    public void testaaTulos() {
-        gui.nollaaTulos();
-        assertEquals(0, gui.getTulos(), "Tulos on väärin");
-    }
     
     @Test
     public void testaaPaketinNimenHaku() {
