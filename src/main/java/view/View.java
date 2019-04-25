@@ -12,7 +12,6 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -127,7 +126,7 @@ public class View extends Application {
             e.printStackTrace();
         }
     };
-
+    
     private void showSalesChart() {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();

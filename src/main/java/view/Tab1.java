@@ -33,9 +33,7 @@ import model.Localization;
 import model.Osa;
 import model.Paketti;
 import model.Product;
-import model.TietokonekauppaDAO;
 import model.Tilaus;
-import model.Tilaus_rivi;
 
 /**
  *

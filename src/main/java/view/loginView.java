@@ -6,9 +6,6 @@
 package view;
 
 import controller.Controller;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import view.View;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -41,6 +38,7 @@ public class loginView extends Application {
     Label lblMessage = new Label();
     Label userlabel = new Label();
     Label passlabel = new Label();
+    
     public TextField user = new TextField();
     public PasswordField password = new PasswordField();
     

@@ -41,18 +41,15 @@ import model.Tilaus;
 
 public class Tab3 extends Tab {
     
+    //Yleiset
     Controller controller = Controller.getInstance();
     Scene scene;
     TabPane tabPane;
-    ObservableList<Product> data;
-    List<Product> tilausrivit;
-    List<Osa> osaLista;
-    ObservableList<Osa> osaData;
+    private final GridPane grid3 = new GridPane();
+    
     List<Tilaus> tilausLista;
     ObservableList<Tilaus> tilausData;
     
-    private final GridPane grid3 = new GridPane();
-    private final Tab tab3 = new Tab();
     private final TableView tableOrders = new TableView();
     private final Button btnOrders = new Button();
     private final Button btnPurchases = new Button();
@@ -64,9 +61,7 @@ public class Tab3 extends Tab {
         createTab3();
     }
     
-    
-    
-     private void createTab3() {
+    private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
         //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
