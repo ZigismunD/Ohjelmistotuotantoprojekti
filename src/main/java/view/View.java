@@ -128,37 +128,7 @@ public class View extends Application {
     };
 
     private void showSalesChart() {
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Month");
 
-        final LineChart<String, Number> lineChart
-                = new LineChart<String, Number>(xAxis, yAxis);
-
-        lineChart.setTitle("Myyntitiedot");
-
-        XYChart.Series series = new XYChart.Series();
-        series.setName("Myynnit");
-
-        series.getData().add(new XYChart.Data("Jan", 23));
-        series.getData().add(new XYChart.Data("Feb", 14));
-        series.getData().add(new XYChart.Data("Mar", 15));
-        series.getData().add(new XYChart.Data("Apr", 24));
-        series.getData().add(new XYChart.Data("May", 34));
-        series.getData().add(new XYChart.Data("Jun", 36));
-        series.getData().add(new XYChart.Data("Jul", 22));
-        series.getData().add(new XYChart.Data("Aug", 45));
-        series.getData().add(new XYChart.Data("Sep", 43));
-        series.getData().add(new XYChart.Data("Oct", 17));
-        series.getData().add(new XYChart.Data("Nov", 29));
-        series.getData().add(new XYChart.Data("Dec", 25));
-
-        lineChart.setPrefHeight(700);
-        lineChart.setPrefWidth(1600);
-        lineChart.getData().add(series);
-        lineChart.setPadding(new Insets(20, 20, 20, 20));
-        grid4.add(lineChart, 1, 1, 7, 7);
-        tab4.setContent(grid4);
     }
     
     private void showPurchasesChart() {

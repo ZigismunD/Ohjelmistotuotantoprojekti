@@ -66,7 +66,34 @@ public class Tab2 extends Tab {
     private final Button btnAddProduct = new Button();
     private final Button btnDeleteProduct = new Button();
     private final Button btnAlterProduct = new Button();
-    
+    private final Text merkki = new Text();
+    TextField productBrand = new TextField();
+    TextField productName = new TextField();
+    Text type = new Text();
+    Text price = new Text();
+    TextField productPrice = new TextField();
+    TextField warehouseAmount = new TextField();
+    Button addProduct = new Button();
+    ComboBox selectType = new ComboBox();
+    Text amount = new Text();
+    Text processor = new Text();
+    Text motherboard = new Text();
+    Text graphics = new Text();
+    Text RAM = new Text();
+    Text powersupply = new Text();
+    Text SSD = new Text();
+    Text HDD = new Text();
+    Text cases = new Text();
+    String[] osat = osienTietokantaTyypit();
+    /*"Prosessori",
+            "Emolevy",
+            "Näytönohjain",
+            "RAM",
+            "Virtalähde",
+            "SSD",
+            "HDD",
+            "Kotelo"
+    */
     public Tab2(){
         createTab2();
     }
@@ -101,8 +128,8 @@ public class Tab2 extends Tab {
         // Nappula, josta saa muistit näkyviin
         btnRam.setPrefSize(200, 100);
         grid2.add(btnRam, 0, 3);
-		btnGraphics.setOnAction(e -> {
-            haeOsat("Näytönohjain");
+		btnRam.setOnAction(e -> {
+            haeOsat("RAM");
         });						 
 
         // Nappula, josta saa virtalähteet näkyviin
@@ -200,52 +227,47 @@ public class Tab2 extends Tab {
             comp.setHgap(15); // Horizontal gap
             comp.setVgap(15); // Vertical gap
 
-            Text merkki = new Text("Merkki");
+
             comp.add(merkki, 0, 0);
 
-            TextField productBrand = new TextField();
             productBrand.setPrefWidth(350);
             comp.add(productBrand, 1, 0);
 
-            Text name = new Text("Tuotteen nimi");
+            Text name = new Text();
             comp.add(name,0, 1);
 
-            TextField productName = new TextField();
             productName.setPrefWidth(350);
             comp.add(productName, 1, 1);
 
-            Text type = new Text("Tuotteen tyyppi");
             comp.add(type, 0, 2);
-            ComboBox selectType = new ComboBox();
+
+            selectType.getItems().clear();
             selectType.getItems().addAll(
-                    "Prosessori",
-                    "Emolevy",
-                    "Näytönohjain",
-                    "RAM",
-                    "Virtalähde",
-                    "SSD",
-                    "HDD",
-                    "Kotelo"
+                    processor,
+                    motherboard,
+                    graphics,
+                    RAM,
+                    powersupply,
+                    SSD,
+                    HDD,
+                    cases
             );
+
+
             comp.add(selectType, 1, 2);
 
-            Text price = new Text("Tuotteen hinta");
             comp.add(price, 0,3);
 
-            TextField productPrice = new TextField();
             productPrice.setPrefWidth(350);
             comp.add(productPrice, 1, 3);
 
-            Text amount = new Text("Määrä varastossa");
             comp.add(amount, 0 ,4);
 
-            TextField warehouseAmount = new TextField();
             warehouseAmount.setPrefWidth(350);
             comp.add(warehouseAmount, 1, 4);
 
-            Button addProduct = new Button("Lisää");
             addProduct.setOnAction(e -> {
-                luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), selectType.getSelectionModel().getSelectedItem().toString()));
+                luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), osat[selectType.getSelectionModel().getSelectedIndex()]));
             });
             comp.add(addProduct, 1, 5);
 
@@ -278,10 +300,56 @@ public class Tab2 extends Tab {
             btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
             btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
             btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
+            merkki.setText(localization.getBundle().getString("lbl_brand_name"));
+            type.setText(localization.getBundle().getString("lbl_product_type"));
+            price.setText(localization.getBundle().getString("lbl_product_price"));
+            amount.setText(localization.getBundle().getString("lbl_product_amount"));
+            addProduct.setText(localization.getBundle().getString("btn_add"));
+            processor.setText(localization.getBundle().getString("lbl_processor"));
+            graphics.setText(localization.getBundle().getString("lbl_graphics"));
+            graphics.setText(localization.getBundle().getString("lbl_graphics"));
+            motherboard.setText(localization.getBundle().getString("lbl_motherboard"));
+            RAM.setText(localization.getBundle().getString("lbl_RAM"));
+            SSD.setText(localization.getBundle().getString("lbl_SSD"));
+            HDD.setText(localization.getBundle().getString("lbl_HDD"));
+            cases.setText(localization.getBundle().getString("lbl_cases"));
+            powersupply.setText(localization.getBundle().getString("lbl_powersupply"));
+
             //tbl_col_type
             //tbl_col_name
             //tbl_col_unit_price
             //tbl_col_quantity
             //tbl_extra
+        }
+
+        private String[] osienTietokantaTyypit() {
+            String[] osat = new String[8];
+            osat[0] = "Prosessori";
+            osat[1] = "Emolevy";
+            osat[2] = "Näytönohjain";
+            osat[3] = "RAM";
+            osat[4] = "Virtalähde";
+            osat[5] = "SSD";
+            osat[6] = "HDD";
+            osat[7] = "Kotelo";
+            return osat;
+        }
+
+        private class Item {
+        int id;
+        String desc;
+
+            private Item(int id, String desc) {
+                this.id = id;
+                this.desc = desc;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public String getDesc() {
+                return desc;
+            }
         }
 }
