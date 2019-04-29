@@ -32,25 +32,24 @@ import model.Tilaus;
 import model.Tilaus_rivi;
 
 public class View extends Application {
-    private int tulos;
+    //private int tulos;
     private Controller controller = Controller.getInstance();
     //private ComboBox<Integer> orderAmount;
     //private ComboBox<Paketti> productsdrop;
-    private TextField UnitPriceTxt;
+    //private TextField UnitPriceTxt;
     
     // yleiset
     Scene scene;
     TabPane tabPane;
-    ObservableList<Product> data;
-    List<Product> tilausrivit;
-    List<Osa> osaLista;
-    ObservableList<Osa> osaData;
-    List<Tilaus> tilausLista;
-    ObservableList<Tilaus> tilausData;
+    //ObservableList<Product> data;
+    //List<Osa> osaLista;
+    //ObservableList<Osa> osaData;
+    //List<Tilaus> tilausLista;
+    //ObservableList<Tilaus> tilausData;
 
     // ekasivu
-    private Tab1 salesTab;
-    private Tab tab1;
+     Tab1 salesTab;
+     Tab tab1;
 
     //tokasivu
     private Tab tab2;
@@ -87,7 +86,7 @@ public class View extends Application {
             BorderPane borderPane = new BorderPane();
 
             // tabit
-            tab1 = new Tab1();
+            tab1 = Tab1.getInstance();
             tab2 = new Tab2();
             tab3 = new Tab3();
             tab4 = new Tab4();
@@ -196,36 +195,6 @@ public class View extends Application {
         tab4.setContent(grid4);
     }
     
-    public int getOrderAmount() {
-        return salesTab.orderAmount.getSelectionModel().getSelectedItem();
-    }
-    
-    /**
-     * Palauttaa pudotusvalikosta valitun paketin
-     * @return 
-     */
-    public Paketti getValittuPaketti() {
-        return salesTab.productsdrop.getSelectionModel().getSelectedItem();
-    }
-    
-    public int getValitunPaketinIndex() {
-        return salesTab.productsdrop.getSelectionModel().getSelectedIndex();
-    }
-    
-    /**
-     * Palauttaa taulukosta valitut paketit ja osat
-     * @return 
-     */
-    public ArrayList<Tilaus_rivi> getTilaukset() {
-        ArrayList<Tilaus_rivi> prodTilaukset = new ArrayList<>();
-
-        //Loop Product table
-        tilausrivit.forEach((prod) -> {
-            prodTilaukset.add(prod.getTilaus_rivi());
-        });
-
-        return prodTilaukset;
-    }
     
     public void localizationSetText() {
         //Aseta tekstikenttien teksti uudelleen
