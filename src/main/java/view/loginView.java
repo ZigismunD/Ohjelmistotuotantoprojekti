@@ -6,9 +6,6 @@
 package view;
 
 import controller.Controller;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import view.View;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;

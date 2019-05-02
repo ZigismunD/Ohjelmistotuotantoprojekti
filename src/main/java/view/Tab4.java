@@ -33,7 +33,7 @@ import model.Tilaus;
 */
 
 public class Tab4 extends Tab {
-    
+    /*
     Scene scene;
     TabPane tabPane;
     ObservableList<Product> data;
@@ -144,6 +144,6 @@ public class Tab4 extends Tab {
         
         //series.setName("Ostot");
         //lineChart.setTitle("Ostotiedot");
-    }
+    }*/
     
 }

@@ -110,6 +110,14 @@ public class Controller {
         }
         return paketit;
     }
+     public ArrayList<Osa> getAllOsat() {
+        ArrayList<Osa> osat = new ArrayList<>();
+        
+        for (Osa osa : dao.readOsat()) {
+            osat.add(osa);
+        }
+        return osat;
+    }
     
     
     /**

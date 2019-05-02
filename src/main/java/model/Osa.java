@@ -49,6 +49,10 @@ public class Osa {
         this.varastoMaara = varastoMaara;
         this.tyyppi = tyyppi;
     }
+    public Osa(String nimi, double hinta){
+        this.osaNimi = nimi;
+        this.osaHinta = hinta;
+    }
     /**
      * 
      * @return Id palauttaa taulun tietokannan generoiman avainarvon
@@ -127,7 +131,9 @@ public class Osa {
         this.tyyppi = tyyppi;
     }
     
-    
+        public String toString(){
+        return this.osaNimi;
+    }
    
    
 }
