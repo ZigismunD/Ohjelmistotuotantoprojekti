@@ -127,7 +127,10 @@ public class Osa {
         this.tyyppi = tyyppi;
     }
     
+    public String toString(){
+        return this.osaNimi;
+    }
     
-   
+    
    
 }
