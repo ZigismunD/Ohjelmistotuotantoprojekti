@@ -98,7 +98,8 @@ public class Tab1 extends Tab {
     private final Text lblAddress = new Text();
     private final Text lblEmail = new Text();
     private final Text lblPhone = new Text();
-    private final Text otsikko = new Text();
+    private final Text lblWarning = new Text();
+    private final Text lblWarning2 = new Text();
     private final TextField companyTxt = new TextField();
     private final TextField addressTxt = new TextField();
     private final TextField emailTxt = new TextField();
@@ -112,7 +113,7 @@ public class Tab1 extends Tab {
 
     private Tab1() {
         createTab1();
-        
+
     }
 
     public static Tab1 getInstance() {
@@ -133,17 +134,6 @@ public class Tab1 extends Tab {
 
         radio2.setText("Osa");
         radio2.setToggleGroup(group);
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ov,
-                    Toggle old_toggle, Toggle new_toggle) {
-                if (group.getSelectedToggle() == radio1) {
-                   haePaketit();
-                }
-                if(group.getSelectedToggle() == radio2){
-                    haeOsat();
-                }
-            }
-        });
 
         lblProduct.setFont(Font.font(null, 15));
         lblProduct.setFill(Color.BLACK);
@@ -189,20 +179,14 @@ public class Tab1 extends Tab {
         TableColumn productCol1 = new TableColumn("Tuote");
         productCol1.setStyle("-fx-font-size: 14pt;");
         productCol1.setMinWidth(200);
-        productCol1.setCellValueFactory(
-                new PropertyValueFactory<Product, String>("name"));
 
         TableColumn amountCol1 = new TableColumn("Määrä");
         amountCol1.setStyle("-fx-font-size: 14pt;");
         amountCol1.setMinWidth(400);
-        amountCol1.setCellValueFactory(
-                new PropertyValueFactory<Product, Integer>("amount"));
 
         TableColumn priceCol1 = new TableColumn("Hinta(kpl)");
         priceCol1.setStyle("-fx-font-size: 14pt;");
         priceCol1.setMinWidth(150);
-        priceCol1.setCellValueFactory(
-                new PropertyValueFactory<Product, Double>("price"));
 
         productsTable.getColumns().addAll(productCol1, amountCol1, priceCol1);
         productsTable.setPrefHeight(250);
@@ -210,8 +194,7 @@ public class Tab1 extends Tab {
         //Taulukon Vbox
         final VBox vboxProcuctsTable = new VBox();
         vboxProcuctsTable.setSpacing(5);
-        vboxProcuctsTable.setPadding(new Insets(10, 10, 10, 10));
-        vboxProcuctsTable.getChildren().addAll(productsTable);
+        vboxProcuctsTable.getChildren().addAll(lblWarning, productsTable);
 
         orderAmount = new ComboBox();
         orderAmount.getItems().addAll(
@@ -221,6 +204,33 @@ public class Tab1 extends Tab {
                 4,
                 5
         );
+
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle old_toggle, Toggle new_toggle) {
+                if (group.getSelectedToggle() == radio1) {
+                    haePaketit();
+                    priceCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, Double>("paketinHinta"));
+                    productCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, String>("paketinNimi"));
+                    amountCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, Integer>("paketinMaara"));
+
+                }
+                if (group.getSelectedToggle() == radio2) {
+                    haeOsat();
+                    priceCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, Double>("osaHinta"));
+                    productCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, String>("osaNimi"));
+                    amountCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, Integer>("varastoMaara"));
+
+                }
+            }
+        });
+
         orderAmount.getSelectionModel().selectFirst();
         //    getPrice(UnitPriceTxt);
 
@@ -245,8 +255,10 @@ public class Tab1 extends Tab {
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
-        otsikko.setFont(Font.font(null, FontWeight.BOLD, 30));
-        otsikko.setFill(Color.rgb(255, 255, 255));
+        lblWarning.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning.setFill(Color.rgb(255, 0, 0));
+        lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning2.setFill(Color.rgb(255, 0, 0));
 
         tableTemp.setEditable(true);
 
@@ -274,22 +286,29 @@ public class Tab1 extends Tab {
         //Taulukon Vbox
         final VBox vboxTempTable = new VBox();
         vboxTempTable.setSpacing(5);
-        vboxTempTable.setPadding(new Insets(10, 10, 10, 10));
-        vboxTempTable.getChildren().addAll(tableTemp);
+        vboxTempTable.getChildren().addAll(lblWarning2,tableTemp);
 
         btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if (group.getSelectedToggle() == radio1) {
-                   tilausrivit.add(new Product(getValittuPaketti(), getOrderAmount()));
-                }
-                if(group.getSelectedToggle() == radio2){
-                   tilausrivit.add(new Product(getValittuOsa(), getOrderAmount()));
-                }
+
                 //    Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
                 //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
-                data = FXCollections.observableArrayList(tilausrivit);
-                tableTemp.setItems(data);
+                if (productsTable.getSelectionModel().getSelectedItem() != null) {
+                    if (group.getSelectedToggle() == radio1) {
+                        tilausrivit.add(new Product(getValittuPaketti(), getOrderAmount()));
+                    }
+                    if (group.getSelectedToggle() == radio2) {
+                        tilausrivit.add(new Product(getValittuOsa(), getOrderAmount()));
+                    }
+
+                    data = FXCollections.observableArrayList(tilausrivit);
+                    tableTemp.setItems(data);
+                    lblWarning.setText("");
+                } else {
+                    lblWarning.setText("Valitse ensin tuote");
+
+                }
 
                 for (int i = 0; i < tilausrivit.size(); i++) {
                     tilausrivit.forEach((prod) -> {
@@ -306,11 +325,14 @@ public class Tab1 extends Tab {
         btnDelproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Object removeItem = tableTemp.getSelectionModel().getSelectedItem();
-                tableTemp.getItems().remove(removeItem);
-                tilausrivit.remove(removeItem);
+                if (tableTemp.getSelectionModel().getSelectedItem() != null) {
+                    Object removeItem = tableTemp.getSelectionModel().getSelectedItem();
+                    tableTemp.getItems().remove(removeItem);
+                    tilausrivit.remove(removeItem);
+                } else {
+                    lblWarning.setText("Valitse ensin poistettava tuote");
+                }
             }
-
         });
         btnSend.setOnAction(e -> {
             controller.createOrder();
@@ -446,7 +468,6 @@ public class Tab1 extends Tab {
         lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
         lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
         lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
-        otsikko.setText(localization.getBundle().getString("lbl_order"));  // = ("TILAUKSESI:");
         //tbl_col_order_name
         //tbl_col_order_quantity
         //tbl_col_order_unit_price
@@ -458,8 +479,8 @@ public class Tab1 extends Tab {
         productsTable.setItems(pakettiData);
         System.out.println(pakettiData);
     }
-    
-    public void haeOsat(){
+
+    public void haeOsat() {
         osaLista = controller.getAllOsat();
         osaData = FXCollections.observableArrayList(osaLista);
         productsTable.setItems(osaData);

@@ -42,15 +42,15 @@ import model.Tilaus;
 public class Tab2 extends Tab {
     
     //private Tab tab2;
-    Scene scene;
-    TabPane tabPane;
-    ObservableList<Product> data;
-    List<Product> tilausrivit;
-    List<Osa> osaLista;
-    ObservableList<Osa> osaData;
-    List<Tilaus> tilausLista;
-    ObservableList<Tilaus> tilausData;
-    Controller controller = Controller.getInstance();
+    private Scene scene;
+    private TabPane tabPane;
+    private ObservableList<Product> data;
+    private List<Product> tilausrivit;
+    private List<Osa> osaLista;
+    private ObservableList<Osa> osaData;
+    private List<Tilaus> tilausLista;
+    private ObservableList<Tilaus> tilausData;
+    private Controller controller = Controller.getInstance();
     
     private final GridPane grid2 = new GridPane();
     private final Tab tab2 = new Tab();
