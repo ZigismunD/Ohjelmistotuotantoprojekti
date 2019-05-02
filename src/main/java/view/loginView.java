@@ -125,7 +125,7 @@ public class loginView extends Application {
         user.setText("");
         password.setText("");
     }
-        
+    
     public static void main(String[] args) {
         launch(args);
     }

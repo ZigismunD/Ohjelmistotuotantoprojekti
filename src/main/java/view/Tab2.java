@@ -9,6 +9,8 @@ import controller.Controller;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -64,6 +66,8 @@ public class Tab2 extends Tab {
     private final Button btnAddProduct = new Button();
     private final Button btnDeleteProduct = new Button();
     private final Button btnAlterProduct = new Button();
+    
+    private final Button btnAddPackage = new Button();
     
     public Tab2(){
         createTab2();
@@ -173,16 +177,23 @@ public class Tab2 extends Tab {
 		// gridin paikka
         grid2.add(vboxVarasto, 1, 0, 7, 7);				
         btnAddProduct.setPrefSize(200, 100);
-		btnAddProduct.setOnAction(event -> {
+        btnAddProduct.setOnAction(event -> {
             newProductPopup();
-        });									
+        });
+        
         btnDeleteProduct.setPrefSize(200, 100);
+        
+        //Uusi paketti painike
+        btnAddPackage.setPrefSize(200, 100);
+        btnAddPackage.setOnAction(event -> {
+            newPackagePopup();
+        });									
         
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
-        buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct);
+        buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct, btnAddPackage);
         
         grid2.add(buttonsBox, 7, 8, 7, 10);
         
@@ -191,95 +202,157 @@ public class Tab2 extends Tab {
         localizationSetText();
     }
 
-        public void newProductPopup(){
-            Stage newStage = new Stage();
-            newStage.setTitle("Luo uusi tuote");
-            GridPane comp = new GridPane();
-            comp.setHgap(15); // Horizontal gap
-            comp.setVgap(15); // Vertical gap
+    public void newProductPopup(){
+        Stage newStage = new Stage();
+        newStage.setTitle("Luo uusi tuote");
+        GridPane comp = new GridPane();
+        comp.setHgap(15); // Horizontal gap
+        comp.setVgap(15); // Vertical gap
 
-            Text merkki = new Text("Merkki");
-            comp.add(merkki, 0, 0);
+        Text merkki = new Text("Merkki");
+        comp.add(merkki, 0, 0);
 
-            TextField productBrand = new TextField();
-            productBrand.setPrefWidth(350);
-            comp.add(productBrand, 1, 0);
+        TextField productBrand = new TextField();
+        productBrand.setPrefWidth(350);
+        comp.add(productBrand, 1, 0);
 
-            Text name = new Text("Tuotteen nimi");
-            comp.add(name,0, 1);
+        Text name = new Text("Tuotteen nimi");
+        comp.add(name,0, 1);
 
-            TextField productName = new TextField();
-            productName.setPrefWidth(350);
-            comp.add(productName, 1, 1);
+        TextField productName = new TextField();
+        productName.setPrefWidth(350);
+        comp.add(productName, 1, 1);
 
-            Text type = new Text("Tuotteen tyyppi");
-            comp.add(type, 0, 2);
-            ComboBox selectType = new ComboBox();
-            selectType.getItems().addAll(
-                    "Prosessori",
-                    "Emolevy",
-                    "Näytönohjain",
-                    "RAM",
-                    "Virtalähde",
-                    "SSD",
-                    "HDD",
-                    "Kotelo"
-            );
-            comp.add(selectType, 1, 2);
+        Text type = new Text("Tuotteen tyyppi");
+        comp.add(type, 0, 2);
+        ComboBox selectType = new ComboBox();
+        selectType.getItems().addAll(
+                "Prosessori",
+                "Emolevy",
+                "Näytönohjain",
+                "RAM",
+                "Virtalähde",
+                "SSD",
+                "HDD",
+                "Kotelo"
+        );
+        comp.add(selectType, 1, 2);
 
-            Text price = new Text("Tuotteen hinta");
-            comp.add(price, 0,3);
+        Text price = new Text("Tuotteen hinta");
+        comp.add(price, 0,3);
 
-            TextField productPrice = new TextField();
-            productPrice.setPrefWidth(350);
-            comp.add(productPrice, 1, 3);
+        TextField productPrice = new TextField();
+        productPrice.setPrefWidth(350);
+        comp.add(productPrice, 1, 3);
 
-            Text amount = new Text("Määrä varastossa");
-            comp.add(amount, 0 ,4);
+        Text amount = new Text("Määrä varastossa");
+        comp.add(amount, 0 ,4);
 
-            TextField warehouseAmount = new TextField();
-            warehouseAmount.setPrefWidth(350);
-            comp.add(warehouseAmount, 1, 4);
+        TextField warehouseAmount = new TextField();
+        warehouseAmount.setPrefWidth(350);
+        comp.add(warehouseAmount, 1, 4);
 
-            Button addProduct = new Button("Lisää");
-            addProduct.setOnAction(e -> {
-                luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), selectType.getSelectionModel().getSelectedItem().toString()));
-            });
-            comp.add(addProduct, 1, 5);
+        Button addProduct = new Button("Lisää");
+        addProduct.setOnAction(e -> {
+            luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), selectType.getSelectionModel().getSelectedItem().toString()));
+        });
+        comp.add(addProduct, 1, 5);
 
 
-            Scene stageScene = new Scene(comp, 500, 300);
-            newStage.setScene(stageScene);
-            newStage.show();
-        }
-
-        public void luoOsa(Osa osa) {
-            controller.luoOsa(osa);
-        }
-
-        public void haeOsat(String tyyppi) {
-            osaLista = controller.getOsat(tyyppi);
-            osaData = FXCollections.observableArrayList(osaLista);
-            tableVarasto.setItems(osaData);
-        }
+        Scene stageScene = new Scene(comp, 500, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+    }
+    
+    public void newPackagePopup(){
+        GridPane grid = new GridPane();
         
-        public void localizationSetText() {
-            Localization localization = Localization.getInstance();
-            //Varastosivu
-            btnProcessors.setText(localization.getBundle().getString("btn_processor"));  // = .setText("Prosessorit");
-            btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));  // = .setText("Emolevyt");
-            btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));  // = .setText("Näytönohjaimet");
-            btnRam.setText(localization.getBundle().getString("btn_ram"));  // = .setText("RAM");
-            btnPower.setText(localization.getBundle().getString("btn_power_source"));  // = .setText("Virtalähteet");
-            btnSsd.setText(localization.getBundle().getString("btn_ssd"));  // = .setText("SSD");
-            btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
-            btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
-            btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
-            btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
-            //tbl_col_type
-            //tbl_col_name
-            //tbl_col_unit_price
-            //tbl_col_quantity
-            //tbl_extra
-        }
+        //Tämä osa
+        HBox h = new HBox();
+        //Text lblThis = new Text(nimi);
+        TextField txtThis = new TextField();
+        
+        h.getChildren().add(txtThis);
+        h.setStyle("-fx-border-style: solid inside;");
+        
+        grid.add(h, 0, 0);
+        
+        //Aliosat
+        VBox v = new VBox();
+        grid.add(v, 1, 1);
+        
+        Button addBtn = new Button();
+        addBtn.setText("Lisää osa");
+        addBtn.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
+                //Aliosa
+                HBox h = new HBox();
+                Text lblThis = new Text("Uusi");
+                h.getChildren().add(lblThis);
+                h.setStyle("-fx-border-style: solid inside;");
+                
+                //Poista painike
+                h.getChildren().add(createDeleteButton(v, h));
+                
+                v.getChildren().add(h);
+            }}
+        );
+        grid.add(addBtn, 1, 0);
+        
+        //Osien yhteishinta
+        TextField txtProductCost = new TextField();
+        grid.add(txtProductCost, 1, 1);
+        
+        Stage newStage = new Stage();
+        newStage.setTitle("Luo uusi paketti");
+        Scene stageScene = new Scene(grid, 500, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+        
+        
+    }
+    
+    private Button createDeleteButton(VBox deleteSource, HBox deleteTarget) {
+        //Poista aliosa painike
+        Button delBtn = new Button();
+        delBtn.setText("Poista");
+        delBtn.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
+                //Poista HBox
+                //h.getChildren().clear();
+                deleteSource.getChildren().remove(deleteTarget);
+            }}
+        );
+        return delBtn;
+    }
+
+    public void luoOsa(Osa osa) {
+        controller.luoOsa(osa);
+    }
+
+    public void haeOsat(String tyyppi) {
+        osaLista = controller.getOsat(tyyppi);
+        osaData = FXCollections.observableArrayList(osaLista);
+        tableVarasto.setItems(osaData);
+    }
+
+    public void localizationSetText() {
+        Localization localization = Localization.getInstance();
+        //Varastosivu
+        btnProcessors.setText(localization.getBundle().getString("btn_processor"));  // = .setText("Prosessorit");
+        btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));  // = .setText("Emolevyt");
+        btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));  // = .setText("Näytönohjaimet");
+        btnRam.setText(localization.getBundle().getString("btn_ram"));  // = .setText("RAM");
+        btnPower.setText(localization.getBundle().getString("btn_power_source"));  // = .setText("Virtalähteet");
+        btnSsd.setText(localization.getBundle().getString("btn_ssd"));  // = .setText("SSD");
+        btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
+        btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
+        btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
+        btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
+        //tbl_col_type
+        //tbl_col_name
+        //tbl_col_unit_price
+        //tbl_col_quantity
+        //tbl_extra
+    }
 }
