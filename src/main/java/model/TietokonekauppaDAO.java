@@ -80,7 +80,31 @@ public class TietokonekauppaDAO {
         }
 
     }
+    public List<Osa> readOsat() {
+        // TODO Auto-generated method stub
+        ArrayList<Osa> osat = new ArrayList<>();
+        Session istunto = istuntotehdas.openSession();
+        try {
+            Transaction transaction = istunto.beginTransaction();
+            //@SuppressWarnings("unchecked")
+            List<Osa> result = istunto.createQuery("from Osa").list();
+            for (Osa v : result) {
+                osat.add(new Osa(v.getOsaNimi(), v.getOsaHinta()));
+            }
+            transaction.commit();
 
+           
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        } finally {
+            istunto.close();
+        }
+
+    }
+    
     /**
      *
      * @return result palauttaa listan kaikista Tilaus riveistä

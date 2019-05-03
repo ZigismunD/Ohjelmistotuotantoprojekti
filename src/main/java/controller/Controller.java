@@ -13,12 +13,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Asiakas;
 import model.Henkilosto;
 import model.Osa;
 import model.Paketti;
 import model.TietokonekauppaDAO;
 import model.Tilaus;
 import model.Tilaus_rivi;
+import view.Tab1;
 import view.View;
 import view.loginView;
 
@@ -75,7 +77,7 @@ public class Controller {
     
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
         Henkilosto user = dao.haeKayttaja(nimi, salasana);
-        
+
         //user.getRooli();
         
         //Kirjautuminen epäonnistui
@@ -97,20 +99,39 @@ public class Controller {
      * Hae tietokoneiden nimet ComboBoxiin
      * @param box ComboBox, johon nimet halutaan tuoda
      */
-    public void getAllComputerNames(ComboBox box) {
+    
+
+    
+     public ArrayList<Paketti> getAllComputerNames() {
+        ArrayList<Paketti> paketit = new ArrayList<>();
+        
         for (Paketti paketti : dao.readPaketit()) {
-           box.getItems().add(paketti);
+            paketit.add(paketti);
         }
-        box.getSelectionModel().selectFirst();
+        return paketit;
     }
+     public ArrayList<Osa> getAllOsat() {
+        ArrayList<Osa> osat = new ArrayList<>();
+        
+        for (Osa osa : dao.readOsat()) {
+            osat.add(osa);
+        }
+        return osat;
+    }
+    
     
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
+    
     public void createOrder() {
+        Tab1 tab1 = Tab1.getInstance();
+
         //Luo Tilaus_rivi lista productista
-        List<Tilaus_rivi> tilaukset = gui.getTilaukset();
-        
+        List<Tilaus_rivi> tilaukset = tab1.getTilaukset();
+        List<Asiakas> asiakas = tab1.getCustomer();
+        System.out.println(tilaukset);
+        System.out.println(asiakas);
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
@@ -127,18 +148,7 @@ public class Controller {
     public void createUser(Henkilosto henkilo) {
         dao.luoHenkilo(henkilo);
     }
-    
-    /**
-     * Hakee käyttöliittymästä valitun paketin ja hakee tietokannasta haluttuun tekstikenttään kyseisen paketin hinnan
-     * @param PriceTxt Tekstikenttä johon hinta halutaan tuoda
-     */
-    public void getPrice(TextField PriceTxt) {
-        double hinta = dao.haePaketinHinta(gui.getValitunPaketinIndex() + 1);
-        System.out.println(gui.getValitunPaketinIndex());
-        
-        PriceTxt.setText("" + hinta);
-    }
-    
+
     /**
      * Hakee tietokannasta kaikki tiettyä tyyppiä vastaavat osat
      * @param tyyppi Osat jotka tietokannasta halutaan hakea
@@ -169,4 +179,5 @@ public class Controller {
     public void luoOsa(Osa osa) {
         dao.luoOsa(osa);
     }
+    
 }

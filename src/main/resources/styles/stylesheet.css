@@ -17,9 +17,6 @@ btnSend{
     -fx-font-size: 25px;
 }
 
-GridPane {
-    -fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png');
-}
 
 Button:hover {
     -fx-background-color: #383838;
@@ -31,12 +28,8 @@ Button:pressed {
     -fx-scale-x: 0.9;
 }
 
-TableView {
-    -fx-background-color: #A5FFDC;
-}
-
 LineChart {
     -fx-background-color: #A5FFDC;
 }
-    
+
 

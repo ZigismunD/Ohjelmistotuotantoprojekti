@@ -6,9 +6,6 @@
 package view;
 
 import controller.Controller;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import view.View;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -75,6 +72,7 @@ public class loginView extends Application {
             });
             
             loginBtn.setId("login");
+            loginBtn.setDefaultButton(true); 
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
                     controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());
@@ -110,6 +108,7 @@ public class loginView extends Application {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
     }
     
     public void localizationSetText() {

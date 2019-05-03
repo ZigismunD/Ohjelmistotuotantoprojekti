@@ -51,6 +51,10 @@ public class Osa {
         this.tyyppi = tyyppi;
         this.hyllynNumero = hyllynNumero;
     }
+    public Osa(String nimi, double hinta){
+        this.osaNimi = nimi;
+        this.osaHinta = hinta;
+    }
 
     public Osa(String osaNimi, double osaHinta, int varastoMaara, String tyyppi) {
         this.osaNimi = osaNimi;
@@ -153,7 +157,9 @@ public class Osa {
         this.hyllynNumero = hyllynNumero;
     }
     
-    
+        public String toString(){
+        return this.osaNimi;
+    }
    
    
 }
