@@ -54,6 +54,7 @@ public class Tab3 extends Tab {
     private final GridPane grid3 = new GridPane();
     private final Tab tab3 = new Tab();
     private final TableView tableOrders = new TableView();
+    private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
     private final Button btnPurchases = new Button();
     private final Button btnAllEvents = new Button();
@@ -67,8 +68,8 @@ public class Tab3 extends Tab {
     
     
      private void createTab3() {
-        grid3.setHgap(0); // Horizontal gap
-        grid3.setVgap(0); // Vertical gap
+        grid3.setHgap(10); // Horizontal gap
+        grid3.setVgap(10); // Vertical gap
         //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
 
         btnOrders.setPrefSize(200, 100);
@@ -114,15 +115,40 @@ public class Tab3 extends Tab {
         additionalInfo.setMinWidth(500);
 
         tableOrders.getColumns().addAll(brand, client, orderDate, amount, additionalInfo);
-        tableOrders.setPrefHeight(700);
+        tableOrders.setPrefHeight(500);
         tableOrders.setPrefWidth(1600);
 
         final VBox vboxOrders = new VBox();
         vboxOrders.setSpacing(5);
         vboxOrders.setPadding(new Insets(0, 0, 0, 20));
         vboxOrders.getChildren().addAll(tableOrders);
+        
+        tableDetails.setEditable(true);
 
-        grid3.add(vboxOrders, 1, 0, 7, 7);
+        TableColumn products = new TableColumn("Tilaus ID");
+        products.setStyle("-fx-font-size: 14pt;");
+        products.setMinWidth(200);
+        products.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
+
+        TableColumn productamount = new TableColumn("Asiakas");
+        productamount.setStyle("-fx-font-size: 14pt;");
+        productamount.setMinWidth(500);
+        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>(""));
+
+        TableColumn ordersum = new TableColumn("Tilauspvm");
+        ordersum.setStyle("-fx-font-size: 14pt;");
+        ordersum.setMinWidth(200);
+        ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("s"));
+
+
+        tableDetails.getColumns().addAll(products, productamount, ordersum);
+        tableDetails.setPrefHeight(300);
+        tableDetails.setPrefWidth(1600);
+
+        final VBox vboxDetails = new VBox();
+        vboxDetails.setSpacing(5);
+        vboxDetails.setPadding(new Insets(0, 0, 0, 20));
+        vboxDetails.getChildren().addAll(tableDetails);
 
         btnAlterOrder.setId("alterOrder");
         btnAlterOrder.setPrefSize(200, 100);
@@ -134,8 +160,11 @@ public class Tab3 extends Tab {
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
         buttonsBox.getChildren().addAll(btnAlterOrder, btnRemoveOrder);
-        grid3.add(buttonsBox, 7, 8, 7, 10);
         
+        grid3.add(vboxOrders, 1, 0, 7, 7);
+        grid3.add(vboxDetails,1, 10, 7, 2);
+        grid3.add(buttonsBox, 7, 12, 7, 10);
+
         this.setContent(grid3);
         
         localizationSetText();

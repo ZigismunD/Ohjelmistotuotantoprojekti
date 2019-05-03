@@ -192,7 +192,7 @@ public class Tab1 extends Tab {
 
         productsTable.getColumns().addAll(productCol1, nameCol1, amountCol1, priceCol1);
         productsTable.setPrefHeight(300);
-
+        emailTxt.setPrefSize(400, 10);
         //Taulukon Vbox
         final VBox vboxProcuctsTable = new VBox();
         vboxProcuctsTable.setSpacing(5);
@@ -350,8 +350,8 @@ public class Tab1 extends Tab {
         grid1.add(btnAddproduct, 12, 9, 2, 1);
         grid1.add(btnDelproduct, 12, 10, 2, 1);
         grid1.add(vboxTempTable, 15, 7, 8, 4);
-        grid1.add(lblPrice, 21, 11);
-        grid1.add(PriceTxt, 22, 11);
+        grid1.add(lblPrice, 19, 11);
+        grid1.add(PriceTxt, 21, 11);
         grid1.add(btnSend, 22, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
