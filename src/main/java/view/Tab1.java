@@ -302,13 +302,13 @@ public class Tab1 extends Tab {
                     if (group.getSelectedToggle() == radio1) {
                         product = new Product(getValittuPaketti(), getOrderAmount());
                         tilausrivit.add(product);
-                        updatePrice(product.getPrice());
+                        updatePrice(product.getPrice()*getOrderAmount());
 
                     }
                     if (group.getSelectedToggle() == radio2) {
                         product = new Product(getValittuOsa(), getOrderAmount());
                         tilausrivit.add(product);
-                        updatePrice(product.getPrice());
+                        updatePrice(product.getPrice()* product.getAmount());
                     }
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
@@ -322,14 +322,13 @@ public class Tab1 extends Tab {
             @Override
             public void handle(ActionEvent e) {
                 if (tableTemp.getSelectionModel().getSelectedItem() != null) {
-                    Object removeItem = tableTemp.getSelectionModel().getSelectedItem();
+                    Product removeItem =(Product)tableTemp.getSelectionModel().getSelectedItem();
                     tableTemp.getItems().remove(removeItem);
-                    tilausrivit.forEach((prod) -> {
-                    updatePrice(-prod.getPrice());
+                    updatePrice(-(removeItem.getPrice()* removeItem.getAmount()));
                     tilausrivit.remove(removeItem);
-                    });
+                    lblWarning2.setText("");
                 } else {
-                    lblWarning.setText("Valitse ensin poistettava tuote");
+                    lblWarning2.setText("Valitse ensin poistettava tuote");
                 }
             }
         });
