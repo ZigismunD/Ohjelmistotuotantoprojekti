@@ -113,7 +113,6 @@ public class Tab1 extends Tab {
 
     private Tab1() {
         createTab1();
-
     }
 
     public static Tab1 getInstance() {
@@ -216,7 +215,7 @@ public class Tab1 extends Tab {
                             new PropertyValueFactory<Product, String>("paketinNimi"));
                     amountCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Integer>("paketinMaara"));
-
+                    filterList();
                 }
                 if (group.getSelectedToggle() == radio2) {
                     haeOsat();
@@ -226,8 +225,9 @@ public class Tab1 extends Tab {
                             new PropertyValueFactory<Product, String>("osaNimi"));
                     amountCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Integer>("varastoMaara"));
-
+                    filterList();
                 }
+
             }
         });
 
@@ -375,40 +375,56 @@ public class Tab1 extends Tab {
 
         localizationSetText();
 
-        /* 
-        FilteredList<Paketti> filteredData = new FilteredList<>(pakettiData, p -> true);
+        group.selectToggle(radio2);
+        group.selectToggle(radio1);
 
-        // 2. Set the filter Predicate whenever the filter changes.
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Paketti -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+    }
 
-                // Compare first name and last name field in your object with filter.
-                String lowerCaseFilter = newValue.toLowerCase();
+    private void filterList() {
+        if (group.getSelectedToggle() == radio1) {
+            FilteredList<Paketti> filteredData = new FilteredList<>(pakettiData, p -> true);
+            searchField.textProperty().addListener(((observable, oldValue, newValue) ->  {
+                filteredData.setPredicate(Paketti -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
 
-                if (String.valueOf(Paketti.getPaketinNimi()).toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                    // Filter matches first name.
+                    String lowerCaseFilter = newValue.toLowerCase();
 
-                } else if (String.valueOf(Paketti.getPaketinNimi()).toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                } 
+                    if (String.valueOf(Paketti.getPaketinNimi()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            }));
 
-                return false; // Does not match.
-            });
-        });
+            SortedList<Paketti> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
+            productsTable.setItems(sortedData);
+        }
 
-        // 3. Wrap the FilteredList in a SortedList. 
-        SortedList<Paketti> sortedData = new SortedList<>(filteredData);
+        if (group.getSelectedToggle() == radio2) {
+            FilteredList<Osa> filteredData = new FilteredList<>(osaData, p -> true);
+            searchField.textProperty().addListener(((observable, oldValue, newValue) ->  {
+                filteredData.setPredicate(Osa -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
 
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
-        // 5. Add sorted (and filtered) data to the table.
-        productsTable.setItems(sortedData);
-         */
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (String.valueOf(Osa.getOsaNimi()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            }));
+
+            SortedList<Osa> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
+            productsTable.setItems(sortedData);
+        }
+
     }
 
     public int getOrderAmount() {
