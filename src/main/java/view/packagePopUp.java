@@ -42,6 +42,9 @@ public class packagePopUp extends Application {
     VBox vProducts;
     TextField txtProductCost;
     
+    public packagePopUp() {
+    }
+    
     public void newPackagePopup(Paketti updatePackage){
         GridPane grid = new GridPane();
         
@@ -88,7 +91,7 @@ public class packagePopUp extends Application {
         //Paketin hinta
         Text lblPackageCost = new Text("Paketin hinta:");
         grid.add(lblPackageCost, 0, 4);
-        txtPackageCost = new TextField();
+        txtPackageCost = new TextField("0.0");
         grid.add(txtPackageCost, 1, 4);
         
         //Tallenna painike
@@ -100,11 +103,11 @@ public class packagePopUp extends Application {
         if (updatePackage != null) {
             //Kyseessä on update, täydennä pakkauksen tiedot kenttiin
             txtPackage.setText(updatePackage.getPaketinNimi());
-            txtProductCost.setText(Double.toString(updatePackage.getPaketinHinta()));
             
             Osa osa1 = new Osa("osa 1", 200, 300, "RAM");
             Osa osa2 = new Osa("osa 2", 50, 20, "Kotelo");
             Osa osa3 = new Osa("osa 3", 400, 55, "HDD");
+            
             ArrayList<Paketti_rivi> arr_paketti = new ArrayList<>();
             arr_paketti.add(new Paketti_rivi(updatePackage, osa1));
             arr_paketti.add(new Paketti_rivi(updatePackage, osa2));
@@ -149,8 +152,10 @@ public class packagePopUp extends Application {
         
         //Jos parametri Osa ei ole null niin täydennä sen tiedot
         if (osa != null) {
-            //cboProductType.selectionModelProperty().set(osa.getTyyppi());
-            //cboProduct.selectionModelProperty().set(osa);
+            cboProductType.getSelectionModel().select(osa.getTyyppi());
+            lblPrice.setText(Double.toString(osa.getOsaHinta()));
+            updateProductTotalCost(osa.getOsaHinta());
+            cboProduct.getSelectionModel().select(osa);
         }
         
         return hProduct;
@@ -224,7 +229,8 @@ public class packagePopUp extends Application {
                 //Tarkistus onko kyseessä päivittäminen vai uuden luominen
                 if (tmpPackage != null) {
                     //Paketin päivittäminen
-                    
+                    tmpPackage.setPaketinHinta(Double.parseDouble(txtPackageCost.getText()));
+                    tmpPackage.setPaketinNimi(txtPackage.getText());
                 } else {
                     //Rakenna paketti olio
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
@@ -242,7 +248,10 @@ public class packagePopUp extends Application {
                     }
                 }
                 
+                //Aseta paketille aliosat
                 //tmpPackage.setPakettiRivit(packageProducts);
+                
+                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
                 
             }}
         );
@@ -259,12 +268,10 @@ public class packagePopUp extends Application {
         txtPackageCost.setText(Double.toString(dPackageCost));
     }
     
-    //
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Luo testipakkaus
-        Paketti testPakkaus = new Paketti();
+        Paketti testPakkaus = new Paketti("TEST PAKETTI", 200);
         Osa osa1 = new Osa();
         Osa osa2 = new Osa();
         Osa osa3 = new Osa();
@@ -273,13 +280,14 @@ public class packagePopUp extends Application {
         //arr_paketti.add(new Paketti_rivi(testPakkaus, osa2));
         //arr_paketti.add(new Paketti_rivi(testPakkaus, osa3));
         //testPakkaus.setPakettiRivit(arr_paketti);
-        newPackagePopup(testPakkaus);
+        
+        newPackagePopup(null);
+        //newPackagePopup(testPakkaus);
         
     }
     
     public static void main(String[] args) {
         launch(args);
     }
-    
         
 }

@@ -41,7 +41,6 @@ public class Tilaus {
      * @param tilausPvm luo tilauksen päivämäärän 
      */
     public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm) {
-        
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;

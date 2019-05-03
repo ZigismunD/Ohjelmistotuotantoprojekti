@@ -73,6 +73,7 @@ public class loginView extends Application {
             });
             
             loginBtn.setId("login");
+            loginBtn.setDefaultButton(true); 
             loginBtn.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent ae) {
                     controller.loginUser(loginscreen, primaryStage, user.getText().toString(), password.getText().toString());

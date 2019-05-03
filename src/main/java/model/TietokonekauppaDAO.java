@@ -279,5 +279,23 @@ public class TietokonekauppaDAO {
             
         }
     }
+    
+    public void objectSaveUpdateDelete(Object obj, boolean saveOperation) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            if (saveOperation == true) {
+                //save or update
+                istunto.saveOrUpdate(obj);
+            } else if (saveOperation == false) {
+                //delete
+                istunto.delete(obj);
+            }
+            
+            istunto.getTransaction().commit();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

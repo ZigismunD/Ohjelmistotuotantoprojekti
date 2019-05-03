@@ -43,7 +43,6 @@ public class Osa {
      * @param tyyppi luo tuotteen tyypi (paketti tai osa)
      */
     public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
-        
         this.osaNimi = nimi;
         this.osaHinta = hinta;
         this.varastoMaara = varastoMaara;
