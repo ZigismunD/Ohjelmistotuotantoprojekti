@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import model.Asiakas;
 import model.Henkilosto;
@@ -21,39 +22,46 @@ import javax.persistence.Table;
  *
  * @author vadimzubchenko
  *
- * Luodaan olion TILAUS
- * ja uuden tietokantataulun olio-relaatiomuunnoksen annotaatiolla.
+ * Luodaan olion TILAUS ja uuden tietokantataulun olio-relaatiomuunnoksen
+ * annotaatiolla.
  */
 @Entity
 @Table(name = "TILAUS")
 public class Tilaus {
+
     /**
-     * luodaan olion muuttujat 
+     * luodaan olion muuttujat
      */
     private int id;
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private Date tilausPvm;
+    private ArrayList<Tilaus_rivi> tilausRivit = new ArrayList<>();
+    
+
     /**
      * luodaan konstruktorin 3-parametrilla
+     *
      * @param asiakas luo asiakkaan parametrit Asiakas-oliosta
      * @param henkilosto luo työntekijän parametrit Henkilosto-oliosta
-     * @param tilausPvm luo tilauksen päivämäärän 
+     * @param tilausPvm luo tilauksen päivämäärän
      */
     public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm) {
-        
+
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
     }
-    
+
     /**
      * luodaan parametriton konstruktorin
      */
     public Tilaus() {
     }
+
     /**
      * luodaan tauluun perusavaimen ja sen kenttä id
+     *
      * @return id palauttaa taulun tietokannan generoiman avainarvon
      */
     @Id
@@ -62,16 +70,19 @@ public class Tilaus {
     public int getTilausId() {
         return id;
     }
+
     /**
-     * 
+     *
      * @param Id asentaa tietokannan generoiman id olioon
      */
     public void setTilausId(int Id) {
         this.id = Id;
     }
+
     /**
-     * luodaan monen suhde yhteen-yhteyden, joka 
-     * tuottaa viiteavaimen Asiakas-olioon
+     * luodaan monen suhde yhteen-yhteyden, joka tuottaa viiteavaimen
+     * Asiakas-olioon
+     *
      * @return asikkaan parametrit Asiakas-oliosta
      */
     @ManyToOne
@@ -79,17 +90,19 @@ public class Tilaus {
     public Asiakas getAsiakas() {
         return asiakas;
     }
+
     /**
-     * 
-     * @param asiakas asentaa asiakkaan parametrit Asiakas-oliosta
-     * Tilaus-olioon
+     *
+     * @param asiakas asentaa asiakkaan parametrit Asiakas-oliosta Tilaus-olioon
      */
     public void setAsiakas(Asiakas asiakas) {
         this.asiakas = asiakas;
     }
+
     /**
-     * luodaan monen suhde yhteen-yhteyden, joka 
-     * tuottaa viiteavaimen Henkilosto-olioon
+     * luodaan monen suhde yhteen-yhteyden, joka tuottaa viiteavaimen
+     * Henkilosto-olioon
+     *
      * @return työntekijan parametrit Henkilosto-oliosta
      */
     @ManyToOne
@@ -97,28 +110,49 @@ public class Tilaus {
     public Henkilosto getHenkilosto() {
         return henkilosto;
     }
+
     /**
-     * 
+     *
      * @param henkilosto asentaa työntekijan parametrit Henkilosto-oliosta
      * Tilaus-olioon
      */
     public void setHenkilosto(Henkilosto henkilosto) {
         this.henkilosto = henkilosto;
     }
+
     /**
      * luodaan tauluun kentän "TilausPvm"
-     * @return tilausPvm palauttaa tulauksen päivämäärän 
+     *
+     * @return tilausPvm palauttaa tulauksen päivämäärän
      */
     @Column(name = "TilausPvm")
     public Date getTilausPvm() {
         return tilausPvm;
     }
+
     /**
-     * 
+     *
      * @param tilausPvm asentaa tilauksen päivämäärän Tilaus-olioon
      */
     public void setTilausPvm(Date tilausPvm) {
         this.tilausPvm = tilausPvm;
+    }
+
+    // tällä lisätään tilaus_rivi objektina arrayListaan
+    public void lisääTilausRivi(Tilaus_rivi tilausrivi) {
+        tilausRivit.add(tilausrivi);
+
+    }
+    
+    public double getYhtHinta(){
+        double yhtHinta = 0;
+        for (int i = 0; i < tilausRivit.size(); i++) {
+          double hinta = tilausRivit.get(i).getHinta();
+          yhtHinta += hinta;
+        }
+        return yhtHinta;
+
+ 
     }
 
 }

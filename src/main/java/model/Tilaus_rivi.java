@@ -35,6 +35,7 @@ public class Tilaus_rivi {
     private int maara;
     private Tilaus tilaus;
     private double hinta;
+    private Object tavara;
     /**
      * luodaan konstruktorin 5-lla parametrilla
      * @param tilaus luo tilauksen parametrit Tilaus oliosta
@@ -49,6 +50,7 @@ public class Tilaus_rivi {
         this.osa = osa;
         this.maara = maara;
         this.hinta = hinta;
+        
     }
     /**
      * luodaan parametriton konstruktorin 
@@ -60,6 +62,9 @@ public class Tilaus_rivi {
      * @param paketti luo paketin parametrit Paketti oliosta
      * @param orderAmount lou tilauksen pakettien ja osien yhteisen määrän
      */
+    
+    
+    
     public Tilaus_rivi(Paketti paketti, int orderAmount) {
         this.paketti = paketti;
         this.maara = orderAmount;

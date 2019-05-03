@@ -99,7 +99,7 @@ public class Controller {
      */
     public void getAllComputerNames(ComboBox box) {
         for (Paketti paketti : dao.readPaketit()) {
-            box.getItems().add(paketti);
+           box.getItems().add(paketti);
         }
         box.getSelectionModel().selectFirst();
     }
@@ -148,7 +148,7 @@ public class Controller {
         ArrayList<Osa> osat = new ArrayList<>();
         
         for (Osa osa : dao.getOsat(tyyppi)) {
-            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi()));
+            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi(), osa.getHyllynNumero()));
         }
         return osat;
     }

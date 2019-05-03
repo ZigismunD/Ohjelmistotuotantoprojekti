@@ -40,7 +40,7 @@ public class Localization {
                 Locale.setDefault(new Locale("en", "US"));
                 break; 
             case "RUS": 
-                Locale.setDefault(new Locale("en", "US"));
+                Locale.setDefault(new Locale("ru", "RU"));
                 break;
         }
         mybundle = ResourceBundle.getBundle("MyLabels");

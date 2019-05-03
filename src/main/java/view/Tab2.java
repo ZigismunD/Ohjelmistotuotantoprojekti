@@ -242,10 +242,16 @@ public class Tab2 extends Tab {
             TextField warehouseAmount = new TextField();
             warehouseAmount.setPrefWidth(350);
             comp.add(warehouseAmount, 1, 4);
-
+            
+            //TÄHÄN KENTTÄ HYLLYNUMEROLLE!!!
+            
             Button addProduct = new Button("Lisää");
             addProduct.setOnAction(e -> {
-                luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), selectType.getSelectionModel().getSelectedItem().toString()));
+                luoOsa(new Osa(productName.getText(), 
+                        Double.parseDouble(productPrice.getText()), 
+                        Integer.parseInt(warehouseAmount.getText()), 
+                        selectType.getSelectionModel().getSelectedItem().toString(),
+                        ""));
             });
             comp.add(addProduct, 1, 5);
 

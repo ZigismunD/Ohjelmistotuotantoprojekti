@@ -37,6 +37,7 @@ import model.TietokonekauppaDAO;
 import model.Tilaus;
 import model.Tilaus_rivi;
 
+
 /**
  *
  * @author RJulin
@@ -60,6 +61,9 @@ public class Tab1 extends Tab {
     
     // yleiset
     Scene scene;
+    
+    GridPane grid = new GridPane();
+    
     TabPane tabPane = new TabPane();
     ObservableList<Product> data;
     List<Product> tilausrivit;
@@ -67,6 +71,11 @@ public class Tab1 extends Tab {
     ObservableList<Osa> osaData;
     List<Tilaus> tilausLista;
     ObservableList<Tilaus> tilausData;
+    
+    
+    
+    
+    
 
     // ekasivu
     private final Text lblSales = new Text();
@@ -127,7 +136,7 @@ public class Tab1 extends Tab {
 
         // ComboboXXX
         productsdrop = new ComboBox();
-        controller.getAllComputerNames(productsdrop);
+        //controller.getAllComputerNames(productsdrop);
         productsdrop.setOnAction(e-> {
             controller.getPrice(UnitPriceTxt);
         });

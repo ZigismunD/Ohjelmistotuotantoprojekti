@@ -30,6 +30,7 @@ public class Osa {
    private double osaHinta;
    private int varastoMaara;
    private String tyyppi;
+   private String hyllynNumero;
     /**
      * luodaan tyhjän parametriton konstruktorin
      */
@@ -42,13 +43,22 @@ public class Osa {
      * @param varastoMaara luoo tuotteen määrän varastossa
      * @param tyyppi luo tuotteen tyypi (paketti tai osa)
      */
-    public Osa(String nimi, double hinta, int varastoMaara, String tyyppi) {
+    public Osa(String nimi, double hinta, int varastoMaara, String tyyppi, String hyllynNumero) {
         
         this.osaNimi = nimi;
         this.osaHinta = hinta;
         this.varastoMaara = varastoMaara;
         this.tyyppi = tyyppi;
+        this.hyllynNumero = hyllynNumero;
     }
+
+    public Osa(String osaNimi, double osaHinta, int varastoMaara, String tyyppi) {
+        this.osaNimi = osaNimi;
+        this.osaHinta = osaHinta;
+        this.varastoMaara = varastoMaara;
+        this.tyyppi = tyyppi;
+    }
+    
     /**
      * 
      * @return Id palauttaa taulun tietokannan generoiman avainarvon
@@ -125,6 +135,22 @@ public class Osa {
      */
     public void setTyyppi(String tyyppi) {
         this.tyyppi = tyyppi;
+    }
+    /**
+     * luodaan tauluun kentän "hylly"
+     *
+     * @return hyllynNumero palauttaa osan hyllyn numero
+     */
+    @Column(name = "hylly")
+    public String getHyllynNumero() {
+        return hyllynNumero;
+    }
+    /**
+     * 
+     * @param tyyppi asentaa osan hyllyn numeron  (paketti tai osa) olioon
+     */
+    public void setHyllynNumero(String hyllynNumero) {
+        this.hyllynNumero = hyllynNumero;
     }
     
     
