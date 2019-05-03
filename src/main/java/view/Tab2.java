@@ -44,14 +44,15 @@ import model.Tilaus;
 public class Tab2 extends Tab {
     
     //private Tab tab2;
-    
-    //Yleiset
-    Controller controller = Controller.getInstance();
-    Scene scene;
-    TabPane tabPane;
-    
-    List<Osa> osaLista;
-    ObservableList<Osa> osaData;
+    private Scene scene;
+    private TabPane tabPane;
+    private ObservableList<Product> data;
+    private List<Product> tilausrivit;
+    private List<Osa> osaLista;
+    private ObservableList<Osa> osaData;
+    private List<Tilaus> tilausLista;
+    private ObservableList<Tilaus> tilausData;
+    private Controller controller = Controller.getInstance();
     
     private final GridPane grid2 = new GridPane();
     private final TableView tableVarasto = new TableView();
@@ -68,23 +69,23 @@ public class Tab2 extends Tab {
     private final Button btnAlterProduct = new Button();
     private final Button btnAddPackage = new Button();
     private final Text merkki = new Text();
-    TextField productBrand = new TextField();
-    TextField productName = new TextField();
-    Text type = new Text();
-    Text price = new Text();
-    TextField productPrice = new TextField();
-    TextField warehouseAmount = new TextField();
-    Button addProduct = new Button();
-    ComboBox selectType = new ComboBox();
-    Text amount = new Text();
-    Text processor = new Text();
-    Text motherboard = new Text();
-    Text graphics = new Text();
-    Text RAM = new Text();
-    Text powersupply = new Text();
-    Text SSD = new Text();
-    Text HDD = new Text();
-    Text cases = new Text();
+    private TextField productBrand = new TextField();
+    private TextField productName = new TextField();
+    private Text type = new Text();
+    private Text price = new Text();
+    private TextField productPrice = new TextField();
+    private TextField warehouseAmount = new TextField();
+    private Button addProduct = new Button();
+    private ComboBox selectType = new ComboBox();
+    private Text amount = new Text();
+    private Text processor = new Text();
+    private Text motherboard = new Text();
+    private Text graphics = new Text();
+    private Text RAM = new Text();
+    private Text powersupply = new Text();
+    private Text SSD = new Text();
+    private Text HDD = new Text();
+    private Text cases = new Text();
     String[] osat = osienTietokantaTyypit();
     /*"Prosessori",
             "Emolevy",
