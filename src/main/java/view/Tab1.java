@@ -310,6 +310,7 @@ public class Tab1 extends Tab {
                         tilausrivit.add(product);
                         updatePrice(product.getPrice()* product.getAmount());
                     }
+                    orderAmount.getSelectionModel().selectFirst();
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
                     lblWarning.setText("");

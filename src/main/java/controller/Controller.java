@@ -130,8 +130,8 @@ public class Controller {
         //Luo Tilaus_rivi lista productista
         List<Tilaus_rivi> tilaukset = tab1.getTilaukset();
         List<Asiakas> asiakas = tab1.getCustomer();
-        System.out.println(tab1.getCustomer());
-        System.out.println(tab1.getTilaukset());
+        System.out.println(tilaukset);
+        System.out.println(asiakas);
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
