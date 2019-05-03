@@ -34,7 +34,7 @@ public class Product {
         this.amount = Samount;
         this.tilausrivi = new Tilaus_rivi(objekti, Samount);
     }
-
+    
     public String getName() {
         return name;
     }

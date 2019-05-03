@@ -110,6 +110,7 @@ public class Tab1 extends Tab {
     private final RadioButton radio1 = new RadioButton();
     private final RadioButton radio2 = new RadioButton();
     private final ToggleGroup group = new ToggleGroup();
+    private final TextField PriceTxt = new TextField();
 
     private Tab1() {
         createTab1();
@@ -173,22 +174,24 @@ public class Tab1 extends Tab {
 
         VboxCustomer.getChildren().addAll(hboxCompany,hboxAddress,hboxEmail,hboxPhone);
          */
-        TextField PriceTxt = new TextField();
-
         TableColumn productCol1 = new TableColumn("Tuote");
-        productCol1.setStyle("-fx-font-size: 14pt;");
-        productCol1.setMinWidth(200);
+        productCol1.setStyle("-fx-font-size: 12pt;");
+        productCol1.setMinWidth(100);
+
+        TableColumn nameCol1 = new TableColumn("Nimi");
+        nameCol1.setStyle("-fx-font-size: 12pt;");
+        nameCol1.setMinWidth(300);
 
         TableColumn amountCol1 = new TableColumn("Määrä");
-        amountCol1.setStyle("-fx-font-size: 14pt;");
-        amountCol1.setMinWidth(400);
+        amountCol1.setStyle("-fx-font-size: 12pt;");
+        amountCol1.setMinWidth(150);
 
         TableColumn priceCol1 = new TableColumn("Hinta(kpl)");
-        priceCol1.setStyle("-fx-font-size: 14pt;");
+        priceCol1.setStyle("-fx-font-size: 12pt;");
         priceCol1.setMinWidth(150);
 
-        productsTable.getColumns().addAll(productCol1, amountCol1, priceCol1);
-        productsTable.setPrefHeight(250);
+        productsTable.getColumns().addAll(productCol1, nameCol1, amountCol1, priceCol1);
+        productsTable.setPrefHeight(300);
 
         //Taulukon Vbox
         final VBox vboxProcuctsTable = new VBox();
@@ -211,7 +214,7 @@ public class Tab1 extends Tab {
                     haePaketit();
                     priceCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Double>("paketinHinta"));
-                    productCol1.setCellValueFactory(
+                    nameCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, String>("paketinNimi"));
                     amountCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Integer>("paketinMaara"));
@@ -219,9 +222,11 @@ public class Tab1 extends Tab {
                 }
                 if (group.getSelectedToggle() == radio2) {
                     haeOsat();
+                    productCol1.setCellValueFactory(
+                            new PropertyValueFactory<Product, Double>("tyyppi"));
                     priceCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Double>("osaHinta"));
-                    productCol1.setCellValueFactory(
+                    nameCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, String>("osaNimi"));
                     amountCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, Integer>("varastoMaara"));
@@ -259,68 +264,59 @@ public class Tab1 extends Tab {
         lblWarning.setFill(Color.rgb(255, 0, 0));
         lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 12));
         lblWarning2.setFill(Color.rgb(255, 0, 0));
+        PriceTxt.setText(""+0);
 
         tableTemp.setEditable(true);
 
-        TableColumn productCol = new TableColumn("Tuote");
-        productCol.setStyle("-fx-font-size: 14pt;");
+        TableColumn productCol = new TableColumn("Nimi");
+        productCol.setStyle("-fx-font-size: 12pt;");
         productCol.setMinWidth(400);
         productCol.setCellValueFactory(
                 new PropertyValueFactory<Product, String>("name"));
 
         TableColumn amountCol = new TableColumn("Määrä");
-        amountCol.setStyle("-fx-font-size: 14pt;");
+        amountCol.setStyle("-fx-font-size: 12pt;");
         amountCol.setMinWidth(200);
         amountCol.setCellValueFactory(
                 new PropertyValueFactory<Product, Integer>("amount"));
 
         TableColumn priceCol = new TableColumn("Hinta(kpl)");
-        priceCol.setStyle("-fx-font-size: 14pt;");
+        priceCol.setStyle("-fx-font-size: 12pt;");
         priceCol.setMinWidth(150);
         priceCol.setCellValueFactory(
                 new PropertyValueFactory<Product, Double>("price"));
 
         tableTemp.getColumns().addAll(productCol, amountCol, priceCol);
-        tableTemp.setPrefHeight(250);
+        tableTemp.setPrefHeight(300);
 
         //Taulukon Vbox
         final VBox vboxTempTable = new VBox();
         vboxTempTable.setSpacing(5);
-        vboxTempTable.getChildren().addAll(lblWarning2,tableTemp);
+        vboxTempTable.getChildren().addAll(lblWarning2, tableTemp);
 
         btnAddproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
-                //    Tilaus_rivi tilausrivi = new Tilaus_rivi(getValittuPaketti(), getOrderAmount());
-                //System.out.println(new Product(tilausrivi,getOrderAmount(),getValitunPaketinIndex()));
+                Product product;
                 if (productsTable.getSelectionModel().getSelectedItem() != null) {
                     if (group.getSelectedToggle() == radio1) {
-                        tilausrivit.add(new Product(getValittuPaketti(), getOrderAmount()));
+                        product = new Product(getValittuPaketti(), getOrderAmount());
+                        tilausrivit.add(product);
+                        updatePrice(product.getPrice());
+
                     }
                     if (group.getSelectedToggle() == radio2) {
-                        tilausrivit.add(new Product(getValittuOsa(), getOrderAmount()));
+                        product = new Product(getValittuOsa(), getOrderAmount());
+                        tilausrivit.add(product);
+                        updatePrice(product.getPrice());
                     }
-
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
                     lblWarning.setText("");
                 } else {
                     lblWarning.setText("Valitse ensin tuote");
-
-                }
-
-                for (int i = 0; i < tilausrivit.size(); i++) {
-                    tilausrivit.forEach((prod) -> {
-                        PriceTxt.setText("" + prod.getPrice());
-
-                        /*  for(int i = 0; i < tilausrivit.size(); i++){
-                PriceTxt.setText(""+(tilausrivit.get(i).getPrice()*tilausrivit.get(i).getAmount())*tilausrivit.size());
-                }*/
-                    });
-                }
+                }   
             }
-
         });
         btnDelproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -328,7 +324,10 @@ public class Tab1 extends Tab {
                 if (tableTemp.getSelectionModel().getSelectedItem() != null) {
                     Object removeItem = tableTemp.getSelectionModel().getSelectedItem();
                     tableTemp.getItems().remove(removeItem);
+                    tilausrivit.forEach((prod) -> {
+                    updatePrice(-prod.getPrice());
                     tilausrivit.remove(removeItem);
+                    });
                 } else {
                     lblWarning.setText("Valitse ensin poistettava tuote");
                 }
@@ -344,33 +343,24 @@ public class Tab1 extends Tab {
         grid1.add(radio1, 3, 3);
         grid1.add(radio2, 5, 3);
         grid1.add(lblProduct, 2, 5);
-        grid1.add(searchField, 3, 5, 4, 1);
-        grid1.add(vboxProcuctsTable, 3, 7, 4, 4);
-        grid1.add(lblOrderAmount, 8, 7);
-        grid1.add(orderAmount, 9, 7);
-        grid1.add(btnAddproduct, 8, 9, 2, 1);
-        grid1.add(btnDelproduct, 8, 10, 2, 1);
-        grid1.add(vboxTempTable, 12, 7, 4, 4);
+        grid1.add(searchField, 3, 5, 8, 1);
+        grid1.add(vboxProcuctsTable, 3, 7, 8, 4);
+        grid1.add(lblOrderAmount, 12, 8);
+        grid1.add(orderAmount, 13, 8);
+        grid1.add(btnAddproduct, 12, 9, 2, 1);
+        grid1.add(btnDelproduct, 12, 10, 2, 1);
+        grid1.add(vboxTempTable, 15, 7, 8, 4);
+        grid1.add(lblPrice, 21, 11);
+        grid1.add(PriceTxt, 22, 11);
+        grid1.add(btnSend, 22, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
-        grid1.add(lblCompany, 2, 15);
-        grid1.add(companyTxt, 3, 15, 5, 1);
-        grid1.add(lblAddress, 2, 17);
-        grid1.add(addressTxt, 3, 17, 5, 1);
-        grid1.add(lblEmail, 2, 19);
-        grid1.add(emailTxt, 3, 19, 5, 1);
-
-        //grid1.add(lblSales, 2, 1, 4, 2);
-        //  grid1.add(lblUnitPrice, 2, 7);
-        //  grid1.add(lblAddproduct, 2, 8);
-        //  grid1.add(btnAddproduct, 3, 8);
-        //   grid1.add(lblOther, 2, 31);
-        //   grid1.add(otherTxt, 3, 31);
+        grid1.add(lblCompany, 2, 13);
+        grid1.add(companyTxt, 3, 13, 4, 1);
+        grid1.add(lblAddress, 2, 15);
+        grid1.add(addressTxt, 3, 15, 4, 1);
+        grid1.add(lblEmail, 2, 17);
+        grid1.add(emailTxt, 3, 17, 4, 1);
         tab1.setContent(grid1);
-        //grid1.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
-
-        //   grid1.add(lblPrice, 2, 11);
-        //   grid1.add(PriceTxt, 30, 31);
-        //   grid1.add(btnSend, 35, 31);
         this.setContent(grid1);
 
         localizationSetText();
@@ -501,6 +491,12 @@ public class Tab1 extends Tab {
         osaData = FXCollections.observableArrayList(osaLista);
         productsTable.setItems(osaData);
         System.out.println(osaData);
+    }
+
+    public void updatePrice(Double priceChange) {
+        double totalPrice = Double.parseDouble(PriceTxt.getText());
+        totalPrice = priceChange + totalPrice;
+        PriceTxt.setText(Double.toString(totalPrice));
     }
 
 }
