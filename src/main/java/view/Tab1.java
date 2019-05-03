@@ -47,6 +47,7 @@ import model.Product;
 import model.Tilaus;
 import model.Tilaus_rivi;
 
+
 /**
  *
  * @author RJulin

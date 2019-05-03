@@ -158,7 +158,7 @@ public class Controller {
         ArrayList<Osa> osat = new ArrayList<>();
         
         for (Osa osa : dao.getOsat(tyyppi)) {
-            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi()));
+            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi(), osa.getHyllynNumero()));
         }
         return osat;
     }

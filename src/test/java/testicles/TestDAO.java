@@ -31,7 +31,7 @@ public class TestDAO {
         //2.Tarkista että henkilö on luotu
         System.out.println("Henkilön id: " + henkiloId);  
         */
-        /*        
+      /*          
         //Hae henkilön rooli
         String nimi = "Admin";
         String salasana = "salis";

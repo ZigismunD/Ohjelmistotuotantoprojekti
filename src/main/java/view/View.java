@@ -6,6 +6,8 @@
 package view;
 
 import controller.Controller;
+import java.awt.Image;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -23,6 +25,11 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.Localization;
 import model.Osa;
 import model.Paketti;
@@ -96,6 +103,68 @@ public class View extends Application {
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
             
+            // buttons ja text for GridPane
+            //creating label email 
+            Text text1 = new Text("Tervetuloa: ");       
+
+            //creating label password 
+            Text text2 = new Text("Kirjautumisaika: "); 
+
+            //Creating Text Filed for email        
+            TextField textField1 = new TextField();       
+
+            //Creating Text Filed for password        
+            TextField textField2 = new TextField();  
+
+            //Creating Buttons 
+            Button button1 = new Button("Suomi"); 
+            Button button2 = new Button("Englanti");  
+            Button button3 = new Button("Venäjä"); 
+            Button button4 = new Button("Kirjaudu ulos");
+           // Vadim Jatka tästä 
+//            button1.setPrefSize(50, 50);
+//            //Image imageOk = new Image(getClass().getResourceAsStream("yes.png"));
+//            ImageView img = new ImageView();
+//            img.setPreserveRatio(true);
+//            img.fitWidthProperty().bind(button1.widthProperty());
+//            img.fitHeightProperty().bind(button2.heightProperty());
+//            button1.setGraphic(img);
+//            
+//            
+//            
+//            button1.setGraphic(text2);
+//            button2.setGraphic(text2);
+//            button3.setGraphic(text2);
+            
+            
+            GridPane gridPane = new GridPane();
+            //Setting size for the pane  
+            gridPane.setMinSize(1900, 100);
+            //Setting the vertical and horizontal gaps between the columns 
+            gridPane.setVgap(10); 
+            gridPane.setHgap(10);
+            //Setting the padding  
+            gridPane.setPadding(new Insets(10, 10, 10, 10)); 
+            
+            HBox hEmpty = new HBox();
+            hEmpty.setMinSize(700, 50);
+            
+            //Arranging all the nodes in the grid 
+            gridPane.add(text1, 0, 0); 
+            gridPane.add(textField1, 1, 0); 
+            gridPane.add(text2, 0, 1);       
+            gridPane.add(textField2, 1, 1);
+            gridPane.add(hEmpty, 2, 0);
+            gridPane.add(button1, 3, 0); 
+            gridPane.add(button2, 4, 0); 
+            gridPane.add(button3, 5, 0); 
+            gridPane.add(button4, 6, 0);
+            
+            VBox vBox = new VBox();
+            vBox.getChildren().add(gridPane);
+            vBox.getChildren().add(tabPane);
+            
+            
             // KIRJAUTUMISTA
             /*
             if (checkUser.equals(user1) && checkPw.equals(pw1)){
@@ -108,8 +177,7 @@ public class View extends Application {
                 tabPane.getTabs().add(tab3);
             }
             */
-            
-            scene = new Scene(tabPane, 1900, 1000);
+            scene = new Scene(vBox, 1900, 1000);
             scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
             borderPane.prefHeightProperty().bind(scene.heightProperty());
@@ -190,5 +258,8 @@ public class View extends Application {
         //series.setName("Ostot");
         //lineChart.setTitle("Ostotiedot");
         */
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 }

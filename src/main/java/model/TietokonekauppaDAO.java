@@ -16,13 +16,13 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class TietokonekauppaDAO {
-    
+
     SessionFactory istuntotehdas = null;
     final StandardServiceRegistry registry;
-    
+
     /**
-    * Konstruktori
-    */
+     * Konstruktori
+     */
     public TietokonekauppaDAO() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -41,17 +41,17 @@ public class TietokonekauppaDAO {
             e.printStackTrace();
         }
     }
-    
+
     public boolean isSessionFactoryConnected() {
         if (istuntotehdas != null) {
             return true;
         } else {
-            return false;   
+            return false;
         }
     }
-    
+
     /**
-     * 
+     *
      * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
@@ -63,7 +63,7 @@ public class TietokonekauppaDAO {
             //@SuppressWarnings("unchecked")
             List<Paketti> result = istunto.createQuery("from Paketti").list();
             for (Paketti v : result) {
-                paketit.add(new Paketti(v.getPaketinNimi(), v.getPaketinHinta()));
+                paketit.add(new Paketti(v.getPaketinNimi(), v.getVarastoMaara(), v.getPaketinHinta()));
             }
             transaction.commit();
 
@@ -106,7 +106,7 @@ public class TietokonekauppaDAO {
     }
     
     /**
-     * 
+     *
      * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
@@ -117,9 +117,9 @@ public class TietokonekauppaDAO {
             Transaction transaction = istunto.beginTransaction();
             //@SuppressWarnings("unchecked")
             List<Tilaus> result = istunto.createQuery("from Tilaus").list();
-            
+
             transaction.commit();
-            
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,9 +130,9 @@ public class TietokonekauppaDAO {
         }
 
     }
-    
+
     /**
-     * 
+     *
      * @param id - olion haetun id
      * @return result palauttaa paketti olion haetun id:n perusteella
      */
@@ -141,15 +141,15 @@ public class TietokonekauppaDAO {
             istunto.beginTransaction();
             Paketti pak = new Paketti();
             istunto.load(pak, id);
-            return new Paketti(pak.getPaketinNimi(), pak.getPaketinHinta());
+            return new Paketti(pak.getPaketinNimi(), pak.getVarastoMaara(), pak.getPaketinHinta());
         } catch (Exception e) {
             return null;
         }
     }
-    
+
     /**
-     * 
-     * @param id 
+     *
+     * @param id
      * @return result palauttaa paketin hinnan haetun id:n perusteella
      */
     public Double haePaketinHinta(int id) {
@@ -162,9 +162,9 @@ public class TietokonekauppaDAO {
             return null;
         }
     }
-    
+
     /**
-     * 
+     *
      * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
@@ -187,9 +187,9 @@ public class TietokonekauppaDAO {
             istunto.close();
         }
     }
-    
+
     /**
-     * 
+     *
      * @param nimi - työntekijän nimi
      * @return henkilo palauttaa Henkilosto rivin haetun nimen perusteella
      */
@@ -202,7 +202,7 @@ public class TietokonekauppaDAO {
             List<Henkilosto> result = istunto.createQuery("from Henkilosto where Kirjautumistunnus = '" + nimi + "' AND Salasana = '" + salasana + "'").list();
             henkilo = result.get(0);
             transaction.commit();
-            
+
             return henkilo;
         } catch (Exception e) {
             e.printStackTrace();
@@ -212,23 +212,24 @@ public class TietokonekauppaDAO {
             istunto.close();
         }
     }
-    
+
     /**
      * Luo Henkilosto rivin tietokantaan annetusta Henkilosto-oliosta
+     *
      * @param henkilo työntekijän nimi
      * @return id palauttaaa työntekijän parametrit Henkilosto-oliosta
      */
     public int luoHenkilo(Henkilosto henkilo) {
         int id = 0;
-        
+
         try (Session istunto = istuntotehdas.openSession()) {
             Transaction transaktio = istunto.beginTransaction();
             //Henkilosto henkilo = new Henkilosto(username, role);
             istunto.save(henkilo);
             //Ota id talteen
             id = henkilo.getHenkiloId();
-            
-            transaktio.commit();    
+
+            transaktio.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,9 +245,10 @@ public class TietokonekauppaDAO {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Poistaa rivin Henkilosto taulusta annetun Henkilosto olion perusteella
+     *
      * @param henkilo työnkekijän nimi
      */
     public void poistaHenkilo(Henkilosto henkilo) {
@@ -255,25 +257,27 @@ public class TietokonekauppaDAO {
             //henkilo = istunto.find(Henkilosto.class, henkilo.getHenkiloId());
             //assertThat(henkilo, notNullValue());
             istunto.delete(henkilo);
-            
-            transaktio.commit();  
+
+            transaktio.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * Luo Tilaus rivin, ja asettaa annetun Tilaus_rivi listan oliot viittaamaan siihen
+     * Luo Tilaus rivin, ja asettaa annetun Tilaus_rivi listan oliot viittaamaan
+     * siihen
+     *
      * @param tilaukset - asikkaiden valmiit tilaukset
      */
     public void luoTilaus(List<Tilaus_rivi> tilaukset) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
-            
+
             //Luo Tilaus olio
             Tilaus tilaus = new Tilaus(null, null, new Date());
             istunto.saveOrUpdate(tilaus);
-            
+
             //Looppaa tilaus rivejä
             for (Tilaus_rivi tilaus_rivi : tilaukset) {
                 //Aseta viiteavain
@@ -281,18 +285,20 @@ public class TietokonekauppaDAO {
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
             }
-            
+
             istunto.getTransaction().commit();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
-        }        
+        }
     }
-    
+
     /**
-     * Palauttaa listan Osa taulun riveistä joiden tyyppi on sama kuin annettulla String muuttujalla
+     * Palauttaa listan Osa taulun riveistä joiden tyyppi on sama kuin
+     * annettulla String muuttujalla
+     *
      * @param tyyppi tilauksen tyypi osa tai paketti
-     * @return result palauttaa listan Osa taulun riveistä 
+     * @return result palauttaa listan Osa taulun riveistä
      */
     public List<Osa> getOsat(String tyyppi) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -300,7 +306,7 @@ public class TietokonekauppaDAO {
             List<Osa> result = istunto.createQuery("from Osa where Tyyppi='" + tyyppi + "'").list();
             transaktio.commit();
             return result;
-            
+
         }
     }
     
