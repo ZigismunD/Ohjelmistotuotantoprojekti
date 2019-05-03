@@ -63,7 +63,7 @@ public class Tilaus_rivi {
      * @param orderAmount lou tilauksen pakettien ja osien yhteisen määrän
      */
     public Tilaus_rivi(Object objekti, int orderAmount) {
-         if (objekti instanceof Paketti) {
+        if (objekti instanceof Paketti) {
             this.paketti = (Paketti) objekti;
         }
         if (objekti instanceof Osa) {

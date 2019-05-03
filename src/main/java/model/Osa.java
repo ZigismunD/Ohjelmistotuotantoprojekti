@@ -145,7 +145,7 @@ public class Osa {
      *
      * @return hyllynNumero palauttaa osan hyllyn numero
      */
-    @Column(name = "hylly")
+    @Column(name = "hyllyNumero")
     public String getHyllynNumero() {
         return hyllynNumero;
     }

@@ -48,11 +48,8 @@ public class Paketti_rivi {
      * @param osa luo osan parametrit Osa-oliosta
      */
     public Paketti_rivi( Paketti paketti, Osa osa) {
-
-        this.osa = osa;
-
         this.paketti = paketti;
-
+        this.osa = osa;
     }
 
     /**

@@ -20,7 +20,6 @@ public class TestDAO {
     public static void main(String[] args) {
         TietokonekauppaDAO dao = new TietokonekauppaDAO();
         
-        /*
         //1.Luo henkilö
         Henkilosto henkilo1 = new Henkilosto();
         int henkiloId;
@@ -30,8 +29,8 @@ public class TestDAO {
         
         //2.Tarkista että henkilö on luotu
         System.out.println("Henkilön id: " + henkiloId);  
-        */
-      /*          
+        
+        /*
         //Hae henkilön rooli
         String nimi = "Admin";
         String salasana = "salis";

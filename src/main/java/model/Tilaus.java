@@ -7,6 +7,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import model.Asiakas;
 import model.Henkilosto;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Tilaus {
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private Date tilausPvm;
-    private ArrayList<Tilaus_rivi> tilausRivit = new ArrayList<>();
+    //private List<Tilaus_rivi> tilausRivit = new ArrayList<Tilaus_rivi>();
     
 
     /**
@@ -137,10 +138,19 @@ public class Tilaus {
         this.tilausPvm = tilausPvm;
     }
 
+    /*
+    @Column(name = "TilausRivit")
+    public List<Tilaus_rivi> getTilausRivit() {
+        return tilausRivit;
+    }
+    
+    public void setTilausRivit(ArrayList<Tilaus_rivi> tilausRivit) {
+        this.tilausRivit = tilausRivit;
+    }
+    
     // tällä lisätään tilaus_rivi objektina arrayListaan
     public void lisääTilausRivi(Tilaus_rivi tilausrivi) {
-        tilausRivit.add(tilausrivi);
-
+        this.tilausRivit.add(tilausrivi);
     }
     
     public double getYhtHinta(){
@@ -150,8 +160,6 @@ public class Tilaus {
           yhtHinta += hinta;
         }
         return yhtHinta;
-
- 
     }
-
+    */
 }

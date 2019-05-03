@@ -192,70 +192,70 @@ public class Tests {
         tilaus.setTilausId(69);
         assertEquals(69, tilaus.getTilausId(), "TilausId:n muutos epäonnistui");
     }
-    @Test
-    public void testaaSetTilausRivi() {
-        Tilaus tilaus = new Tilaus(new Asiakas("Herra Huu", "Korpi", "huu@mail.fi"), new Henkilosto("Vadim", "IT-insinööri"), new Date());
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti paketti = new Paketti("SupeGamer", 2000);
-        Tilaus_rivi rivi  = new Tilaus_rivi(tilaus, paketti, osa, 1, 2200);
-        Tilaus_rivi rivi2  = new Tilaus_rivi(tilaus, paketti, osa, 1, 2200);
-        tilaus.lisääTilausRivi(rivi);
-        tilaus.lisääTilausRivi(rivi2);
-        tilaus.getYhtHinta();
-        assertEquals(4400.0, tilaus.getYhtHinta(), "Paketin rakentaminen ei onnistunut");
-    }
-    
-    // Paketti_rivi.javan testaus
-    @Test
-    public void testaaPakettiRiviGetPaketti() {
-        Paketti_rivi pkt = new Paketti_rivi();
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        pkt = new Paketti_rivi(paketti, osa);
-        assertEquals(paketti, pkt.getPaketti(), "Paketin haku epäonnistui");
-    }
-    @Test
-    public void testaaPakettiRiviSetPaketti() {
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
-        pkt.setPaketti(new Paketti("testi", 900));
-        assertNotEquals(paketti, pkt.getPaketti(), "Paketin asetus epäonnistui");
-    }
-    @Test
-    public void testaaPakettiRiviGetOsa() {
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
-        assertEquals(osa, pkt.getOsa(), "Osan haku epäonnistui");
-    }
-    
-    @Test
-    public void testaaPakettiRiviSetOsa() {
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
-        pkt.setOsa(new Osa("testi", 900, 70, "Prosessori"));
-        assertNotEquals(osa, pkt.getOsa(), "Osan asetus epäonnistui");
-    }
-    
-    @Test
-    public void testaaPakettiRiviId() {
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
-        pkt.setPakettiId(666);
-        assertEquals(666, pkt.getPakettiId(), "Paketin id asetus ja haku epäonnistui");
-    }
-    @Test
-    public void testaaSetPakettiRivit() {
-        Paketti paketti = new Paketti("Paketti", 100);
-        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
-        Paketti_rivi pakkaus  = new Paketti_rivi(paketti, osa);
-        paketti.lisaaPakettiRivi(pakkaus);
-        paketti.getYhtPakettiHinta();
-        assertEquals(200.0, paketti.getYhtPakettiHinta(), "Paketin rakentaminen ei onnistunut");
-    }
+//    @Test
+//    public void testaaSetTilausRivi() {
+//        Tilaus tilaus = new Tilaus(new Asiakas("Herra Huu", "Korpi", "huu@mail.fi"), new Henkilosto("Vadim", "IT-insinööri"), new Date());
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti paketti = new Paketti("SupeGamer", 2000);
+//        Tilaus_rivi rivi  = new Tilaus_rivi(tilaus, paketti, osa, 1, 2200);
+//        Tilaus_rivi rivi2  = new Tilaus_rivi(tilaus, paketti, osa, 1, 2200);
+//        tilaus.lisääTilausRivi(rivi);
+//        tilaus.lisääTilausRivi(rivi2);
+//        tilaus.getYhtHinta();
+//        assertEquals(4400.0, tilaus.getYhtHinta(), "Paketin rakentaminen ei onnistunut");
+//    }
+//    
+//    // Paketti_rivi.javan testaus
+//    @Test
+//    public void testaaPakettiRiviGetPaketti() {
+//        Paketti_rivi pkt = new Paketti_rivi();
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        pkt = new Paketti_rivi(paketti, osa);
+//        assertEquals(paketti, pkt.getPaketti(), "Paketin haku epäonnistui");
+//    }
+//    @Test
+//    public void testaaPakettiRiviSetPaketti() {
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
+//        pkt.setPaketti(new Paketti("testi", 900));
+//        assertNotEquals(paketti, pkt.getPaketti(), "Paketin asetus epäonnistui");
+//    }
+//    @Test
+//    public void testaaPakettiRiviGetOsa() {
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
+//        assertEquals(osa, pkt.getOsa(), "Osan haku epäonnistui");
+//    }
+//    
+//    @Test
+//    public void testaaPakettiRiviSetOsa() {
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
+//        pkt.setOsa(new Osa("testi", 900, 70, "Prosessori"));
+//        assertNotEquals(osa, pkt.getOsa(), "Osan asetus epäonnistui");
+//    }
+//    
+//    @Test
+//    public void testaaPakettiRiviId() {
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti_rivi pkt = new Paketti_rivi(paketti, osa);
+//        pkt.setPakettiId(666);
+//        assertEquals(666, pkt.getPakettiId(), "Paketin id asetus ja haku epäonnistui");
+//    }
+//    @Test
+//    public void testaaSetPakettiRivit() {
+//        Paketti paketti = new Paketti("Paketti", 100);
+//        Osa osa = new Osa("Osa", 200.0, 69, "Emolevy");
+//        Paketti_rivi pakkaus  = new Paketti_rivi(paketti, osa);
+//        paketti.lisaaPakettiRivi(pakkaus);
+//        paketti.getYhtPakettiHinta();
+//        assertEquals(200.0, paketti.getYhtPakettiHinta(), "Paketin rakentaminen ei onnistunut");
+//    }
     // 
     
     @Test
