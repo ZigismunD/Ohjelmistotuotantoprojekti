@@ -72,9 +72,12 @@ public class Tab2 extends Tab {
     private TextField productBrand = new TextField();
     private TextField productName = new TextField();
     private Text type = new Text();
+    private Text name = new Text();
     private Text price = new Text();
     private TextField productPrice = new TextField();
     private TextField warehouseAmount = new TextField();
+    private Text warehouseLocation = new Text();
+    private TextField warehouseLoca = new TextField();
     private Button addProduct = new Button();
     private ComboBox selectType = new ComboBox();
     private Text amount = new Text();
@@ -168,9 +171,10 @@ public class Tab2 extends Tab {
 
         tableVarasto.setEditable(true);
 
-        TableColumn brand = new TableColumn("Merkki");
+        TableColumn brand = new TableColumn("Hylly");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
+        brand.setCellValueFactory(new PropertyValueFactory<Osa, String>("hyllynNumero"));
 
         TableColumn product = new TableColumn("Tuote");
         product.setStyle("-fx-font-size: 14pt;");
@@ -236,13 +240,8 @@ public class Tab2 extends Tab {
         GridPane comp = new GridPane();
         comp.setHgap(15); // Horizontal gap
         comp.setVgap(15); // Vertical gap
-        
-        comp.add(merkki, 0, 0);
 
-        productBrand.setPrefWidth(350);
-        comp.add(productBrand, 1, 0);
 
-        Text name = new Text();
         comp.add(name,0, 1);
 
         productName.setPrefWidth(350);
@@ -252,14 +251,14 @@ public class Tab2 extends Tab {
 
         selectType.getItems().clear();
         selectType.getItems().addAll(
-                processor,
-                motherboard,
-                graphics,
-                RAM,
-                powersupply,
-                SSD,
-                HDD,
-                cases
+                processor.getText(),
+                motherboard.getText(),
+                graphics.getText(),
+                RAM.getText(),
+                powersupply.getText(),
+                SSD.getText(),
+                HDD.getText(),
+                cases.getText()
         );
 
 
@@ -275,15 +274,18 @@ public class Tab2 extends Tab {
         warehouseAmount.setPrefWidth(350);
         comp.add(warehouseAmount, 1, 4);
         
-        //TÄHÄN KENTTÄ HYLLYNUMEROLLE!!!
+
+        comp.add(warehouseLocation, 0, 5);
+        comp.add(warehouseLoca, 1, 5);
         
         addProduct.setOnAction(e -> {
             luoOsa(new Osa(productName.getText(), 
                     Double.parseDouble(productPrice.getText()), 
                     Integer.parseInt(warehouseAmount.getText()), 
-                    osat[selectType.getSelectionModel().getSelectedIndex()]));
+                    osat[selectType.getSelectionModel().getSelectedIndex()],
+                    warehouseLoca.getText()));
         });
-        comp.add(addProduct, 1, 5);
+        comp.add(addProduct, 1, 6);
         
         /*
         Button addProduct = new Button("Lisää");
@@ -297,7 +299,7 @@ public class Tab2 extends Tab {
         comp.add(addProduct, 1, 5);
         */
 
-        Scene stageScene = new Scene(comp, 500, 300);
+        Scene stageScene = new Scene(comp, 500, 350);
         newStage.setScene(stageScene);
         newStage.show();
     }
@@ -326,8 +328,10 @@ public class Tab2 extends Tab {
         btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
         btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
         merkki.setText(localization.getBundle().getString("lbl_brand_name"));
+        name.setText(localization.getBundle().getString("lbl_product_name"));
         type.setText(localization.getBundle().getString("lbl_product_type"));
         price.setText(localization.getBundle().getString("lbl_product_price"));
+        warehouseLocation.setText(localization.getBundle().getString("lbl_warehouse_location"));
         amount.setText(localization.getBundle().getString("lbl_product_amount"));
         addProduct.setText(localization.getBundle().getString("btn_add"));
         processor.setText(localization.getBundle().getString("lbl_processor"));
