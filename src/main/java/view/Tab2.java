@@ -274,46 +274,37 @@ public class Tab2 extends Tab {
 
         warehouseAmount.setPrefWidth(350);
         comp.add(warehouseAmount, 1, 4);
-
+        
+        //TÄHÄN KENTTÄ HYLLYNUMEROLLE!!!
+        
         addProduct.setOnAction(e -> {
-            luoOsa(new Osa(productName.getText(), Double.parseDouble(productPrice.getText()), Integer.parseInt(warehouseAmount.getText()), osat[selectType.getSelectionModel().getSelectedIndex()]));
+            luoOsa(new Osa(productName.getText(), 
+                    Double.parseDouble(productPrice.getText()), 
+                    Integer.parseInt(warehouseAmount.getText()), 
+                    osat[selectType.getSelectionModel().getSelectedIndex()]));
         });
         comp.add(addProduct, 1, 5);
+        
+        /*
+        Button addProduct = new Button("Lisää");
+        addProduct.setOnAction(e -> {
+            luoOsa(new Osa(productName.getText(), 
+                    Double.parseDouble(productPrice.getText()), 
+                    Integer.parseInt(warehouseAmount.getText()), 
+                    selectType.getSelectionModel().getSelectedItem().toString(),
+                    ""));
+        });
+        comp.add(addProduct, 1, 5);
+        */
 
+        Scene stageScene = new Scene(comp, 500, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+    }
 
-            comp.add(selectType, 1, 2);
-
-            comp.add(price, 0,3);
-
-            productPrice.setPrefWidth(350);
-            comp.add(productPrice, 1, 3);
-
-            comp.add(amount, 0 ,4);
-
-            warehouseAmount.setPrefWidth(350);
-            comp.add(warehouseAmount, 1, 4);
-            
-            //TÄHÄN KENTTÄ HYLLYNUMEROLLE!!!
-            
-            Button addProduct = new Button("Lisää");
-            addProduct.setOnAction(e -> {
-                luoOsa(new Osa(productName.getText(), 
-                        Double.parseDouble(productPrice.getText()), 
-                        Integer.parseInt(warehouseAmount.getText()), 
-                        selectType.getSelectionModel().getSelectedItem().toString(),
-                        ""));
-            });
-            comp.add(addProduct, 1, 5);
-
-
-            Scene stageScene = new Scene(comp, 500, 300);
-            newStage.setScene(stageScene);
-            newStage.show();
-        }
-
-        public void luoOsa(Osa osa) {
-            controller.luoOsa(osa);
-        }
+    public void luoOsa(Osa osa) {
+        controller.luoOsa(osa);
+    }
 
     public void haeOsat(String tyyppi) {
         osaLista = controller.getOsat(tyyppi);
