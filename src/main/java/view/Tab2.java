@@ -22,11 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Localization;
-import model.Osa;
-import model.Product;
-import model.Tilaus;
-
+import model.*;
 
 
 /**
@@ -53,7 +49,8 @@ public class Tab2 extends Tab {
     private List<Tilaus> tilausLista;
     private ObservableList<Tilaus> tilausData;
     private Controller controller = Controller.getInstance();
-    
+    private final int BUTTONWIDTH = 200;
+    private final int BUTTONHEIGHT = 75;
     private final GridPane grid2 = new GridPane();
     private final TableView tableVarasto = new TableView();
     private final Button btnMotherboard = new Button();
@@ -64,6 +61,7 @@ public class Tab2 extends Tab {
     private final Button btnSsd = new Button();
     private final Button btnHdd = new Button();
     private final Button btnCase = new Button();
+    private final Button btnPackage = new Button();
     private final Button btnAddProduct = new Button();
     private final Button btnDeleteProduct = new Button();
     private final Button btnAlterProduct = new Button();
@@ -89,6 +87,11 @@ public class Tab2 extends Tab {
     private Text SSD = new Text();
     private Text HDD = new Text();
     private Text cases = new Text();
+    TableColumn brand = new TableColumn("Hylly");
+    TableColumn product = new TableColumn("Tuote");
+        TableColumn arriveDate = new TableColumn("Hinta (€)");
+        TableColumn amountTable = new TableColumn("Määrä");
+        TableColumn additionalInfo = new TableColumn("HUOM");
     String[] osat = osienTietokantaTyypit();
     /*"Prosessori",
             "Emolevy",
@@ -110,59 +113,65 @@ public class Tab2 extends Tab {
         //grid2.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
         
         // Nappula, josta saa prosessorit näkyviin
-        btnProcessors.setPrefSize(200, 100);
+        btnProcessors.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         btnProcessors.setOnAction(e-> {
             haeOsat("Prosessori");
         });
         grid2.add(btnProcessors, 0, 0);
 
         // Nappula, josta saa emolevyt näkyviin
-        btnMotherboard.setPrefSize(200, 100);
+        btnMotherboard.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnMotherboard, 0, 1);
         btnMotherboard.setOnAction(e-> {
             haeOsat("Emolevy");
         });
 
         // Nappula, josta saa näytönohjaimet näkyviin
-        btnGraphics.setPrefSize(200, 100);
+        btnGraphics.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnGraphics, 0, 2);
         btnGraphics.setOnAction(e -> {
             haeOsat("Näytönohjain");
         });
         
         // Nappula, josta saa muistit näkyviin
-        btnRam.setPrefSize(200, 100);
+        btnRam.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnRam, 0, 3);
 		btnRam.setOnAction(e -> {
             haeOsat("RAM");
         });						 
 
         // Nappula, josta saa virtalähteet näkyviin
-        btnPower.setPrefSize(200, 100);
+        btnPower.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnPower, 0, 4);
 		btnPower.setOnAction(e -> {
             haeOsat("Virtalähde");
         });						   
 
         // Nappula, josta saa SSD:t näkyviin
-        btnSsd.setPrefSize(200, 100);
+        btnSsd.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnSsd, 0, 5);
 		btnSsd.setOnAction(e -> {
             haeOsat("SSD");
         });						 
 
         // Nappula, josta saa HDD:t näkyviin
-        btnHdd.setPrefSize(200, 100);
+        btnHdd.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnHdd, 0, 6);
 		btnHdd.setOnAction(e -> {
             haeOsat("HDD");
         });						 
 
         // Nappula, josta saa HDD:t näkyviin
-        btnCase.setPrefSize(200, 100);
+        btnCase.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnCase, 0, 7);
         btnCase.setOnAction(e -> {
             haeOsat("Kotelo");
+        });
+
+        btnPackage.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
+        grid2.add(btnPackage,0, 8);
+        btnPackage.setOnAction(e -> {
+            haeOsat("Paketti");
         });
         
         InnerShadow is = new InnerShadow();
@@ -171,32 +180,32 @@ public class Tab2 extends Tab {
 
         tableVarasto.setEditable(true);
 
-        TableColumn brand = new TableColumn("Hylly");
+
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
-        brand.setCellValueFactory(new PropertyValueFactory<Osa, String>("hyllynNumero"));
 
-        TableColumn product = new TableColumn("Tuote");
+
+
         product.setStyle("-fx-font-size: 14pt;");
         product.setMinWidth(500);
-        product.setCellValueFactory(new PropertyValueFactory<Osa, String>("osaNimi"));
 
-        TableColumn arriveDate = new TableColumn("Hinta (€)");
+
+
         arriveDate.setStyle("-fx-font-size: 14pt;");
         arriveDate.setMinWidth(200);
-        arriveDate.setCellValueFactory(new PropertyValueFactory<Osa, Double>("osaHinta"));
 
-        TableColumn amount = new TableColumn("Määrä");
-        amount.setStyle("-fx-font-size: 14pt;");
-        amount.setMinWidth(200);
-        amount.setCellValueFactory(new PropertyValueFactory<Osa, Integer>("varastoMaara"));
 
-        TableColumn additionalInfo = new TableColumn("HUOM");
+
+        amountTable.setStyle("-fx-font-size: 14pt;");
+        amountTable.setMinWidth(200);
+
+
+
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
-        additionalInfo.setCellValueFactory(new PropertyValueFactory<Osa, String>("tyyppi"));
 
-        tableVarasto.getColumns().addAll(brand, product, arriveDate, amount, additionalInfo);
+
+        tableVarasto.getColumns().addAll(brand, product, arriveDate, amountTable, additionalInfo);
         tableVarasto.setPrefHeight(700);
         tableVarasto.setPrefWidth(1600);
 
@@ -206,7 +215,7 @@ public class Tab2 extends Tab {
         vboxVarasto.getChildren().addAll(tableVarasto);
 
 		// gridin paikka
-        grid2.add(vboxVarasto, 1, 0, 7, 7);				
+        grid2.add(vboxVarasto, 1, 0, 7, 10);
         btnAddProduct.setPrefSize(200, 100);
         btnAddProduct.setOnAction(event -> {
             newProductPopup();
@@ -227,7 +236,7 @@ public class Tab2 extends Tab {
 
         buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct, btnAddPackage);
         
-        grid2.add(buttonsBox, 7, 8, 7, 10);
+        grid2.add(buttonsBox, 7, 11, 7, 10);
         
         this.setContent(grid2);
         
@@ -309,9 +318,24 @@ public class Tab2 extends Tab {
     }
 
     public void haeOsat(String tyyppi) {
-        osaLista = controller.getOsat(tyyppi);
-        osaData = FXCollections.observableArrayList(osaLista);
-        tableVarasto.setItems(osaData);
+        if (tyyppi.equals("Paketti")) {
+            product.setCellValueFactory(new PropertyValueFactory<Paketti, String>("paketinNimi"));
+            amountTable.setCellValueFactory(new PropertyValueFactory<Paketti, Integer>("varastoMaara"));
+            arriveDate.setCellValueFactory(new PropertyValueFactory<Paketti, Double>("paketinHinta"));
+            tableVarasto.setItems(FXCollections.observableArrayList(controller.getAllComputerNames()));
+        } else {
+            brand.setCellValueFactory(new PropertyValueFactory<Osa, String>("hyllynNumero"));
+            product.setCellValueFactory(new PropertyValueFactory<Osa, String>("osaNimi"));
+            arriveDate.setCellValueFactory(new PropertyValueFactory<Osa, Double>("osaHinta"));
+            amountTable.setCellValueFactory(new PropertyValueFactory<Osa, Integer>("varastoMaara"));
+            additionalInfo.setCellValueFactory(new PropertyValueFactory<Osa, String>("tyyppi"));
+            tableVarasto.setItems(FXCollections.observableArrayList(controller.getOsat(tyyppi)));
+            /*
+            osaLista = controller.getOsat(tyyppi);
+            osaData = FXCollections.observableArrayList(osaLista);
+            tableVarasto.setItems(osaData);*/
+        }
+
     }
         
     public void localizationSetText() {
@@ -334,6 +358,7 @@ public class Tab2 extends Tab {
         warehouseLocation.setText(localization.getBundle().getString("lbl_warehouse_location"));
         amount.setText(localization.getBundle().getString("lbl_product_amount"));
         addProduct.setText(localization.getBundle().getString("btn_add"));
+        btnPackage.setText(localization.getBundle().getString("btn_packages"));
         processor.setText(localization.getBundle().getString("lbl_processor"));
         graphics.setText(localization.getBundle().getString("lbl_graphics"));
         graphics.setText(localization.getBundle().getString("lbl_graphics"));
