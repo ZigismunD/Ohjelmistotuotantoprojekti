@@ -334,7 +334,7 @@ public class Tab1 extends Tab {
             }
         });
         btnSend.setOnAction(e -> {
-            controller.createOrder();
+            controller.createOrder(Double.parseDouble(PriceTxt.getText()));
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
 

@@ -5,9 +5,8 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -51,7 +50,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
@@ -80,6 +78,7 @@ public class TietokonekauppaDAO {
         }
 
     }
+
     public List<Osa> readOsat() {
         // TODO Auto-generated method stub
         ArrayList<Osa> osat = new ArrayList<>();
@@ -93,7 +92,7 @@ public class TietokonekauppaDAO {
             }
             transaction.commit();
 
-           
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +103,8 @@ public class TietokonekauppaDAO {
         }
 
     }
-    
+
     /**
-     *
      * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
@@ -132,7 +130,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id - olion haetun id
      * @return result palauttaa paketti olion haetun id:n perusteella
      */
@@ -148,7 +145,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id
      * @return result palauttaa paketin hinnan haetun id:n perusteella
      */
@@ -164,7 +160,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
@@ -189,7 +184,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param nimi - työntekijän nimi
      * @return henkilo palauttaa Henkilosto rivin haetun nimen perusteella
      */
@@ -270,12 +264,13 @@ public class TietokonekauppaDAO {
      *
      * @param tilaukset - asikkaiden valmiit tilaukset
      */
-    public void luoTilaus(List<Tilaus_rivi> tilaukset) {
+    public void luoTilaus(List<Tilaus_rivi> tilaukset, Double hinta) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
 
             //Luo Tilaus olio
             Tilaus tilaus = new Tilaus(null, null, new Date());
+            tilaus.setYhteishinta(hinta);
             istunto.saveOrUpdate(tilaus);
 
             //Looppaa tilaus rivejä
@@ -309,7 +304,7 @@ public class TietokonekauppaDAO {
 
         }
     }
-    
+
     public void objectSaveUpdateDelete(Object obj, boolean saveOperation) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -320,12 +315,64 @@ public class TietokonekauppaDAO {
                 //delete
                 istunto.delete(obj);
             }
-            
+
             istunto.getTransaction().commit();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public double[] getSalesYear(Integer year) {
+        double[] sales = new double[12];
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction ta = istunto.beginTransaction();
+            List<Tilaus> tilausList = istunto.createQuery("from Tilaus").list();
+            for (Tilaus dt :
+                    tilausList) {
+
+                switch (dt.getTilausPvm().getMonth()) {
+                    case Calendar.JANUARY:
+                        sales[0] += dt.getYhteishinta();
+                        break;
+                    case Calendar.FEBRUARY:
+                        sales[1] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MARCH:
+                        sales[2] += dt.getYhteishinta();
+                        break;
+                    case Calendar.APRIL:
+                        sales[3] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MAY:
+                        sales[4] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JUNE:
+                        sales[5] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JULY:
+                        sales[6] += dt.getYhteishinta();
+                        break;
+                    case Calendar.AUGUST:
+                        sales[7] += dt.getYhteishinta();
+                        break;
+                    case Calendar.SEPTEMBER:
+                        sales[8] += dt.getYhteishinta();
+                        break;
+                    case Calendar.OCTOBER:
+                        sales[9] += dt.getYhteishinta();
+                        break;
+                    case Calendar.NOVEMBER:
+                        sales[10] += dt.getYhteishinta();
+                        break;
+                    case Calendar.DECEMBER:
+                        sales[11] += dt.getYhteishinta();
+
+                }
+            }
+            ta.commit();
+        }
+        return sales;
     }
 
 }

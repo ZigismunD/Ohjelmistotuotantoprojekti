@@ -78,11 +78,8 @@ public class Tab4 extends Tab {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
-        ArrayList tilaukset = controller.getTilaukset();
 
-
-        final BarChart<String, Number> lineChart
-                = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> lineChart = new BarChart<String, Number>(xAxis, yAxis);
 
         lineChart.setTitle("Myyntitiedot");
 
@@ -92,31 +89,33 @@ public class Tab4 extends Tab {
         XYChart.Series series2019 = new XYChart.Series();
         series2019.setName("2019");
 
-        series.getData().add(new XYChart.Data("Jan", 23));
-        series.getData().add(new XYChart.Data("Feb", 14));
-        series.getData().add(new XYChart.Data("Mar", 15));
-        series.getData().add(new XYChart.Data("Apr", 24));
-        series.getData().add(new XYChart.Data("May", 34));
-        series.getData().add(new XYChart.Data("Jun", 36));
-        series.getData().add(new XYChart.Data("Jul", 22));
-        series.getData().add(new XYChart.Data("Aug", 45));
-        series.getData().add(new XYChart.Data("Sep", 43));
-        series.getData().add(new XYChart.Data("Oct", 17));
-        series.getData().add(new XYChart.Data("Nov", 29));
-        series.getData().add(new XYChart.Data("Dec", 25));
+        double[] year2019 = controller.getSalesOfYear(2019);
 
-        series2019.getData().add(new XYChart.Data("Jan", 23));
-        series2019.getData().add(new XYChart.Data("Feb", 14));
-        series2019.getData().add(new XYChart.Data("Mar", 15));
-        series2019.getData().add(new XYChart.Data("Apr", 24));
-        series2019.getData().add(new XYChart.Data("May", 34));
-        series2019.getData().add(new XYChart.Data("Jun", 36));
-        series2019.getData().add(new XYChart.Data("Jul", 22));
-        series2019.getData().add(new XYChart.Data("Aug", 45));
-        series2019.getData().add(new XYChart.Data("Sep", 43));
-        series2019.getData().add(new XYChart.Data("Oct", 17));
-        series2019.getData().add(new XYChart.Data("Nov", 29));
-        series2019.getData().add(new XYChart.Data("Dec", 25));
+        series.getData().add(new XYChart.Data("Jan", 23004));
+        series.getData().add(new XYChart.Data("Feb", 14002));
+        series.getData().add(new XYChart.Data("Mar", 15228));
+        series.getData().add(new XYChart.Data("Apr", 24225));
+        series.getData().add(new XYChart.Data("May", 34557));
+        series.getData().add(new XYChart.Data("Jun", 36754));
+        series.getData().add(new XYChart.Data("Jul", 22454));
+        series.getData().add(new XYChart.Data("Aug", 45544));
+        series.getData().add(new XYChart.Data("Sep", 43454));
+        series.getData().add(new XYChart.Data("Oct", 17454));
+        series.getData().add(new XYChart.Data("Nov", 29454));
+        series.getData().add(new XYChart.Data("Dec", 25197));
+
+        series2019.getData().add(new XYChart.Data("Jan", year2019[0]));
+        series2019.getData().add(new XYChart.Data("Feb", year2019[1]));
+        series2019.getData().add(new XYChart.Data("Mar", year2019[2]));
+        series2019.getData().add(new XYChart.Data("Apr", year2019[3]));
+        series2019.getData().add(new XYChart.Data("May", year2019[4]));
+        series2019.getData().add(new XYChart.Data("Jun", year2019[5]));
+        series2019.getData().add(new XYChart.Data("Jul", year2019[6]));
+        series2019.getData().add(new XYChart.Data("Aug", year2019[7]));
+        series2019.getData().add(new XYChart.Data("Sep", year2019[8]));
+        series2019.getData().add(new XYChart.Data("Oct", year2019[9]));
+        series2019.getData().add(new XYChart.Data("Nov", year2019[10]));
+        series2019.getData().add(new XYChart.Data("Dec", year2019[11]));
 
         lineChart.setPrefHeight(700);
         lineChart.setPrefWidth(1600);

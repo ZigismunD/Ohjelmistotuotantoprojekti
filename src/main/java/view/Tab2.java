@@ -87,11 +87,11 @@ public class Tab2 extends Tab {
     private Text SSD = new Text();
     private Text HDD = new Text();
     private Text cases = new Text();
-    TableColumn brand = new TableColumn("Hylly");
-    TableColumn product = new TableColumn("Tuote");
-        TableColumn arriveDate = new TableColumn("Hinta (€)");
-        TableColumn amountTable = new TableColumn("Määrä");
-        TableColumn additionalInfo = new TableColumn("HUOM");
+    private TableColumn brand = new TableColumn("Hylly");
+    private TableColumn product = new TableColumn("Tuote");
+    private TableColumn arriveDate = new TableColumn("Hinta (€)");
+    private TableColumn amountTable = new TableColumn("Määrä");
+    private TableColumn additionalInfo = new TableColumn("HUOM");
     String[] osat = osienTietokantaTyypit();
     /*"Prosessori",
             "Emolevy",
@@ -269,6 +269,7 @@ public class Tab2 extends Tab {
                 HDD.getText(),
                 cases.getText()
         );
+        selectType.getSelectionModel().selectFirst();
 
 
         comp.add(selectType, 1, 2);

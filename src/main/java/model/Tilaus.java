@@ -37,7 +37,10 @@ public class Tilaus {
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private Date tilausPvm;
-    //private List<Tilaus_rivi> tilausRivit = new ArrayList<Tilaus_rivi>();
+    private Double yhteishinta;
+
+
+//private List<Tilaus_rivi> tilausRivit = new ArrayList<Tilaus_rivi>();
     
 
     /**
@@ -51,6 +54,13 @@ public class Tilaus {
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
+    }
+
+    public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm, Double yhteishinta) {
+        this.asiakas = asiakas;
+        this.henkilosto = henkilosto;
+        this.tilausPvm = tilausPvm;
+        this.yhteishinta = yhteishinta;
     }
 
     /**
@@ -162,4 +172,13 @@ public class Tilaus {
         return yhtHinta;
     }
     */
+
+    @Column(name = "Yhteishinta")
+    public Double getYhteishinta() {
+        return yhteishinta;
+    }
+
+    public void setYhteishinta(Double yhteishinta) {
+        this.yhteishinta = yhteishinta;
+    }
 }
