@@ -6,41 +6,23 @@
 package view;
 
 import controller.Controller;
-
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Localization;
-import model.Osa;
-import model.Paketti;
-import model.Product;
-import model.Tilaus;
-import model.Tilaus_rivi;
 
 public class View extends Application {
 
@@ -90,7 +72,7 @@ public class View extends Application {
 
     public View() {
     }
-    
+
     public View(String username) {
         textField1.setText(username);
     }

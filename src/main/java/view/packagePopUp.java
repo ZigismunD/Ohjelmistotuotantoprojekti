@@ -43,6 +43,13 @@ public class packagePopUp extends Application {
     VBox vProducts;
     TextField txtProductCost;
     
+    Text lblPackage;
+    Button addBtn;
+    Text lblProductCost;
+    Text lblPackageCost;
+    Button btnSave;
+
+    
     public packagePopUp() {
     }
     
@@ -75,7 +82,7 @@ public class packagePopUp extends Application {
         
         grid.add(sp, 1, 1);
         
-        Button addBtn = new Button();
+        addBtn = new Button();
         addBtn.setText("Lisää osa");
         addBtn.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
@@ -87,19 +94,19 @@ public class packagePopUp extends Application {
         grid.add(addBtn, 1, 0);
         
         //Osien yhteishinta
-        Text lblProductCost = new Text("Osien hinta:");
+        lblProductCost = new Text("Osien hinta:");
         grid.add(lblProductCost, 0, 3);
         txtProductCost = new TextField("0.0");
         grid.add(txtProductCost, 1, 3);
         
         //Paketin hinta
-        Text lblPackageCost = new Text("Paketin hinta:");
+        lblPackageCost = new Text("Paketin hinta:");
         grid.add(lblPackageCost, 0, 4);
         txtPackageCost = new TextField("0.0");
         grid.add(txtPackageCost, 1, 4);
         
         //Tallenna painike
-        Button btnSave = createSaveButton();
+        btnSave = createSaveButton();
         btnSave.setText("Tallenna");
         grid.add(btnSave, 2, 5);
         
@@ -108,15 +115,6 @@ public class packagePopUp extends Application {
             //Kyseessä on update, täydennä pakkauksen tiedot kenttiin
             txtPackage.setText(updatePackage.getPaketinNimi());
             
-//            Osa osa1 = new Osa("osa 1", 200, 300, "RAM");
-//            Osa osa2 = new Osa("osa 2", 50, 20, "Kotelo");
-//            Osa osa3 = new Osa("osa 3", 400, 55, "HDD");
-//            
-//            ArrayList<Paketti_rivi> arr_paketti = new ArrayList<>();
-//            arr_paketti.add(new Paketti_rivi(updatePackage, osa1));
-//            arr_paketti.add(new Paketti_rivi(updatePackage, osa2));
-//            arr_paketti.add(new Paketti_rivi(updatePackage, osa3));
-//
 //            //Luo pakkauksen aliosa kentät
 //            for (Paketti_rivi tmpPackage_row : arr_paketti) {//updatePackage.getPakettiRivit()) {
 //                HBox hbox = createProductLine(vProducts, tmpPackage_row.getOsa());
@@ -124,6 +122,8 @@ public class packagePopUp extends Application {
 //            }
             
         }
+        
+        localizationSetText();
         
         Stage newStage = new Stage();
         newStage.setTitle("Luo uusi paketti");
@@ -139,6 +139,7 @@ public class packagePopUp extends Application {
         
         Text lblType = new Text("Osa:");
         Text lblProduct = new Text("Osa:");
+        //lblProduct.setText(Localization.getInstance().getBundle().getString("lbl_product"));
         Text lblPrice = new Text("0.0");
         ComboBox<Osa> cboProduct = createProductComboBox(lblPrice);
         ComboBox cboProductType = createProductTypeList(cboProduct);
@@ -272,6 +273,17 @@ public class packagePopUp extends Application {
         //Paketin yhteishinta = osien hinta + (2% osien hinnasta)
         Double dPackageCost = dProductCost + (dProductCost / 100 * 2);
         txtPackageCost.setText(Double.toString(dPackageCost));
+    }
+    
+    public void localizationSetText() {
+        Localization localization = Localization.getInstance();
+//        lblPackage.setText(localization.getBundle().getString("lbl_package"));
+//        addBtn.setText(localization.getBundle().getString("btn_add"));
+//        lblProductCost.setText(localization.getBundle().getString("lbl_cost"));
+//        lblPackageCost.setText(localization.getBundle().getString("lbl_cost"));
+//        btnSave.setText(localization.getBundle().getString("btn_save"));
+//        newStage.setTitle(localization.getBundle().getString("title_package"));
+        
     }
     
     @Override
