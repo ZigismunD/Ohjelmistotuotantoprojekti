@@ -5,9 +5,8 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -51,7 +50,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
@@ -80,6 +78,7 @@ public class TietokonekauppaDAO {
         }
 
     }
+
     public List<Osa> readOsat() {
         // TODO Auto-generated method stub
         ArrayList<Osa> osat = new ArrayList<>();
@@ -93,7 +92,7 @@ public class TietokonekauppaDAO {
             }
             transaction.commit();
 
-           
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +103,8 @@ public class TietokonekauppaDAO {
         }
 
     }
-    
+
     /**
-     *
      * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
@@ -132,7 +130,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id - olion haetun id
      * @return result palauttaa paketti olion haetun id:n perusteella
      */
@@ -148,7 +145,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id
      * @return result palauttaa paketin hinnan haetun id:n perusteella
      */
@@ -164,7 +160,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
@@ -189,7 +184,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param nimi - työntekijän nimi
      * @return henkilo palauttaa Henkilosto rivin haetun nimen perusteella
      */
@@ -270,12 +264,16 @@ public class TietokonekauppaDAO {
      *
      * @param tilaukset - asikkaiden valmiit tilaukset
      */
-    public void luoTilaus(List<Tilaus_rivi> tilaukset) {
+    public void luoTilaus(List<Tilaus_rivi> tilaukset,Asiakas asiakas, Double hinta) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
-
+            
+         //  Tallenna asiakas
+            istunto.save(asiakas);
+                        
             //Luo Tilaus olio
-            Tilaus tilaus = new Tilaus(null, null, new Date());
+            
+            Tilaus tilaus = new Tilaus(asiakas, null, new Date(),hinta);
             istunto.saveOrUpdate(tilaus);
 
             //Looppaa tilaus rivejä
@@ -285,6 +283,8 @@ public class TietokonekauppaDAO {
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
             }
+                        
+
 
             istunto.getTransaction().commit();
 
@@ -394,7 +394,6 @@ public class TietokonekauppaDAO {
                 }
             }
             istunto.getTransaction().commit();
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

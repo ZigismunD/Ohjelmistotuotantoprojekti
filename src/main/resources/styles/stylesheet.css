@@ -32,4 +32,7 @@ LineChart {
     -fx-background-color: #A5FFDC;
 }
 
+.table-column {
+    -fx-alignment: CENTER;
+}
 
