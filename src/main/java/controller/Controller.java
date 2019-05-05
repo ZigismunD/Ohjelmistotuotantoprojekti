@@ -92,6 +92,7 @@ public class Controller {
             View v = new View();
             setGui(v);
             v.start(Viewclass);
+            
             primaryStage.close();
         }
     }
