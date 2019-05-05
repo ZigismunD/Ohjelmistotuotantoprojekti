@@ -66,6 +66,10 @@ public class Localization {
         
     }
 
+    public void translateAll(Tab tab1, Tab tab2, Tab tab3, Tab tab4) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 
    

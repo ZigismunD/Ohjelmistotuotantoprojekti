@@ -43,7 +43,6 @@ public class Paketti {
      * @param pakettiHinta luo paketin hinnan
      */
     public Paketti(String pakettiNimi, int varastoMaara,  double pakettiHinta) {
-
         this.paketinNimi = pakettiNimi;
         this.paketinHinta = pakettiHinta;
         this.varastoMaara = varastoMaara;
