@@ -406,7 +406,7 @@ public class Tab1 extends Tab {
             sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
             productsTable.setItems(sortedData);
         }
-
+            
         if (group.getSelectedToggle() == radio2) {
             FilteredList<Osa> filteredData = new FilteredList<>(osaData, p -> true);
             searchField.textProperty().addListener(((observable, oldValue, newValue) ->  {
