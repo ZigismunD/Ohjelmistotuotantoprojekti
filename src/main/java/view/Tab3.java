@@ -133,17 +133,17 @@ public class Tab3 extends Tab {
         
         tableDetails.setEditable(true);
 
-        TableColumn products = new TableColumn("Tilaus ID");
+        TableColumn products = new TableColumn("Osa");
         products.setStyle("-fx-font-size: 14pt;");
         products.setMinWidth(200);
         products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
-        TableColumn productamount = new TableColumn("Asiakas");
+        TableColumn productamount = new TableColumn("Paketti");
         productamount.setStyle("-fx-font-size: 14pt;");
         productamount.setMinWidth(500);
        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
 
-        TableColumn ordersum = new TableColumn("Tilauspvm");
+        TableColumn ordersum = new TableColumn("Määrä");
         ordersum.setStyle("-fx-font-size: 14pt;");
         ordersum.setMinWidth(200);
         ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Integer>("maara"));
@@ -168,24 +168,11 @@ public class Tab3 extends Tab {
                     Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
                     tableOrders.getItems().remove(removeItem);
                     controller.objectDelete(removeItem);
+                    tableDetails.getItems().clear();
                 } else {
                 }
             }
         });
-        
-        
-        btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                if (tableOrders.getSelectionModel().getSelectedItem() != null) {
-                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
-                    tableOrders.getItems().remove(removeItem);
-                    controller.objectDelete(removeItem);
-                } else {
-                }
-            }
-        });
-        
         
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
