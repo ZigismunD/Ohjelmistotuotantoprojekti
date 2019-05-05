@@ -32,7 +32,7 @@ public class Product {
             this.price = ((Osa) objekti).getOsaHinta();
         }
         this.amount = Samount;
-        this.tilausrivi = new Tilaus_rivi(objekti, Samount);
+        this.tilausrivi = new Tilaus_rivi(objekti, Samount,this.price);
     }
     
     public String getName() {

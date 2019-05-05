@@ -63,7 +63,7 @@ public class Tilaus_rivi {
      * @param paketti luo paketin parametrit Paketti oliosta
      * @param orderAmount lou tilauksen pakettien ja osien yhteisen määrän
      */
-    public Tilaus_rivi(Object objekti, int orderAmount) {
+    public Tilaus_rivi(Object objekti, int orderAmount, double price) {
         if (objekti instanceof Paketti) {
             this.paketti = (Paketti) objekti;
         }
@@ -71,6 +71,7 @@ public class Tilaus_rivi {
             this.osa = (Osa) objekti;
         }
         this.maara = orderAmount;
+        this.hinta = price;
     }
     /**
      * luodaan Tilaus_rivi tauluun perusavaimen ja sen kenttä Id
@@ -113,7 +114,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Osa-olioon
      * @return osan parametrit Osa-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "Osa")
     public Osa getOsa() {
         return osa;
@@ -147,7 +148,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Tilaus-olioon
      * @return tilaus palauttaa tilauksen parametrit Tilaus-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "tilaus")
     public Tilaus getTilaus() {
         return tilaus;
