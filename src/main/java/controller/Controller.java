@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -124,20 +125,18 @@ public class Controller {
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
     
-    public void createOrder() {
+    public void createOrder(Double hinta) {
         Tab1 tab1 = Tab1.getInstance();
 
         //Luo Tilaus_rivi lista productista
         List<Tilaus_rivi> tilaukset = tab1.getTilausrivit();
         Asiakas asiakas = tab1.getCustomer();
-        System.out.println(tilaukset);
-        System.out.println(asiakas.toString());
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
             //gui.setMessagebox("Tilaus lista on tyhjä!");
         } else {
-            dao.luoTilaus(tilaukset,asiakas);
+            dao.luoTilaus(tilaukset,asiakas,hinta);
         }
     }
     
@@ -191,6 +190,10 @@ public class Controller {
     
     public void objectDelete(Object obj) {
         dao.objectSaveUpdateDelete(obj, false);
+    }
+
+    public double[] getSalesOfYear(Integer vuosi) {
+        return dao.getSalesYear(vuosi);
     }
     
 }

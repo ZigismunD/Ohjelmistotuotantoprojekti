@@ -115,6 +115,8 @@ public class Tab3 extends Tab {
         TableColumn amount = new TableColumn("Summa (€)");
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
+        amount.setCellValueFactory(new PropertyValueFactory<Tilaus, Double>("yhteishinta"));
+
 
         TableColumn additionalInfo = new TableColumn("HUOM");
         additionalInfo.setStyle("-fx-font-size: 14pt;");

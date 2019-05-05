@@ -307,16 +307,14 @@ public class Tab1 extends Tab {
                         product = new Product(getValittuPaketti(), getOrderAmount());
                         tilausrivit.add(product);
                         updatePrice(product.getPrice()*getOrderAmount());
-                        if(tilausrivit.contains(product) == true){
-                            System.out.println("jee");
-                        }
-
                     }
+                    
                     if (group.getSelectedToggle() == radio2) {
                         product = new Product(getValittuOsa(), getOrderAmount());
                         tilausrivit.add(product);
                         updatePrice(product.getPrice()* product.getAmount());
                     }
+                    
                     txtOrderAmount.setText(""+1);
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
@@ -341,7 +339,7 @@ public class Tab1 extends Tab {
             }
         });
         btnSend.setOnAction(e -> {
-            controller.createOrder();
+            controller.createOrder(Double.parseDouble(PriceTxt.getText()));
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
 
@@ -464,8 +462,6 @@ public class Tab1 extends Tab {
 
     public Asiakas getCustomer() {
         Asiakas uusiasiakas = new Asiakas(companyTxt.getText(), addressTxt.getText(), emailTxt.getText());
-       // ArrayList asiakasrivit = new ArrayList<Asiakas>();
-       // asiakasrivit.add(new Asiakas(companyTxt.getText(), addressTxt.getText(), emailTxt.getText()));
         return uusiasiakas;
     }
 
