@@ -47,11 +47,8 @@ public class Tab2 extends Tab {
     private Scene scene;
     private TabPane tabPane;
     private ObservableList<Product> data;
-    private List<Product> tilausrivit;
     private List<Osa> osaLista;
     private ObservableList<Osa> osaData;
-    private List<Tilaus> tilausLista;
-    private ObservableList<Tilaus> tilausData;
     private Controller controller = Controller.getInstance();
     
     private final GridPane grid2 = new GridPane();

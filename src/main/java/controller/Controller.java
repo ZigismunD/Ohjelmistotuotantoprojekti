@@ -110,6 +110,7 @@ public class Controller {
         }
         return paketit;
     }
+     
      public ArrayList<Osa> getAllOsat() {
         ArrayList<Osa> osat = new ArrayList<>();
         
@@ -118,8 +119,7 @@ public class Controller {
         }
         return osat;
     }
-    
-    
+
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
@@ -128,16 +128,16 @@ public class Controller {
         Tab1 tab1 = Tab1.getInstance();
 
         //Luo Tilaus_rivi lista productista
-        List<Tilaus_rivi> tilaukset = tab1.getTilaukset();
-        List<Asiakas> asiakas = tab1.getCustomer();
+        List<Tilaus_rivi> tilaukset = tab1.getTilausrivit();
+        Asiakas asiakas = tab1.getCustomer();
         System.out.println(tilaukset);
-        System.out.println(asiakas);
+        System.out.println(asiakas.toString());
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
             //gui.setMessagebox("Tilaus lista on tyhjä!");
         } else {
-            dao.luoTilaus(tilaukset);
+            dao.luoTilaus(tilaukset,asiakas);
         }
     }
     
@@ -175,6 +175,11 @@ public class Controller {
         }
         return tilaukset;
     }
+    
+     public ArrayList<Tilaus> getOrderRows(Tilaus tilaus) {
+         return dao.tilausGetTilausRivit(tilaus);
+    }
+    
 
     public void luoOsa(Osa osa) {
         dao.luoOsa(osa);

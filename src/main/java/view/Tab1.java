@@ -64,7 +64,9 @@ public class Tab1 extends Tab {
 
     private static Tab1 INSTANCE = null;
     private Controller controller = Controller.getInstance();
-    public ComboBox<Integer> orderAmount;
+    private Button btnPlusOrderAmount = new Button();
+    private Button btnMinusOrderAmount = new Button();
+    private final TextField txtOrderAmount = new TextField();
     private final TableView productsTable = new TableView();
     public TextField UnitPriceTxt;
     private View gui;
@@ -89,7 +91,6 @@ public class Tab1 extends Tab {
 
     private final TextField searchField = new TextField();
     private final Text lblProduct = new Text();
-    private final Text lblOrderAmount = new Text();
     private final Text lblUnitPrice = new Text();
     private final Text lblPrice = new Text();
     private final Text lblAddproduct = new Text();
@@ -138,9 +139,6 @@ public class Tab1 extends Tab {
         lblProduct.setFont(Font.font(null, 15));
         lblProduct.setFill(Color.BLACK);
 
-        lblOrderAmount.setFont(Font.font(null, 15));
-        lblOrderAmount.setFill(Color.BLACK);
-
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
         TextField UnitPriceTxt = new TextField();
@@ -156,6 +154,9 @@ public class Tab1 extends Tab {
         //grid1.add(billingTxt, 3, 19,5,1);
         lblEmail.setText("Email:");
         lblPhone.setText("Phone:");
+        companyTxt.setPromptText("Jarmonkauppa Oy");
+        emailTxt.setPromptText("jarmo@jarmonkauppa.com");
+        addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
         /*
       
        final VBox VboxCustomer = new VBox();
@@ -198,14 +199,22 @@ public class Tab1 extends Tab {
         vboxProcuctsTable.setSpacing(5);
         vboxProcuctsTable.getChildren().addAll(lblWarning, productsTable);
 
-        orderAmount = new ComboBox();
-        orderAmount.getItems().addAll(
-                1,
-                2,
-                3,
-                4,
-                5
-        );
+        txtOrderAmount.setText(""+1);
+        txtOrderAmount.setPrefWidth(40);
+        txtOrderAmount.setEditable(false);
+        btnPlusOrderAmount.setText("+");
+        btnPlusOrderAmount.setOnAction(e -> {
+            plusOrminusamount(1);
+        });
+        btnMinusOrderAmount.setText("-");
+        btnMinusOrderAmount.setOnAction(e -> {
+            int totalAmount = Integer.parseInt(txtOrderAmount.getText());
+            if (totalAmount > 1) {
+                plusOrminusamount(-1);
+            }
+        });
+        
+ 
 
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
@@ -236,12 +245,6 @@ public class Tab1 extends Tab {
             }
         });
 
-        orderAmount.getSelectionModel().selectFirst();
-        //    getPrice(UnitPriceTxt);
-
-        orderAmount.setOnAction(e -> {
-            //      getPrice(UnitPriceTxt);
-        });
 
         lblAddproduct.setFont(Font.font(null, 15));
         lblAddproduct.setFill(Color.BLACK);
@@ -251,7 +254,7 @@ public class Tab1 extends Tab {
         btnDelproduct.setText("Poista tuote");
         //btnAddproduct.setStyle("-fx-background-image: url('')");
         btnSend.setId("btnSend");
-        btnSend.setPrefSize(250, 200);
+        btnSend.setPrefSize(250, 50);
 
         // Tilaus taulukko
         tilausrivit = new ArrayList<Product>();
@@ -265,6 +268,7 @@ public class Tab1 extends Tab {
         lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 12));
         lblWarning2.setFill(Color.rgb(255, 0, 0));
         PriceTxt.setText(""+0);
+        PriceTxt.setEditable(false);
 
         tableTemp.setEditable(true);
 
@@ -303,6 +307,9 @@ public class Tab1 extends Tab {
                         product = new Product(getValittuPaketti(), getOrderAmount());
                         tilausrivit.add(product);
                         updatePrice(product.getPrice()*getOrderAmount());
+                        if(tilausrivit.contains(product) == true){
+                            System.out.println("jee");
+                        }
 
                     }
                     if (group.getSelectedToggle() == radio2) {
@@ -310,7 +317,7 @@ public class Tab1 extends Tab {
                         tilausrivit.add(product);
                         updatePrice(product.getPrice()* product.getAmount());
                     }
-                    orderAmount.getSelectionModel().selectFirst();
+                    txtOrderAmount.setText(""+1);
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
                     lblWarning.setText("");
@@ -345,14 +352,15 @@ public class Tab1 extends Tab {
         grid1.add(lblProduct, 2, 5);
         grid1.add(searchField, 3, 5, 8, 1);
         grid1.add(vboxProcuctsTable, 3, 7, 8, 4);
-        grid1.add(lblOrderAmount, 12, 8);
-        grid1.add(orderAmount, 13, 8);
-        grid1.add(btnAddproduct, 12, 9, 2, 1);
-        grid1.add(btnDelproduct, 12, 10, 2, 1);
+        grid1.add(btnMinusOrderAmount, 12, 8);
+        grid1.add(txtOrderAmount, 13, 8);
+        grid1.add(btnPlusOrderAmount, 14, 8);
+        grid1.add(btnAddproduct, 12, 9, 3, 1);
+        grid1.add(btnDelproduct, 12, 10, 3, 1);
         grid1.add(vboxTempTable, 15, 7, 8, 4);
-        grid1.add(lblPrice, 19, 11);
-        grid1.add(PriceTxt, 21, 11);
-        grid1.add(btnSend, 22, 14, 6, 6);
+        grid1.add(lblPrice, 12, 11,2,1);
+        grid1.add(PriceTxt, 15, 11);
+        grid1.add(btnSend, 15, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
         grid1.add(companyTxt, 3, 13, 4, 1);
@@ -418,7 +426,7 @@ public class Tab1 extends Tab {
     }
 
     public int getOrderAmount() {
-        return orderAmount.getSelectionModel().getSelectedItem();
+        return Integer.parseInt(txtOrderAmount.getText());
     }
 
     /**
@@ -443,7 +451,7 @@ public class Tab1 extends Tab {
      *
      * @return
      */
-    public ArrayList<Tilaus_rivi> getTilaukset() {
+    public ArrayList<Tilaus_rivi> getTilausrivit() {
         ArrayList<Tilaus_rivi> prodTilaukset = new ArrayList<>();
 
         //Loop Product table
@@ -454,10 +462,11 @@ public class Tab1 extends Tab {
         return prodTilaukset;
     }
 
-    public ArrayList<Asiakas> getCustomer() {
-        ArrayList asiakasrivit = new ArrayList<Asiakas>();
-        asiakasrivit.add(new Asiakas(companyTxt.getText(), addressTxt.getText(), emailTxt.getText()));
-        return asiakasrivit;
+    public Asiakas getCustomer() {
+        Asiakas uusiasiakas = new Asiakas(companyTxt.getText(), addressTxt.getText(), emailTxt.getText());
+       // ArrayList asiakasrivit = new ArrayList<Asiakas>();
+       // asiakasrivit.add(new Asiakas(companyTxt.getText(), addressTxt.getText(), emailTxt.getText()));
+        return uusiasiakas;
     }
 
     public void localizationSetText() {
@@ -465,7 +474,6 @@ public class Tab1 extends Tab {
 
         //Myyntisivu
         lblProduct.setText(localization.getBundle().getString("lbl_product"));  //  ("TUOTE:");
-        lblOrderAmount.setText(localization.getBundle().getString("lbl_product_quantity"));  //  ("MÄÄRÄ:");
         lblUnitPrice.setText(localization.getBundle().getString("lbl_product_unit_price"));  //  ("YKSIKKÖHINTA:");
         lblPrice.setText(localization.getBundle().getString("lbl_order_total_price"));  //  ("HINTA YHTEENSÄ:");
         btnAddproduct.setText(localization.getBundle().getString("btn_add_product"));  // = ("Lisää");
@@ -498,5 +506,10 @@ public class Tab1 extends Tab {
         totalPrice = priceChange + totalPrice;
         PriceTxt.setText(Double.toString(totalPrice));
     }
-
+    
+    public void plusOrminusamount(int amountChange) {
+        int tAmount = Integer.parseInt(txtOrderAmount.getText());
+        tAmount = amountChange + tAmount;
+        txtOrderAmount.setText(Integer.toString(tAmount));
+    }
 }

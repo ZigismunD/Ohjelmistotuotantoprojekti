@@ -270,12 +270,15 @@ public class TietokonekauppaDAO {
      *
      * @param tilaukset - asikkaiden valmiit tilaukset
      */
-    public void luoTilaus(List<Tilaus_rivi> tilaukset) {
+    public void luoTilaus(List<Tilaus_rivi> tilaukset,Asiakas asiakas) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
-
+            
+         //   Asiakas uusiAsiakas;
+            istunto.save(asiakas);
+            
             //Luo Tilaus olio
-            Tilaus tilaus = new Tilaus(null, null, new Date());
+            Tilaus tilaus = new Tilaus(asiakas, null, new Date());
             istunto.saveOrUpdate(tilaus);
 
             //Looppaa tilaus rivejä
@@ -285,6 +288,8 @@ public class TietokonekauppaDAO {
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
             }
+                        
+
 
             istunto.getTransaction().commit();
 
@@ -312,7 +317,7 @@ public class TietokonekauppaDAO {
     
     public void objectSaveUpdateDelete(Object obj, boolean saveOperation) {
         try (Session istunto = istuntotehdas.openSession()) {
-            istunto.beginTransaction();
+            Transaction transaktio = istunto.beginTransaction();
             if (saveOperation == true) {
                 //save or update
                 istunto.saveOrUpdate(obj);
@@ -321,10 +326,29 @@ public class TietokonekauppaDAO {
                 istunto.delete(obj);
             }
             
-            istunto.getTransaction().commit();
+            transaktio.commit();
             
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public ArrayList tilausGetTilausRivit(Tilaus tilaus) {
+        // TODO Auto-generated method stub
+        ArrayList<Tilaus_rivi> rivit = new ArrayList<>();
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaction = istunto.beginTransaction();
+            //@SuppressWarnings("unchecked")
+            List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
+            for (Tilaus_rivi v : result) {
+                if (v.getTilaus() == tilaus) {
+                    rivit.add(v);
+                }
+            }
+            transaction.commit();           
+            return rivit;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

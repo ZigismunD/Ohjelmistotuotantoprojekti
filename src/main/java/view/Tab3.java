@@ -6,10 +6,13 @@
 package view;
 
 import controller.Controller;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,10 +25,13 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Asiakas;
 import model.Localization;
 import model.Osa;
+import model.Paketti;
 import model.Product;
 import model.Tilaus;
+import model.Tilaus_rivi;
 
 /**
  *
@@ -47,8 +53,11 @@ public class Tab3 extends Tab {
     TabPane tabPane;
     private final GridPane grid3 = new GridPane();
     
-    List<Tilaus> tilausLista;
+    List<Tilaus> tilausLista = new ArrayList<Tilaus>();
     ObservableList<Tilaus> tilausData;
+    
+    ObservableList<Tilaus> rividata; 
+    List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
     
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
@@ -95,7 +104,9 @@ public class Tab3 extends Tab {
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
         client.setMinWidth(500);
+        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas >("asiakas"));
 
+        
         TableColumn orderDate = new TableColumn("Tilauspvm");
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
@@ -123,17 +134,17 @@ public class Tab3 extends Tab {
         TableColumn products = new TableColumn("Tilaus ID");
         products.setStyle("-fx-font-size: 14pt;");
         products.setMinWidth(200);
-        products.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
+        products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
         TableColumn productamount = new TableColumn("Asiakas");
         productamount.setStyle("-fx-font-size: 14pt;");
         productamount.setMinWidth(500);
-        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>(""));
+       productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
 
         TableColumn ordersum = new TableColumn("Tilauspvm");
         ordersum.setStyle("-fx-font-size: 14pt;");
         ordersum.setMinWidth(200);
-        ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("s"));
+        ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Integer>("maara"));
 
 
         tableDetails.getColumns().addAll(products, productamount, ordersum);
@@ -150,6 +161,19 @@ public class Tab3 extends Tab {
 
         btnRemoveOrder.setPrefSize(200, 100);
         
+        btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (tableOrders.getSelectionModel().getSelectedItem() != null) {
+                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
+                    tableOrders.getItems().remove(removeItem);
+                    controller.objectDelete(removeItem);
+                } else {
+                }
+            }
+        });
+        
+        
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
@@ -163,7 +187,22 @@ public class Tab3 extends Tab {
         this.setContent(grid3);
         
         localizationSetText();
+        
+        btnAllEvents.setOnAction(e -> {;
+        showRows();
+        });
     }
+    
+    public void showRows(){
+        Tilaus valittuTilaus =(Tilaus)tableOrders.getSelectionModel().getSelectedItem(); 
+        tilausriviLista = controller.getOrderRows(valittuTilaus);
+        //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
+        rividata = FXCollections.observableArrayList(tilausriviLista);
+        tableDetails.setItems(rividata);
+        System.out.println(rividata);
+        System.out.println(valittuTilaus.getAsiakas());
+    }
+    
      
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
