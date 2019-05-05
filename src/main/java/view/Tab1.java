@@ -87,7 +87,7 @@ public class Tab1 extends Tab {
     private final Text lblSales = new Text();
     final Tab tab1 = new Tab();
     private final GridPane grid1 = new GridPane();
-    private final TableView tableTemp = new TableView();
+    public final TableView tableTemp = new TableView();
 
     private final TextField searchField = new TextField();
     private final Text lblProduct = new Text();
@@ -99,11 +99,11 @@ public class Tab1 extends Tab {
     private final Text lblAddress = new Text();
     private final Text lblEmail = new Text();
     private final Text lblPhone = new Text();
-    private final Text lblWarning = new Text();
-    private final Text lblWarning2 = new Text();
-    private final TextField companyTxt = new TextField();
-    private final TextField addressTxt = new TextField();
-    private final TextField emailTxt = new TextField();
+    public final Text lblWarning = new Text();
+    public final Text lblWarning2 = new Text();
+    public final TextField companyTxt = new TextField();
+    public final TextField addressTxt = new TextField();
+    public final TextField emailTxt = new TextField();
     private final TextField phoneTxt = new TextField();
     private final Button btnAddproduct = new Button();
     private final Button btnDelproduct = new Button();
@@ -112,6 +112,7 @@ public class Tab1 extends Tab {
     private final RadioButton radio2 = new RadioButton();
     private final ToggleGroup group = new ToggleGroup();
     private final TextField PriceTxt = new TextField();
+    public final Text lblWarning3 = new Text();
 
     private Tab1() {
         createTab1();
@@ -261,10 +262,11 @@ public class Tab1 extends Tab {
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
-        lblWarning.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning.setFont(Font.font(null, FontWeight.BOLD, 15));
         lblWarning.setFill(Color.rgb(255, 0, 0));
-        lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 15));
         lblWarning2.setFill(Color.rgb(255, 0, 0));
+        lblWarning3.setFont(Font.font(null, FontWeight.BOLD, 15));
         PriceTxt.setText(""+0);
         PriceTxt.setEditable(false);
 
@@ -316,7 +318,7 @@ public class Tab1 extends Tab {
                     txtOrderAmount.setText(""+1);
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
-                    lblWarning.setText("");
+                    clearWarnings();
                 } else {
                     //TÄHÄN lokalisointi lennossa
                     //lblWarning.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
@@ -332,7 +334,7 @@ public class Tab1 extends Tab {
                     tableTemp.getItems().remove(removeItem);
                     updatePrice(-(removeItem.getPrice()* removeItem.getAmount()));
                     tilausrivit.remove(removeItem);
-                    lblWarning2.setText("");
+                    clearWarnings();
                 } else {
                     //TÄHÄN lokalisointi lennossa
                     //lblWarning2.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
@@ -342,6 +344,9 @@ public class Tab1 extends Tab {
         });
         btnSend.setOnAction(e -> {
             controller.createOrder(Double.parseDouble(PriceTxt.getText()));
+            tilausrivit.clear();
+            PriceTxt.setText(""+0);
+
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
 
@@ -360,6 +365,7 @@ public class Tab1 extends Tab {
         grid1.add(vboxTempTable, 15, 7, 8, 4);
         grid1.add(lblPrice, 12, 11,2,1);
         grid1.add(PriceTxt, 15, 11);
+        grid1.add(lblWarning3,16,11);
         grid1.add(btnSend, 15, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
@@ -521,5 +527,10 @@ public class Tab1 extends Tab {
         int tAmount = Integer.parseInt(txtOrderAmount.getText());
         tAmount = amountChange + tAmount;
         txtOrderAmount.setText(Integer.toString(tAmount));
+    }
+    public void clearWarnings(){
+        lblWarning.setText("");
+        lblWarning2.setText("");
+        lblWarning3.setText("");
     }
 }

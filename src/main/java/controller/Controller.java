@@ -147,9 +147,20 @@ public class Controller {
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
-            //gui.setMessagebox("Tilaus lista on tyhjä!");
+            tab1.lblWarning3.setText("Tilaus lista on tyhjä!");
+            tab1.lblWarning3.setFill(Color.rgb(255, 0, 0));
         } else {
             dao.luoTilaus(tilaukset,asiakas,hinta);
+            tab1.companyTxt.clear();
+            tab1.addressTxt.clear();
+            tab1.emailTxt.clear();
+            tab1.lblWarning3.setText("Tilaus luotu onnistuneesti!");
+            tab1.lblWarning3.setFill(Color.rgb(50, 205,50));
+            tab1.lblWarning2.setText("");
+            tab1.lblWarning.setText("");
+            tab1.tableTemp.getItems().clear();
+            tilaukset.removeAll(tilaukset);
+
         }
     }
     

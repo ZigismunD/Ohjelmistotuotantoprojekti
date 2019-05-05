@@ -64,7 +64,6 @@ public class Tab3 extends Tab {
     private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
     private final Button btnPurchases = new Button();
-    private final Button btnAllEvents = new Button();
     private final Button btnAlterOrder = new Button();
     private final Button btnRemoveOrder = new Button();
     
@@ -87,9 +86,6 @@ public class Tab3 extends Tab {
 
         btnPurchases.setPrefSize(200, 100);
         grid3.add(btnPurchases, 0, 1);
-
-        btnAllEvents.setPrefSize(200, 100);
-        grid3.add(btnAllEvents, 0, 2);
 
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
@@ -142,7 +138,7 @@ public class Tab3 extends Tab {
         TableColumn productamount = new TableColumn("Paketti");
         productamount.setStyle("-fx-font-size: 14pt;");
         productamount.setMinWidth(500);
-       productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
+        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
 
         TableColumn ordersum = new TableColumn("Määrä");
         ordersum.setStyle("-fx-font-size: 14pt;");
@@ -226,7 +222,6 @@ public class Tab3 extends Tab {
         
         btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
         btnPurchases.setText(localization.getBundle().getString("btn_purchases"));  // = .setText("Ostot");
-        btnAllEvents.setText(localization.getBundle().getString("btn_all_transactions"));  // = .setText("Kaikki Tapahtumat");
         btnAlterOrder.setText(localization.getBundle().getString("btn_add_product"));  // = .setText("Lisää Tuote");
         btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Lisää Tuote");
     }
