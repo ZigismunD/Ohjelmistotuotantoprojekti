@@ -23,4 +23,8 @@ public class InputValidator {
         return !syote.isEmpty();
     }
 
+    public boolean isInputLongEnough(String syote) {
+        return syote.length() >= 8;
+    }
 }
+

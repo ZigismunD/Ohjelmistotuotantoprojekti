@@ -6,12 +6,8 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Asiakas;
@@ -21,6 +17,7 @@ import model.Paketti;
 import model.TietokonekauppaDAO;
 import model.Tilaus;
 import model.Tilaus_rivi;
+import model.Encryption;
 import view.Tab1;
 import view.View;
 import view.loginView;
@@ -40,6 +37,7 @@ public class Controller {
      * Tietokannan kanssa asioiva DataAccesObject
      */
     TietokonekauppaDAO dao;
+    private Encryption encryption = Encryption.getInstance();
     
     private Controller() {
         this.dao = new TietokonekauppaDAO();
@@ -80,7 +78,7 @@ public class Controller {
     }
     
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
-        Henkilosto user = dao.haeKayttaja(nimi, salasana);
+        Henkilosto user = dao.haeKayttaja(nimi, encryption.encrypt(salasana));
 
         //user.getRooli();
         

@@ -40,7 +40,7 @@ public class View extends Application {
     //Lokalisointi
     Localization localization = Localization.getInstance();
 
-    // 
+    //
     Text textWelcome = new Text();
     Text textTime = new Text();
     public Text textField1 = new Text();
