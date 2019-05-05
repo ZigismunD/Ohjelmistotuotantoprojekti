@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import model.Encryption;
 import model.Localization;
 
 /**
@@ -38,6 +39,8 @@ public class loginView extends Application {
     Label lblMessage = new Label();
     Label userlabel = new Label();
     Label passlabel = new Label();
+    private Encryption encryption = Encryption.getInstance();
+    private Button createUser = new Button("Create User");
     
     public TextField user = new TextField();
     public PasswordField password = new PasswordField();
@@ -85,17 +88,24 @@ public class loginView extends Application {
                     controller = Controller.getInstance();
                 }}
             );
+
+            createUser.setOnAction(event -> {
+                UserCreation uc = new UserCreation();
+                uc.createUserPopUp();
+            });
             
             GridPane grid = new GridPane();
             grid.setAlignment(Pos.CENTER);
             grid.setVgap(20);
             grid.setHgap(10);
 
+
             grid.add(userlabel, 1, 0);
             grid.add(passlabel, 2, 0);
             grid.add(user, 1, 1);
             grid.add(password, 2, 1);
             grid.add(loginBtn,1, 2);
+            grid.add(createUser, 2, 2);
             grid.add(lblMessage, 2, 2);
             grid.add(reconnectBtn, 3, 0);
             grid.add(localeList, 3, 1);
