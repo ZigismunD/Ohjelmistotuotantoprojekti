@@ -113,6 +113,13 @@ public class Tab1 extends Tab {
     private final ToggleGroup group = new ToggleGroup();
     private final TextField PriceTxt = new TextField();
     public final Text lblWarning3 = new Text();
+    TableColumn productCol1 = new TableColumn();
+    TableColumn nameCol1 = new TableColumn();
+    TableColumn amountCol1 = new TableColumn();
+    TableColumn priceCol1 = new TableColumn();
+    TableColumn productCol = new TableColumn();
+    TableColumn amountCol = new TableColumn();
+    TableColumn priceCol = new TableColumn();
 
     private Tab1() {
         createTab1();
@@ -175,19 +182,19 @@ public class Tab1 extends Tab {
 
         VboxCustomer.getChildren().addAll(hboxCompany,hboxAddress,hboxEmail,hboxPhone);
          */
-        TableColumn productCol1 = new TableColumn("Tuote");
+        
         productCol1.setStyle("-fx-font-size: 12pt;");
         productCol1.setMinWidth(100);
 
-        TableColumn nameCol1 = new TableColumn("Nimi");
+        
         nameCol1.setStyle("-fx-font-size: 12pt;");
         nameCol1.setMinWidth(300);
 
-        TableColumn amountCol1 = new TableColumn("Määrä");
+        
         amountCol1.setStyle("-fx-font-size: 12pt;");
         amountCol1.setMinWidth(150);
 
-        TableColumn priceCol1 = new TableColumn("Hinta(kpl)");
+        
         priceCol1.setStyle("-fx-font-size: 12pt;");
         priceCol1.setMinWidth(150);
 
@@ -272,19 +279,19 @@ public class Tab1 extends Tab {
 
         tableTemp.setEditable(true);
 
-        TableColumn productCol = new TableColumn("Nimi");
+        
         productCol.setStyle("-fx-font-size: 12pt;");
         productCol.setMinWidth(400);
         productCol.setCellValueFactory(
                 new PropertyValueFactory<Product, String>("name"));
 
-        TableColumn amountCol = new TableColumn("Määrä");
+        
         amountCol.setStyle("-fx-font-size: 12pt;");
         amountCol.setMinWidth(200);
         amountCol.setCellValueFactory(
                 new PropertyValueFactory<Product, Integer>("amount"));
 
-        TableColumn priceCol = new TableColumn("Hinta(kpl)");
+        
         priceCol.setStyle("-fx-font-size: 12pt;");
         priceCol.setMinWidth(150);
         priceCol.setCellValueFactory(
@@ -321,8 +328,8 @@ public class Tab1 extends Tab {
                     clearWarnings();
                 } else {
                     //TÄHÄN lokalisointi lennossa
-                    //lblWarning.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
-                    lblWarning.setText("Valitse ensin tuote");
+                    lblWarning.setText(Localization.getInstance().getBundle().getString("lbl_choose_warning"));
+                    //lblWarning.setText("Valitse ensin tuote");
                 }   
             }
         });
@@ -337,8 +344,8 @@ public class Tab1 extends Tab {
                     clearWarnings();
                 } else {
                     //TÄHÄN lokalisointi lennossa
-                    //lblWarning2.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
-                    lblWarning2.setText("Valitse ensin poistettava tuote");
+                    lblWarning2.setText(Localization.getInstance().getBundle().getString("lbl_del_warning"));
+                    //lblWarning2.setText("Valitse ensin poistettava tuote");
                 }
             }
         });
@@ -488,19 +495,19 @@ public class Tab1 extends Tab {
         lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
         lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
         
-        radio1.setText("Paketti");
-        radio2.setText("Osa");
-        lblEmail.setText("Email:");
-        lblPhone.setText("Phone:");
-//        productCol1.setText("Product");
-//        nameCol1
-//        amountCol1
-//        priceCol1
-//        btnDelproduct.setText("Poista tuote");
-//        productCol
-//        amountCol
-//        priceCol
-
+        radio1.setText(localization.getBundle().getString("btn_package"));
+        radio2.setText(localization.getBundle().getString("btn_component"));
+        lblEmail.setText(localization.getBundle().getString("lbl_email"));
+        lblPhone.setText(localization.getBundle().getString("lbl_phone"));
+        productCol1.setText(localization.getBundle().getString("lbl_product"));
+        nameCol1.setText(localization.getBundle().getString("lbl_name"));
+        amountCol1.setText(localization.getBundle().getString("lbl_amount"));
+        priceCol1.setText(localization.getBundle().getString("lbl_price"));
+        btnDelproduct.setText(localization.getBundle().getString("lbl_delProduct"));
+        productCol.setText(localization.getBundle().getString("lbl_product"));
+        amountCol.setText(localization.getBundle().getString("lbl_amount"));
+        priceCol.setText(localization.getBundle().getString("lbl_price"));
+        
     }
 
     public void haePaketit() {
