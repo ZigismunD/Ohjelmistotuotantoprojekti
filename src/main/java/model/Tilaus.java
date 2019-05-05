@@ -33,7 +33,7 @@ public class Tilaus {
     /**
      * luodaan olion muuttujat
      */
-    private int id;
+    private int tilausId;
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private Date tilausPvm;
@@ -78,7 +78,7 @@ public class Tilaus {
     @GeneratedValue
     @Column(name = "id")
     public int getTilausId() {
-        return id;
+        return tilausId;
     }
 
     /**
@@ -86,7 +86,7 @@ public class Tilaus {
      * @param Id asentaa tietokannan generoiman id olioon
      */
     public void setTilausId(int Id) {
-        this.id = Id;
+        this.tilausId = Id;
     }
 
     /**
