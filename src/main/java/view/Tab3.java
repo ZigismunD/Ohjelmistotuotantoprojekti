@@ -173,20 +173,6 @@ public class Tab3 extends Tab {
             }
         });
         
-        
-        btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                if (tableOrders.getSelectionModel().getSelectedItem() != null) {
-                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
-                    tableOrders.getItems().remove(removeItem);
-                    controller.objectDelete(removeItem);
-                } else {
-                }
-            }
-        });
-        
-        
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
