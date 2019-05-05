@@ -97,6 +97,8 @@ public class View extends Application {
             tab3 = new Tab3();
             tab4 = new Tab4();
             
+            Tab1.getInstance().localizationSetText();
+            
             //Tabit tabpanee , tää ehkä pois 
             tabPane.getTabs().add(tab1);
             tabPane.getTabs().add(tab2);
