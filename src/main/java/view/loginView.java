@@ -17,7 +17,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -62,15 +65,15 @@ public class loginView extends Application {
             lblMessage.setId("fail");
             lblMessage.setTextFill(Color.RED);
             
-            ComboBox<String> localeList = new ComboBox();
-            localeList.getItems().addAll(
-                localization.getLocaleList()
-            );
-            localeList.getSelectionModel().selectFirst();
-            localeList.setOnAction(e-> {
-                localization.changeLocale(localeList.getValue());
-                localizationSetText();
-            });
+//            ComboBox<String> localeList = new ComboBox();
+//            localeList.getItems().addAll(
+//                localization.getLocaleList()
+//            );
+//            localeList.getSelectionModel().selectFirst();
+//            localeList.setOnAction(e-> {
+//                localization.changeLocale(localeList.getValue());
+//                localizationSetText();
+//            });
             
             loginBtn.setId("login");
             loginBtn.setDefaultButton(true); 
@@ -98,9 +101,10 @@ public class loginView extends Application {
             grid.add(loginBtn,1, 2);
             grid.add(lblMessage, 2, 2);
             grid.add(reconnectBtn, 3, 0);
-            grid.add(localeList, 3, 1);
+//            grid.add(localeList, 3, 1);
+            grid.add(createLanguageButtons(), 1, 4);
             
-            Scene scene = new Scene(grid, 550, 400);
+            Scene scene = new Scene(grid, 750, 400);
             primaryStage.setScene(scene);
             primaryStage.show();
             
@@ -110,6 +114,40 @@ public class loginView extends Application {
             e.printStackTrace();
         }
 
+    }
+    
+    public HBox createLanguageButtons() {
+        //Creating Buttons 
+        Image image = new Image("Finland-icon.png");
+        
+        Label lblLanguageFI = new Label();
+        lblLanguageFI.setGraphic(new ImageView(image));
+        lblLanguageFI.setOnMouseClicked(e -> {
+            localization.changeLocale("FI");
+            localizationSetText();
+        });
+
+        Image image2 = new Image("Russia-icon.png");
+        Label lblLanguageRUS = new Label();
+        lblLanguageRUS.setGraphic(new ImageView(image2));
+        lblLanguageRUS.setOnMouseClicked(e -> {
+            localization.changeLocale("RUS");
+            localizationSetText();
+        });
+
+        Image image3 = new Image("United-Kingdom-icon.png");
+        Label lblLanguageEN = new Label();
+        lblLanguageEN.setGraphic(new ImageView(image3));
+        lblLanguageEN.setOnMouseClicked(e -> {
+            localization.changeLocale("US");
+            localizationSetText();
+        });
+        
+        HBox hLanguageButtons = new HBox();
+        hLanguageButtons.getChildren().add(lblLanguageFI);
+        hLanguageButtons.getChildren().add(lblLanguageRUS);
+        hLanguageButtons.getChildren().add(lblLanguageEN);
+        return hLanguageButtons;
     }
     
     public void localizationSetText() {

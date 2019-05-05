@@ -26,33 +26,15 @@ import model.Localization;
 
 public class View extends Application {
 
-    //private int tulos;
     private Controller controller = Controller.getInstance();
-    //private ComboBox<Integer> orderAmount;
-    //private ComboBox<Paketti> productsdrop;
-    //private TextField UnitPriceTxt;
-
     // yleiset
     Scene scene;
     TabPane tabPane;
-    //ObservableList<Product> data;
-    //List<Osa> osaLista;
-    //ObservableList<Osa> osaData;
-    //List<Tilaus> tilausLista;
-    //ObservableList<Tilaus> tilausData;
 
-    // ekasivu
-    Tab1 salesTab;
-    Tab tab1;
-
-    //tokasivu
+    //Tabit
+    private Tab tab1;
     private Tab tab2;
-
-    // kolmassivu
     private Tab tab3;
-
-    //Taloustietosivu
-    private GridPane grid4;
     private Tab tab4;
 
     //Lokalisointi
@@ -92,85 +74,30 @@ public class View extends Application {
         try {
             tabPane = new TabPane();
             tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-
+            
             BorderPane borderPane = new BorderPane();
-
-            // tabit
+            
+            //Luo View sivulle yläreunan sessiotiedot
+            gridPane = createViewHeaderGrid(primaryStage);
+            
+            //Luo View sivulle välilehdet sovelluksen eri sivuja varten
             tab1 = Tab1.getInstance();
             tab2 = new Tab2();
             tab3 = new Tab3();
             tab4 = new Tab4();
-
-            //Tabit tabpanee , tää ehkä pois 
+            
+            tab1.styleProperty().set("-fx-pref-width: 100");
+            tab2.styleProperty().set("-fx-pref-width: 100");
+            tab3.styleProperty().set("-fx-pref-width: 100");
+            tab4.styleProperty().set("-fx-pref-width: 100");
+            
+            //Tabit tabpaneen
             tabPane.getTabs().add(tab1);
             tabPane.getTabs().add(tab2);
             tabPane.getTabs().add(tab3);
             tabPane.getTabs().add(tab4);
-
-            //Creating Text Filed for Tervetuloa        
-            //Creating Text Filed for Kirjautumisaika
-            Date date = new Date();
-
-            textField2.setText(date.toLocaleString());
-
-            //Creating Buttons 
-            Image image = new Image("Finland-icon.png");
-
-            lblLanguageFI.setGraphic(new ImageView(image));
-            lblLanguageFI.setOnMouseClicked(e -> {
-                localization.changeLocale("FI");
-                localizationSetText();
-                Tab1.getInstance().localizationSetText();
-
-            });
-
-            Image image2 = new Image("Russia-icon.png");
-
-            lblLanguageRUS.setGraphic(new ImageView(image2));
-            lblLanguageRUS.setOnMouseClicked(e -> {
-                localization.changeLocale("RUS");
-                localizationSetText();
-                Tab1.getInstance().localizationSetText();
-            });
-
-            Image image3 = new Image("United-Kingdom-icon.png");
-
-            lblLanguageEN.setGraphic(new ImageView(image3));
-            lblLanguageEN.setOnMouseClicked(e -> {
-                localization.changeLocale("US");
-                localizationSetText();
-                Tab1.getInstance().localizationSetText();
-
-            });
-            Image image4 = new Image("logout-icon.png");
-
-            lblLogOut.setGraphic(new ImageView(image4));
-            lblLogOut.setOnMouseClicked(e -> {
-                controller.logOut(primaryStage);
-            });
-
-            //Setting size for the pane  
-            gridPane.setMinSize(1900, 80);
-            //Setting the vertical and horizontal gaps between the columns 
-            gridPane.setVgap(5);
-            gridPane.setHgap(10);
-            //Setting the padding  
-            gridPane.setPadding(new Insets(10, 10, 10, 10));
-
-            hEmpty.setMinSize(1400, 30);
-
-            //Arranging all the nodes in the grid 
-            gridPane.add(textWelcome, 0, 0);
-            gridPane.add(textField1, 1, 0);
-            gridPane.add(textTime, 0, 1);
-            gridPane.add(textField2, 1, 1);
-            gridPane.add(hEmpty, 2, 0);
-            gridPane.add(lblLanguageFI, 3, 0,1,2);
-            gridPane.add(lblLanguageRUS, 4, 0,1,2);
-            gridPane.add(lblLanguageEN, 5, 0,1,2);
-            gridPane.add(lblLogOut, 6, 0,1,2);
-            gridPane.setId("ylapalkki");
-
+            
+            //View koostuu yläreunan gridPanesta ja sen alla olevasta tabPanesta
             VBox vBox = new VBox();
             vBox.getChildren().add(gridPane);
             vBox.getChildren().add(tabPane);
@@ -187,6 +114,7 @@ public class View extends Application {
                 tabPane.getTabs().add(tab3);
             }
              */
+            
             scene = new Scene(vBox, 1900, 1000);
             scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
 
@@ -202,9 +130,70 @@ public class View extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    };
+    
+    public GridPane createViewHeaderGrid(Stage primaryStage) {
+        //Creating Text Filed for Tervetuloa        
+            //Creating Text Filed for Kirjautumisaika
+            Date date = new Date();
+            
+            textField2.setText(date.toLocaleString());
 
-    ;
+            //Creating Buttons 
+            Image image = new Image("Finland-icon.png");
+            lblLanguageFI.setGraphic(new ImageView(image));
+            lblLanguageFI.setOnMouseClicked(e -> {
+                localization.changeLocale("FI");
+                localizationSetText();
+                localization.translateAll((Tab1) tab1, (Tab2) tab2, (Tab3) tab3, (Tab4) tab4);
+            });
+
+            Image image2 = new Image("Russia-icon.png");
+            lblLanguageRUS.setGraphic(new ImageView(image2));
+            lblLanguageRUS.setOnMouseClicked(e -> {
+                localization.changeLocale("RUS");
+                localizationSetText();
+                localization.translateAll((Tab1) tab1, (Tab2) tab2, (Tab3) tab3, (Tab4) tab4);
+            });
+            
+            Image image3 = new Image("United-Kingdom-icon.png");
+            lblLanguageEN.setGraphic(new ImageView(image3));
+            lblLanguageEN.setOnMouseClicked(e -> {
+                localization.changeLocale("US");
+                localizationSetText();
+                localization.translateAll((Tab1) tab1, (Tab2) tab2, (Tab3) tab3, (Tab4) tab4);
+            });
+            
+            Image image4 = new Image("logout-icon.png");
+            lblLogOut.setGraphic(new ImageView(image4));
+            lblLogOut.setOnMouseClicked(e -> {
+                controller.logOut(primaryStage);
+            });
+
+            //Setting size for the pane  
+            gridPane.setMinSize(1900, 80);
+            //Setting the vertical and horizontal gaps between the columns 
+            gridPane.setVgap(5);
+            gridPane.setHgap(10);
+            //Setting the padding  
+            gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+            hEmpty.setMinSize(500, 30);
+
+            //Arranging all the nodes in the grid 
+            gridPane.add(textWelcome, 0, 0);
+            gridPane.add(textField1, 1, 0);
+            gridPane.add(textTime, 0, 1);
+            gridPane.add(textField2, 1, 1);
+            gridPane.add(hEmpty, 2, 0);
+            gridPane.add(lblLanguageFI, 3, 0,1,2);
+            gridPane.add(lblLanguageRUS, 4, 0,1,2);
+            gridPane.add(lblLanguageEN, 5, 0,1,2);
+            gridPane.add(lblLogOut, 6, 0,1,2);
+            gridPane.setId("ylapalkki");
+            
+            return gridPane;
+    }
     
     public void localizationSetText() {
         //Aseta tekstikenttien teksti uudelleen

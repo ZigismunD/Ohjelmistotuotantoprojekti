@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -38,6 +39,7 @@ public class packagePopUp extends Application {
     Paketti tmpPackage;
     TextField txtPackage;
     TextField txtPackageCost;
+    TextField txtPackageAmount;
     
     //Osa
     VBox vProducts;
@@ -48,7 +50,6 @@ public class packagePopUp extends Application {
     Text lblProductCost;
     Text lblPackageCost;
     Button btnSave;
-
     
     public packagePopUp() {
     }
@@ -56,24 +57,39 @@ public class packagePopUp extends Application {
     public void newPackagePopup(Paketti updatePackage){
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
+        
         //Paketti
+        VBox vPackageInformation = new VBox();
+        
+        //Paketti nimi
         HBox hPackage = new HBox();
         hPackage.setPadding(new Insets(10,10,10,0));
-
+        hPackage.setAlignment(Pos.TOP_RIGHT);
+        //Otsikko
         Text lblPackage = new Text("Paketti:");
         hPackage.getChildren().add(lblPackage);
-        
+        //Syöttökenttä
         txtPackage = new TextField();
         hPackage.getChildren().add(txtPackage);
         
-        //hPackage.setStyle("-fx-border-style: solid inside;");
-        
-        grid.add(hPackage, 0, 0);
-        
-        //Aliosat
+        //Paketti lkm
+        HBox hPackageAmount = new HBox();
+        hPackageAmount.setPadding(new Insets(10,10,10,0));
+        hPackageAmount.setAlignment(Pos.CENTER_RIGHT);
+        //Otsikko
+        Text lblPackageAmount = new Text("Paketti lkm:");
+        hPackageAmount.getChildren().add(lblPackageAmount);
+        //Syöttö kenttä
+        txtPackageAmount = new TextField();
+        hPackageAmount.getChildren().add(txtPackageAmount);
+
+        vPackageInformation.getChildren().add(hPackage);
+        vPackageInformation.getChildren().add(hPackageAmount);
+        grid.add(vPackageInformation, 0, 1);
+
+        //Aliosat lista
         vProducts = new VBox();
         vProducts.setPrefSize(400, 120);
-
         
         //Aliosille scrollbar
         ScrollPane sp = new ScrollPane();
@@ -84,6 +100,8 @@ public class packagePopUp extends Application {
         
         addBtn = new Button();
         addBtn.setText("Lisää osa");
+        addBtn.setPrefSize(100, 50);
+        addBtn.setPadding(new Insets(20));
         addBtn.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
                 //Aliosa
@@ -91,7 +109,10 @@ public class packagePopUp extends Application {
                 vProducts.getChildren().add(hProductLine);
             }}
         );
-        grid.add(addBtn, 1, 0);
+//        grid.add(addBtn, 1, 0);
+
+        vPackageInformation.getChildren().add(addBtn);
+        vPackageInformation.setAlignment(Pos.CENTER_RIGHT);
         
         //Osien yhteishinta
         lblProductCost = new Text("Osien hinta:");
@@ -108,7 +129,8 @@ public class packagePopUp extends Application {
         //Tallenna painike
         btnSave = createSaveButton();
         btnSave.setText("Tallenna");
-        grid.add(btnSave, 2, 5);
+        btnSave.setPrefSize(100, 50);
+        grid.add(btnSave, 1, 5);
         
         //Tarkista onko kyseessä insert vai update
         if (updatePackage != null) {
@@ -240,9 +262,11 @@ public class packagePopUp extends Application {
                     //Paketin päivittäminen
                     tmpPackage.setPaketinHinta(Double.parseDouble(txtPackageCost.getText()));
                     tmpPackage.setPaketinNimi(txtPackage.getText());
+                    tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
                 } else {
                     //Rakenna paketti olio
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
+                    tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
                 }
                 //Looppaa HBoxit ja lisää niiden Osat pakettiin
                 ArrayList<Object> package_rows = new ArrayList<>();
