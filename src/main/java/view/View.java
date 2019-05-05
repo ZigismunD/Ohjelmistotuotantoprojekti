@@ -168,14 +168,14 @@ public class View extends Application {
             });
 
             //Setting size for the pane  
-            gridPane.setMinSize(1900, 140);
+            gridPane.setMinSize(1900, 80);
             //Setting the vertical and horizontal gaps between the columns 
-            gridPane.setVgap(10);
+            gridPane.setVgap(5);
             gridPane.setHgap(10);
             //Setting the padding  
             gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-            hEmpty.setMinSize(900, 30);
+            hEmpty.setMinSize(1400, 30);
 
             //Arranging all the nodes in the grid 
             gridPane.add(textWelcome, 0, 0);
@@ -183,10 +183,10 @@ public class View extends Application {
             gridPane.add(textTime, 0, 1);
             gridPane.add(textField2, 1, 1);
             gridPane.add(hEmpty, 2, 0);
-            gridPane.add(lblLanguageFI, 3, 0);
-            gridPane.add(lblLanguageRUS, 4, 0);
-            gridPane.add(lblLanguageEN, 5, 0);
-            gridPane.add(lblLogOut, 6, 0);
+            gridPane.add(lblLanguageFI, 3, 0,1,2);
+            gridPane.add(lblLanguageRUS, 4, 0,1,2);
+            gridPane.add(lblLanguageEN, 5, 0,1,2);
+            gridPane.add(lblLogOut, 6, 0,1,2);
             gridPane.setId("ylapalkki");
 
             VBox vBox = new VBox();
