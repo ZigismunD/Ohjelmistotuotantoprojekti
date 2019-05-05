@@ -124,9 +124,8 @@ public class Tab1 extends Tab {
         // SIVUSTON KOMPONENTIT
         radio1.setToggleGroup(group);
         radio1.setSelected(true);
-        radio1.setText("Paketti");
-
-        radio2.setText("Osa");
+//        radio1.setText("Paketti");
+//        radio2.setText("Osa");
         radio2.setToggleGroup(group);
 
         lblProduct.setFont(Font.font(null, 15));
@@ -145,8 +144,8 @@ public class Tab1 extends Tab {
         //grid1.add(addressTxt, 3, 17,5,1);
         //grid1.add(lblBilling, 2, 19);
         //grid1.add(billingTxt, 3, 19,5,1);
-        lblEmail.setText("Email:");
-        lblPhone.setText("Phone:");
+//        lblEmail.setText("Email:");
+//        lblPhone.setText("Phone:");
         companyTxt.setPromptText("Jarmonkauppa Oy");
         emailTxt.setPromptText("jarmo@jarmonkauppa.com");
         addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
@@ -207,8 +206,6 @@ public class Tab1 extends Tab {
             }
         });
         
- 
-
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle old_toggle, Toggle new_toggle) {
@@ -222,6 +219,7 @@ public class Tab1 extends Tab {
                             new PropertyValueFactory<Product, Integer>("paketinMaara"));
                     filterList();
                 }
+                
                 if (group.getSelectedToggle() == radio2) {
                     haeOsat();
                     productCol1.setCellValueFactory(
@@ -244,7 +242,7 @@ public class Tab1 extends Tab {
 
         btnAddproduct.setPrefSize(150, 50);
         btnDelproduct.setPrefSize(150, 50);
-        btnDelproduct.setText("Poista tuote");
+//        btnDelproduct.setText("Poista tuote");
         //btnAddproduct.setStyle("-fx-background-image: url('')");
         btnSend.setId("btnSend");
         btnSend.setPrefSize(250, 50);
@@ -314,6 +312,8 @@ public class Tab1 extends Tab {
                     tableTemp.setItems(data);
                     clearWarnings();
                 } else {
+                    //TÄHÄN lokalisointi lennossa
+                    //lblWarning.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
                     lblWarning.setText("Valitse ensin tuote");
                 }   
             }
@@ -328,6 +328,8 @@ public class Tab1 extends Tab {
                     tilausrivit.remove(removeItem);
                     clearWarnings();
                 } else {
+                    //TÄHÄN lokalisointi lennossa
+                    //lblWarning2.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
                     lblWarning2.setText("Valitse ensin poistettava tuote");
                 }
             }
@@ -514,14 +516,26 @@ public class Tab1 extends Tab {
         lblUnitPrice.setText(localization.getBundle().getString("lbl_product_unit_price"));  //  ("YKSIKKÖHINTA:");
         lblPrice.setText(localization.getBundle().getString("lbl_order_total_price"));  //  ("HINTA YHTEENSÄ:");
         btnAddproduct.setText(localization.getBundle().getString("btn_add_product"));  // = ("Lisää");
+        btnDelproduct.setText(localization.getBundle().getString("btn_delete_product"));  // = ("Poista");
         btnSend.setText(localization.getBundle().getString("btn_send_order"));  // = ("Luo tilaus");
         lblAddproduct.setText(localization.getBundle().getString("lbl_product_add"));  // = ("LISÄÄ TUOTE:");
         lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
         lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
         lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
-        //tbl_col_order_name
-        //tbl_col_order_quantity
-        //tbl_col_order_unit_price
+        
+        radio1.setText("Paketti");
+        radio2.setText("Osa");
+        lblEmail.setText("Email:");
+        lblPhone.setText("Phone:");
+//        productCol1.setText("Product");
+//        nameCol1
+//        amountCol1
+//        priceCol1
+//        btnDelproduct.setText("Poista tuote");
+//        productCol
+//        amountCol
+//        priceCol
+
     }
 
     public void haePaketit() {

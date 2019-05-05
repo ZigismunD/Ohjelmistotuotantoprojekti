@@ -219,6 +219,10 @@ public class Tab2 extends Tab {
         });
         
         btnDeleteProduct.setPrefSize(200, 100);
+        btnAddPackage.setOnAction(event -> {
+            //Tarkista mikä on valittuna tableviewissä
+            
+        });
         
         //Uusi paketti painike
         btnAddPackage.setPrefSize(200, 100);
