@@ -63,8 +63,6 @@ public class Tab3 extends Tab {
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
-    private final Button btnPurchases = new Button();
-    private final Button btnAlterOrder = new Button();
     private final Button btnRemoveOrder = new Button();
     
     public Tab3(){
@@ -77,6 +75,7 @@ public class Tab3 extends Tab {
         //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
 
         btnOrders.setPrefSize(200, 100);
+        btnOrders.setPadding(new Insets(10, 10, 10, 10));
         btnOrders.setOnAction(e-> {
             tilausLista = controller.getTilaukset();
             tilausData = FXCollections.observableArrayList(tilausLista);
@@ -84,8 +83,6 @@ public class Tab3 extends Tab {
         });        
         grid3.add(btnOrders, 0, 0);
 
-        btnPurchases.setPrefSize(200, 100);
-        grid3.add(btnPurchases, 0, 1);
 
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
@@ -125,7 +122,7 @@ public class Tab3 extends Tab {
 
         final VBox vboxOrders = new VBox();
         vboxOrders.setSpacing(5);
-        vboxOrders.setPadding(new Insets(0, 0, 0, 20));
+        vboxOrders.setPadding(new Insets(10, 10, 10, 20));
         vboxOrders.getChildren().addAll(tableOrders);
         
         tableDetails.setEditable(true);
@@ -156,11 +153,11 @@ public class Tab3 extends Tab {
 
         final VBox vboxDetails = new VBox();
         vboxDetails.setSpacing(5);
-        vboxDetails.setPadding(new Insets(0, 0, 0, 20));
+        vboxDetails.setPadding(new Insets(10, 10, 10, 20));
         vboxDetails.getChildren().addAll(tableDetails);
 
-        btnAlterOrder.setId("alterOrder");
-        btnAlterOrder.setPrefSize(200, 100);
+        btnRemoveOrder.setPrefSize(200, 100);
+        btnRemoveOrder.setText("Poista");
         
         btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -179,7 +176,7 @@ public class Tab3 extends Tab {
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
-        buttonsBox.getChildren().addAll(btnAlterOrder, btnRemoveOrder);
+        buttonsBox.getChildren().addAll(btnRemoveOrder);
         
         grid3.add(vboxOrders, 1, 0, 7, 7);
         grid3.add(vboxDetails,1, 10, 7, 2);
@@ -221,8 +218,5 @@ public class Tab3 extends Tab {
         Localization localization = Localization.getInstance();
         
         btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
-        btnPurchases.setText(localization.getBundle().getString("btn_purchases"));  // = .setText("Ostot");
-        btnAlterOrder.setText(localization.getBundle().getString("btn_add_product"));  // = .setText("Lisää Tuote");
-        btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Lisää Tuote");
     }
 }

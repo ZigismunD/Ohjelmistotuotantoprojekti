@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -54,11 +55,12 @@ public class packagePopUp extends Application {
     
     public void newPackagePopup(Paketti updatePackage){
         GridPane grid = new GridPane();
-        
+        grid.setPadding(new Insets(10,10,10,10));
         //Paketti
         HBox hPackage = new HBox();
-        
-        lblPackage = new Text("Paketti:");
+        hPackage.setPadding(new Insets(10,10,10,0));
+
+        Text lblPackage = new Text("Paketti:");
         hPackage.getChildren().add(lblPackage);
         
         txtPackage = new TextField();
@@ -70,6 +72,8 @@ public class packagePopUp extends Application {
         
         //Aliosat
         vProducts = new VBox();
+        vProducts.setPrefSize(400, 120);
+
         
         //Aliosille scrollbar
         ScrollPane sp = new ScrollPane();
@@ -122,8 +126,8 @@ public class packagePopUp extends Application {
         localizationSetText();
         
         Stage newStage = new Stage();
-//        newStage.setTitle("Luo uusi paketti");
-        Scene stageScene = new Scene(grid, 500, 300);
+        newStage.setTitle("Luo uusi paketti");
+        Scene stageScene = new Scene(grid, 720, 300);
         newStage.setScene(stageScene);
         newStage.show();
         
@@ -131,8 +135,9 @@ public class packagePopUp extends Application {
     
     private HBox createProductLine(VBox v, Osa osa) {
         HBox hProduct = new HBox();
+        hProduct.setPadding(new Insets(10,10,10,10));
         
-        //TÄHÄN LOKALISOINTI LENNOSSA
+        Text lblType = new Text("Osa:");
         Text lblProduct = new Text("Osa:");
         //lblProduct.setText(Localization.getInstance().getBundle().getString("lbl_product"));
         Text lblPrice = new Text("0.0");
@@ -141,17 +146,19 @@ public class packagePopUp extends Application {
         
         Button deleteButton = createDeleteButton(v, hProduct, cboProduct);
         
-        //Label
-        hProduct.getChildren().add(lblProduct);
+        //Label Type
+        hProduct.getChildren().add(lblType);
         //Product type
         hProduct.getChildren().add(cboProductType);
+        //Label Product
+        hProduct.getChildren().add(lblProduct);
         //Select Product
         hProduct.getChildren().add(cboProduct);
         //Price
         hProduct.getChildren().add(lblPrice);
         //Delete product line
         hProduct.getChildren().add(deleteButton);
-        
+        hProduct.setSpacing(10);
         //Jos parametri Osa ei ole null niin täydennä sen tiedot
         if (osa != null) {
             cboProductType.getSelectionModel().select(osa.getTyyppi());

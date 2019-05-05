@@ -169,6 +169,7 @@ public class View extends Application {
             gridPane.add(lblLanguageRUS, 4, 0);
             gridPane.add(lblLanguageEN, 5, 0);
             gridPane.add(lblLogOut, 6, 0);
+            gridPane.setId("ylapalkki");
 
             VBox vBox = new VBox();
             vBox.getChildren().add(gridPane);
