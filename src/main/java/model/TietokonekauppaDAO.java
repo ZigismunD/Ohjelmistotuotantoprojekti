@@ -384,6 +384,9 @@ public class TietokonekauppaDAO {
                         istunto.delete(listobject);
                     }
                 }
+                
+                //Poista tilauksen asiakas
+                istunto.delete(((Tilaus) obj).getAsiakas());
             } else if (obj instanceof Paketti) {
                 //Hae ja poista paketin rivit
                 List<Paketti_rivi> result = istunto.createQuery("from Paketti_rivi").list();
