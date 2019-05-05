@@ -5,6 +5,7 @@
  */
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import model.Osa;
 import model.Paketti;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -77,7 +79,7 @@ public class Paketti_rivi {
      *
      * @return osa Osa-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "Osa")
     public Osa getOsa() {
         return osa;

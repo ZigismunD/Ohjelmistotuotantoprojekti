@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -147,8 +149,19 @@ public class Tab3 extends Tab {
 
         btnAlterOrder.setId("alterOrder");
         btnAlterOrder.setPrefSize(200, 100);
-
-        btnRemoveOrder.setPrefSize(200, 100);
+        
+        btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (tableOrders.getSelectionModel().getSelectedItem() != null) {
+                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
+                    tableOrders.getItems().remove(removeItem);
+                    controller.objectDelete(removeItem);
+                } else {
+                }
+            }
+        });
+        
         
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);

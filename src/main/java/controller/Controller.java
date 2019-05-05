@@ -180,12 +180,22 @@ public class Controller {
         dao.luoOsa(osa);
     }
     
+    public ArrayList<Object> getObjectRows(Object obj) {
+        return dao.getObjectRows(obj);
+    }
+    
     public void objectSaveOrUpdate(Object obj) {
-        dao.objectSaveUpdateDelete(obj, true);
+        dao.objectSaveOrUpdate(obj, null);
+    }
+    
+    public void objectAndRowsSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
+        //dao.objectSaveOrUpdate(obj, obj_rows);
+        dao.objectSaveOrUpdate(obj);
+        dao.objectListSaveOrUpdate(obj_rows);
     }
     
     public void objectDelete(Object obj) {
-        dao.objectSaveUpdateDelete(obj, false);
+        dao.objectDelete(obj);
     }
     
 }

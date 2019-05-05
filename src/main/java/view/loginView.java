@@ -85,7 +85,7 @@ public class loginView extends Application {
                     controller = Controller.getInstance();
                 }}
             );
-                    
+            
             GridPane grid = new GridPane();
             grid.setAlignment(Pos.CENTER);
             grid.setVgap(20);

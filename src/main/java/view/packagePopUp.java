@@ -104,20 +104,20 @@ public class packagePopUp extends Application {
             //Kyseessä on update, täydennä pakkauksen tiedot kenttiin
             txtPackage.setText(updatePackage.getPaketinNimi());
             
-            Osa osa1 = new Osa("osa 1", 200, 300, "RAM");
-            Osa osa2 = new Osa("osa 2", 50, 20, "Kotelo");
-            Osa osa3 = new Osa("osa 3", 400, 55, "HDD");
-            
-            ArrayList<Paketti_rivi> arr_paketti = new ArrayList<>();
-            arr_paketti.add(new Paketti_rivi(updatePackage, osa1));
-            arr_paketti.add(new Paketti_rivi(updatePackage, osa2));
-            arr_paketti.add(new Paketti_rivi(updatePackage, osa3));
-
-            //Luo pakkauksen aliosa kentät
-            for (Paketti_rivi tmpPackage_row : arr_paketti) {//updatePackage.getPakettiRivit()) {
-                HBox hbox = createProductLine(vProducts, tmpPackage_row.getOsa());
-                vProducts.getChildren().add(hbox);
-            }
+//            Osa osa1 = new Osa("osa 1", 200, 300, "RAM");
+//            Osa osa2 = new Osa("osa 2", 50, 20, "Kotelo");
+//            Osa osa3 = new Osa("osa 3", 400, 55, "HDD");
+//            
+//            ArrayList<Paketti_rivi> arr_paketti = new ArrayList<>();
+//            arr_paketti.add(new Paketti_rivi(updatePackage, osa1));
+//            arr_paketti.add(new Paketti_rivi(updatePackage, osa2));
+//            arr_paketti.add(new Paketti_rivi(updatePackage, osa3));
+//
+//            //Luo pakkauksen aliosa kentät
+//            for (Paketti_rivi tmpPackage_row : arr_paketti) {//updatePackage.getPakettiRivit()) {
+//                HBox hbox = createProductLine(vProducts, tmpPackage_row.getOsa());
+//                vProducts.getChildren().add(hbox);
+//            }
             
         }
         
@@ -236,22 +236,20 @@ public class packagePopUp extends Application {
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
                 }
                 //Looppaa HBoxit ja lisää niiden Osat pakettiin
-                ArrayList<Osa> packageProducts = new ArrayList<>();
+                ArrayList<Object> package_rows = new ArrayList<>();
                 
                 for (Node child : vProducts.getChildren()) {
                     if(child instanceof HBox){
                         Node cboProduct = ((HBox) child).getChildren().get(2);
                         if(cboProduct instanceof ComboBox){
                             Osa product = ((ComboBox<Osa>) cboProduct).getSelectionModel().getSelectedItem();
-                            packageProducts.add(product);
+                            package_rows.add(new Paketti_rivi(tmpPackage, product));
                         }
                     }
                 }
-                
-                //Aseta paketille aliosat
-                //tmpPackage.setPakettiRivit(packageProducts);
-                
-                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
+//                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
+                Controller.getInstance().objectAndRowsSaveOrUpdate(tmpPackage, package_rows);
+//                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
                 
             }}
         );
@@ -270,20 +268,7 @@ public class packagePopUp extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Luo testipakkaus
-        Paketti testPakkaus = new Paketti("TEST PAKETTI", 200);
-        Osa osa1 = new Osa();
-        Osa osa2 = new Osa();
-        Osa osa3 = new Osa();
-        //ArrayList<Paketti_rivi> arr_paketti = new ArrayList<>();
-        //arr_paketti.add(new Paketti_rivi(testPakkaus, osa1));
-        //arr_paketti.add(new Paketti_rivi(testPakkaus, osa2));
-        //arr_paketti.add(new Paketti_rivi(testPakkaus, osa3));
-        //testPakkaus.setPakettiRivit(arr_paketti);
-        
         newPackagePopup(null);
-        //newPackagePopup(testPakkaus);
-        
     }
     
     public static void main(String[] args) {

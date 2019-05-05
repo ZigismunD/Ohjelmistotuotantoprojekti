@@ -5,6 +5,7 @@
  */
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -94,7 +95,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Paketti-olioon
      * @return paketin parametrit Paketti-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "Paketti")
     public Paketti getPaketti() {
         return paketti;

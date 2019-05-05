@@ -261,15 +261,12 @@ public class Tab2 extends Tab {
                 HDD,
                 cases
         );
-
-
+        
         comp.add(selectType, 1, 2);
-
         comp.add(price, 0,3);
 
         productPrice.setPrefWidth(350);
         comp.add(productPrice, 1, 3);
-
         comp.add(amount, 0 ,4);
 
         warehouseAmount.setPrefWidth(350);

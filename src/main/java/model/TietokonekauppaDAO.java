@@ -310,22 +310,140 @@ public class TietokonekauppaDAO {
         }
     }
     
-    public void objectSaveUpdateDelete(Object obj, boolean saveOperation) {
+    public ArrayList tilausGetTilausRivit(Tilaus tilaus) {
+        // TODO Auto-generated method stub
+        ArrayList<Tilaus_rivi> rivit = new ArrayList<>();
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaction = istunto.beginTransaction();
+            //@SuppressWarnings("unchecked")
+            List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
+            for (Tilaus_rivi v : result) {
+                if (v.getTilaus() == tilaus) {
+                    rivit.add(v);
+                }
+            }
+            transaction.commit();
+            
+            return rivit;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    //Ottaa vastaan id:n ja objektityypin, palauttaa objektin jolla sama id
+    public Object getObjectById(int id, Object object) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaction = istunto.beginTransaction();
+            
+            istunto.load(object, id);
+            return object;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }    
+    }
+    
+    //Hakee ja palauttaa objektin alirivit
+    public ArrayList<Object> getObjectRows(Object obj) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            if (obj instanceof Tilaus) {
+                //Hae ja poista tilauksen rivit
+                List<Object> result = istunto.createQuery("from Tilaus_rivi where tilaus = " + ((Tilaus) obj).getTilausId()).list();
+                ArrayList<Object> tilaus_rivit = new ArrayList<Object>();
+                tilaus_rivit.addAll(result);
+                return tilaus_rivit;
+            } else if (obj instanceof Paketti) {
+                //Hae ja poista paketin rivit
+                List<Object> result = istunto.createQuery("from Paketti_rivi where id = " + ((Paketti) obj).getPakettiId()).list();
+                ArrayList<Object> paketti_rivit = new ArrayList<Object>();
+                paketti_rivit.addAll(result);
+                return paketti_rivit;
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }    
+    }
+    
+    //Poistaa objektin tietokannasta. Jos objektilla on alirivejä se poistaa ne myös
+    public void objectDelete(Object obj) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
-            if (saveOperation == true) {
-                //save or update
-                istunto.saveOrUpdate(obj);
-            } else if (saveOperation == false) {
-                //delete
-                istunto.delete(obj);
-            }
             
+            //Delete main object
+            istunto.delete(obj);
+            
+            //Jos poistettavalla objektilla on aliobjekteja niin poista ne ensin
+            if (obj instanceof Tilaus) {
+                //Hae ja poista tilauksen rivit
+                List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
+                for (Tilaus_rivi listobject : result) {
+                    if (listobject.getTilaus().getTilausId() == ((Tilaus) obj).getTilausId()) {
+                        istunto.delete(listobject);
+                    }
+                }
+            } else if (obj instanceof Paketti) {
+                //Hae ja poista paketin rivit
+                List<Paketti_rivi> result = istunto.createQuery("from Paketti_rivi").list();
+                for (Paketti_rivi listobject : result) {
+                    if (listobject.getPaketti().getPakettiId() == ((Paketti) obj).getPakettiId()) {
+                        istunto.delete(listobject);
+                    }
+                }
+            }
             istunto.getTransaction().commit();
             
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
+    //Tallentaa objektin ja sen alirivit
+    public void objectSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            
+            //Tallenna yksittäinen objekti
+            if (obj != null) {
+                istunto.saveOrUpdate(obj);
+            }
+            
+            //Tallenna objekti lista jos niitä on annettu
+            if (obj_rows != null) {
+                for (Object row : obj_rows) {
+                    istunto.saveOrUpdate(row);
+                }
+            }
+            
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Tallentaa yksittäisen objektin
+    public void objectSaveOrUpdate(Object obj) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            istunto.saveOrUpdate(obj);
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Tallentaa listan objekteja
+    public void objectListSaveOrUpdate(ArrayList<Object> obj_list) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            for(Object obj : obj_list) {
+                istunto.save(obj);
+            }
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
