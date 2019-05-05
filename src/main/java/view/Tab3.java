@@ -99,7 +99,7 @@ public class Tab3 extends Tab {
         TableColumn brand = new TableColumn("Tilaus ID");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
-        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
+        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("tilausId"));
 
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
