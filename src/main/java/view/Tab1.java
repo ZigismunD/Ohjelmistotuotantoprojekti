@@ -87,7 +87,7 @@ public class Tab1 extends Tab {
     private final Text lblSales = new Text();
     final Tab tab1 = new Tab();
     private final GridPane grid1 = new GridPane();
-    private final TableView tableTemp = new TableView();
+    public final TableView tableTemp = new TableView();
 
     private final TextField searchField = new TextField();
     private final Text lblProduct = new Text();
@@ -99,11 +99,11 @@ public class Tab1 extends Tab {
     private final Text lblAddress = new Text();
     private final Text lblEmail = new Text();
     private final Text lblPhone = new Text();
-    private final Text lblWarning = new Text();
-    private final Text lblWarning2 = new Text();
-    private final TextField companyTxt = new TextField();
-    private final TextField addressTxt = new TextField();
-    private final TextField emailTxt = new TextField();
+    public final Text lblWarning = new Text();
+    public final Text lblWarning2 = new Text();
+    public final TextField companyTxt = new TextField();
+    public final TextField addressTxt = new TextField();
+    public final TextField emailTxt = new TextField();
     private final TextField phoneTxt = new TextField();
     private final Button btnAddproduct = new Button();
     private final Button btnDelproduct = new Button();
@@ -112,6 +112,7 @@ public class Tab1 extends Tab {
     private final RadioButton radio2 = new RadioButton();
     private final ToggleGroup group = new ToggleGroup();
     private final TextField PriceTxt = new TextField();
+    public final Text lblWarning3 = new Text();
 
     private Tab1() {
         createTab1();
@@ -131,9 +132,8 @@ public class Tab1 extends Tab {
         // SIVUSTON KOMPONENTIT
         radio1.setToggleGroup(group);
         radio1.setSelected(true);
-        radio1.setText("Paketti");
-
-        radio2.setText("Osa");
+//        radio1.setText("Paketti");
+//        radio2.setText("Osa");
         radio2.setToggleGroup(group);
 
         lblProduct.setFont(Font.font(null, 15));
@@ -152,8 +152,8 @@ public class Tab1 extends Tab {
         //grid1.add(addressTxt, 3, 17,5,1);
         //grid1.add(lblBilling, 2, 19);
         //grid1.add(billingTxt, 3, 19,5,1);
-        lblEmail.setText("Email:");
-        lblPhone.setText("Phone:");
+//        lblEmail.setText("Email:");
+//        lblPhone.setText("Phone:");
         companyTxt.setPromptText("Jarmonkauppa Oy");
         emailTxt.setPromptText("jarmo@jarmonkauppa.com");
         addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
@@ -214,8 +214,6 @@ public class Tab1 extends Tab {
             }
         });
         
- 
-
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle old_toggle, Toggle new_toggle) {
@@ -229,6 +227,7 @@ public class Tab1 extends Tab {
                             new PropertyValueFactory<Product, Integer>("paketinMaara"));
                     filterList();
                 }
+                
                 if (group.getSelectedToggle() == radio2) {
                     haeOsat();
                     productCol1.setCellValueFactory(
@@ -251,7 +250,7 @@ public class Tab1 extends Tab {
 
         btnAddproduct.setPrefSize(150, 50);
         btnDelproduct.setPrefSize(150, 50);
-        btnDelproduct.setText("Poista tuote");
+//        btnDelproduct.setText("Poista tuote");
         //btnAddproduct.setStyle("-fx-background-image: url('')");
         btnSend.setId("btnSend");
         btnSend.setPrefSize(250, 50);
@@ -263,10 +262,11 @@ public class Tab1 extends Tab {
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
-        lblWarning.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning.setFont(Font.font(null, FontWeight.BOLD, 15));
         lblWarning.setFill(Color.rgb(255, 0, 0));
-        lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 15));
         lblWarning2.setFill(Color.rgb(255, 0, 0));
+        lblWarning3.setFont(Font.font(null, FontWeight.BOLD, 15));
         PriceTxt.setText(""+0);
         PriceTxt.setEditable(false);
 
@@ -318,8 +318,10 @@ public class Tab1 extends Tab {
                     txtOrderAmount.setText(""+1);
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
-                    lblWarning.setText("");
+                    clearWarnings();
                 } else {
+                    //TÄHÄN lokalisointi lennossa
+                    //lblWarning.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
                     lblWarning.setText("Valitse ensin tuote");
                 }   
             }
@@ -332,14 +334,19 @@ public class Tab1 extends Tab {
                     tableTemp.getItems().remove(removeItem);
                     updatePrice(-(removeItem.getPrice()* removeItem.getAmount()));
                     tilausrivit.remove(removeItem);
-                    lblWarning2.setText("");
+                    clearWarnings();
                 } else {
+                    //TÄHÄN lokalisointi lennossa
+                    //lblWarning2.setText(Localization.getInstance().getBundle().getString("XXXXXXXXXX"));
                     lblWarning2.setText("Valitse ensin poistettava tuote");
                 }
             }
         });
         btnSend.setOnAction(e -> {
             controller.createOrder(Double.parseDouble(PriceTxt.getText()));
+            tilausrivit.clear();
+            PriceTxt.setText(""+0);
+
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
 
@@ -358,6 +365,7 @@ public class Tab1 extends Tab {
         grid1.add(vboxTempTable, 15, 7, 8, 4);
         grid1.add(lblPrice, 12, 11,2,1);
         grid1.add(PriceTxt, 15, 11);
+        grid1.add(lblWarning3,16,11);
         grid1.add(btnSend, 15, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
@@ -479,9 +487,20 @@ public class Tab1 extends Tab {
         lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
         lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
         lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
-        //tbl_col_order_name
-        //tbl_col_order_quantity
-        //tbl_col_order_unit_price
+        
+        radio1.setText("Paketti");
+        radio2.setText("Osa");
+        lblEmail.setText("Email:");
+        lblPhone.setText("Phone:");
+//        productCol1.setText("Product");
+//        nameCol1
+//        amountCol1
+//        priceCol1
+//        btnDelproduct.setText("Poista tuote");
+//        productCol
+//        amountCol
+//        priceCol
+
     }
 
     public void haePaketit() {
@@ -508,5 +527,10 @@ public class Tab1 extends Tab {
         int tAmount = Integer.parseInt(txtOrderAmount.getText());
         tAmount = amountChange + tAmount;
         txtOrderAmount.setText(Integer.toString(tAmount));
+    }
+    public void clearWarnings(){
+        lblWarning.setText("");
+        lblWarning2.setText("");
+        lblWarning3.setText("");
     }
 }

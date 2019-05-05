@@ -41,8 +41,6 @@ public class Tab4 extends Tab {
     private final GridPane grid4 = new GridPane();
     
     private final Button btnSales = new Button();
-    private final Button btnSalesPurchases = new Button();
-    private final Button btnSummary = new Button();
     
     public Tab4(){
        createTab4();
@@ -59,15 +57,10 @@ public class Tab4 extends Tab {
         });
         grid4.add(btnSales, 0, 0);
         
-        btnSalesPurchases.setPrefSize(200, 100);
      
         //btnSalesPurchases.setOnAction((event) -> {
         //    showPurchasesChart();
         //});
-        grid4.add(btnSalesPurchases, 0, 1);
-
-        btnSummary.setPrefSize(200, 100);
-        grid4.add(btnSummary, 0, 2);
 
         this.setContent(grid4);
         
@@ -129,8 +122,6 @@ public class Tab4 extends Tab {
         Localization localization = Localization.getInstance();
         
         btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
-        btnSalesPurchases.setText(localization.getBundle().getString("btn_sales_purchases"));  // = .setText("Osto");
-        btnSummary.setText(localization.getBundle().getString("btn_summary"));  // = .setText("Yhteenveto ja budjetti");
         
         //lineChart.setTitle("Myyntitiedot");
         //series.setName("Myynnit");

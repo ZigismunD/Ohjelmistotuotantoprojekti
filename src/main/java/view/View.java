@@ -90,6 +90,10 @@ public class View extends Application {
 
     public View() {
     }
+    
+    public View(String username) {
+        textField1.setText(username);
+    }
 
     /**
      * Luo käyttöliittymä näkymä.<br>
