@@ -19,17 +19,9 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
@@ -342,10 +334,53 @@ public class Tab1 extends Tab {
                 }
             }
         });
+
+        // Tarkistaa onko asiakaskenttiin annettu syötteet
+        // Ilmoittaa, jos syöte ei ole validi
         btnSend.setOnAction(e -> {
-            controller.createOrder(Double.parseDouble(PriceTxt.getText()));
-            tilausrivit.clear();
-            PriceTxt.setText(""+0);
+            InputValidator iv = InputValidator.getINSTANCE();
+            if (iv.isEmailValid(emailTxt.getText()) && iv.isInputNotEmpty(companyTxt.getText()) && iv.isInputNotEmpty(addressTxt.getText())) {
+                controller.createOrder(Double.parseDouble(PriceTxt.getText()));
+                tilausrivit.clear();
+                PriceTxt.setText(""+0);
+            } else {
+                if (!iv.isInputNotEmpty(companyTxt.getText())) {
+                    ContextMenu yritysValidator = new ContextMenu();
+                    yritysValidator.setAutoHide(true);
+                    yritysValidator.getItems().add(
+                            new MenuItem("Syötä nimi")
+                    );
+                    yritysValidator.show(companyTxt, Side.RIGHT, 10, 10);
+                    companyTxt.setOnMouseClicked(event ->  {
+                        yritysValidator.hide();
+                    });
+                }
+
+                if (!iv.isInputNotEmpty(addressTxt.getText())) {
+                    ContextMenu osoiteValidator = new ContextMenu();
+                    osoiteValidator.setAutoHide(true);
+                    osoiteValidator.getItems().add(
+                            new MenuItem("Syötä osoite")
+                    );
+                    osoiteValidator.show(addressTxt, Side.RIGHT, 10, 10);
+                    addressTxt.setOnMouseClicked(event ->  {
+                        osoiteValidator.hide();
+                    });
+                }
+
+                if (!iv.isEmailValid(emailTxt.getText())) {
+                    ContextMenu emailValidator = new ContextMenu();
+                    emailValidator.setAutoHide(true);
+                    emailValidator.getItems().add(
+                            new MenuItem("Syötä email")
+                    );
+                    emailValidator.show(emailTxt, Side.RIGHT, 10, 10);
+                    emailTxt.setOnMouseClicked(event ->  {
+                        emailValidator.hide();
+                    });
+                }
+            }
+
 
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });

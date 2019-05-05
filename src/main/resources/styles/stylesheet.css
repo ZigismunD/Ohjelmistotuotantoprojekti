@@ -30,8 +30,22 @@ LineChart {
     -fx-background-color: #A5FFDC;
 }
 
-.table-view .column-header .label{
-    -fx-alignment: left;
+.context-menu {
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
+    -fx-padding: 0;
 }
 
+.context-menu:hover {
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+}
 
