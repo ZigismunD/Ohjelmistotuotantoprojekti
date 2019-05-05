@@ -138,7 +138,7 @@ public class Tab3 extends Tab {
         TableColumn productamount = new TableColumn("Paketti");
         productamount.setStyle("-fx-font-size: 14pt;");
         productamount.setMinWidth(500);
-       productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
+        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
 
         TableColumn ordersum = new TableColumn("Määrä");
         ordersum.setStyle("-fx-font-size: 14pt;");
