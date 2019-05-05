@@ -93,7 +93,6 @@ public class UserCreation extends Application {
                         passuValidator.hide();
                     });
                 }
-
             }
 
         });
