@@ -26,8 +26,7 @@ public class Paketti {
     private int id;
     private String paketinNimi;
     private double paketinHinta;
-    private ArrayList<Paketti_rivi> pakettiRivit = new ArrayList<>();
-    private double yhtPakettiHinta = 0;
+    //private ArrayList<Paketti_rivi> pakettiRivit = new ArrayList<>();
     private int varastoMaara;
 
     /**
@@ -130,23 +129,23 @@ public class Paketti {
         this.varastoMaara = varastoMaara;
     }
 
-    /**
-     * luodaan tauluun kentän "paketin osat"
-     *
-     * @return paketiRivit palauttaa paketin osat
-     */
-    @Column(name = "paketin osat")
-    public ArrayList<Paketti_rivi> getPakettiRivit() {
-        return pakettiRivit;
-    }
-    /**
-     * 
-     * @param pakettiRivit asentaa uusi paketti paketti-taulukkoon
-     */
-    public void setPakettiRivit(ArrayList<Paketti_rivi> pakettiRivit) {
-        this.pakettiRivit = pakettiRivit;
-
-    }
+//    /**
+//     * luodaan tauluun kentän "paketin osat"
+//     *
+//     * @return paketiRivit palauttaa paketin osat
+//     */
+//    @Column(name = "paketinOsat")
+//    public ArrayList<Paketti_rivi> getPakettiRivit() {
+//        return pakettiRivit;
+//    }
+//    /**
+//     * 
+//     * @param pakettiRivit asentaa uusi paketti paketti-taulukkoon
+//     */
+//    public void setPakettiRivit(ArrayList<Paketti_rivi> pakettiRivit) {
+//        this.pakettiRivit = pakettiRivit;
+//
+//    }
     /**
      *
      * @return paketin nimen
@@ -155,24 +154,23 @@ public class Paketti {
         return this.paketinNimi;
     }
 
-    // luodaan Paketti_rivit ArrayListaan 
-    public void lisaaPakettiRivi(Paketti_rivi pakettiRivi) {
-        pakettiRivit.add(pakettiRivi);
-    }
+//    // luodaan Paketti_rivit ArrayListaan 
+//    public void lisaaPakettiRivi(Paketti_rivi pakettiRivi) {
+//        this.pakettiRivit.add(pakettiRivi);
+//    }
     
     /**
      * luodaan tauluun kentän "yhteishinta"
      *
      * @return yhtPakettiHinta palauttaa kaikkin pakettien yhteishinnan
      */
-    @Column(name = "yhteishinta")
-    public double getYhtPakettiHinta() {
-        double yhtPakettiHinta = 0;
-        for (int i = 0; i < pakettiRivit.size(); i++) {
-            double hinta = pakettiRivit.get(i).getOsa().getOsaHinta();
-            yhtPakettiHinta += hinta;
-        }
-        return yhtPakettiHinta;
-    }
+//    public double getYhtPakettiHinta() {
+//        double yhtPakettiHinta = 0;
+//        for (int i = 0; i < this.pakettiRivit.size(); i++) {
+//            double hinta = this.pakettiRivit.get(i).getOsa().getOsaHinta();
+//            yhtPakettiHinta += hinta;
+//        }
+//        return yhtPakettiHinta;
+//    }
 
 }

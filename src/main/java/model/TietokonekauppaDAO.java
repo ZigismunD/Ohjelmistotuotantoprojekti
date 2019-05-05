@@ -5,9 +5,8 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -51,7 +50,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
@@ -80,6 +78,7 @@ public class TietokonekauppaDAO {
         }
 
     }
+
     public List<Osa> readOsat() {
         // TODO Auto-generated method stub
         ArrayList<Osa> osat = new ArrayList<>();
@@ -93,7 +92,7 @@ public class TietokonekauppaDAO {
             }
             transaction.commit();
 
-           
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +103,8 @@ public class TietokonekauppaDAO {
         }
 
     }
-    
+
     /**
-     *
      * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
@@ -132,7 +130,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id - olion haetun id
      * @return result palauttaa paketti olion haetun id:n perusteella
      */
@@ -148,7 +145,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param id
      * @return result palauttaa paketin hinnan haetun id:n perusteella
      */
@@ -164,7 +160,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
@@ -189,7 +184,6 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     *
      * @param nimi - työntekijän nimi
      * @return henkilo palauttaa Henkilosto rivin haetun nimen perusteella
      */
@@ -270,12 +264,16 @@ public class TietokonekauppaDAO {
      *
      * @param tilaukset - asikkaiden valmiit tilaukset
      */
-    public void luoTilaus(List<Tilaus_rivi> tilaukset) {
+    public void luoTilaus(List<Tilaus_rivi> tilaukset,Asiakas asiakas, Double hinta) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
-
+            
+         //  Tallenna asiakas
+            istunto.save(asiakas);
+                        
             //Luo Tilaus olio
-            Tilaus tilaus = new Tilaus(null, null, new Date());
+            
+            Tilaus tilaus = new Tilaus(asiakas, null, new Date(),hinta);
             istunto.saveOrUpdate(tilaus);
 
             //Looppaa tilaus rivejä
@@ -285,6 +283,8 @@ public class TietokonekauppaDAO {
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
             }
+                        
+
 
             istunto.getTransaction().commit();
 
@@ -309,5 +309,195 @@ public class TietokonekauppaDAO {
 
         }
     }
+    
+    public ArrayList tilausGetTilausRivit(Tilaus tilaus) {
+        // TODO Auto-generated method stub
+        ArrayList<Tilaus_rivi> rivit = new ArrayList<>();
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaction = istunto.beginTransaction();
+            //@SuppressWarnings("unchecked")
+            List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
+            for (Tilaus_rivi v : result) {
+                if (v.getTilaus() == tilaus) {
+                    rivit.add(v);
+                }
+            }
+            transaction.commit();
+            
+            return rivit;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    //Ottaa vastaan id:n ja objektityypin, palauttaa objektin jolla sama id
+    public Object getObjectById(int id, Object object) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction transaction = istunto.beginTransaction();
+            
+            istunto.load(object, id);
+            return object;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }    
+    }
+    
+    //Hakee ja palauttaa objektin alirivit
+    public ArrayList<Object> getObjectRows(Object obj) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            if (obj instanceof Tilaus) {
+                //Hae ja poista tilauksen rivit
+                List<Object> result = istunto.createQuery("from Tilaus_rivi where tilaus = " + ((Tilaus) obj).getTilausId()).list();
+                ArrayList<Object> tilaus_rivit = new ArrayList<Object>();
+                tilaus_rivit.addAll(result);
+                return tilaus_rivit;
+            } else if (obj instanceof Paketti) {
+                //Hae ja poista paketin rivit
+                List<Object> result = istunto.createQuery("from Paketti_rivi where id = " + ((Paketti) obj).getPakettiId()).list();
+                ArrayList<Object> paketti_rivit = new ArrayList<Object>();
+                paketti_rivit.addAll(result);
+                return paketti_rivit;
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }    
+    }
+    
+    //Poistaa objektin tietokannasta. Jos objektilla on alirivejä se poistaa ne myös
+    public void objectDelete(Object obj) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            
+            //Delete main object
+            istunto.delete(obj);
+            
+            //Jos poistettavalla objektilla on aliobjekteja niin poista ne ensin
+            if (obj instanceof Tilaus) {
+                //Hae ja poista tilauksen rivit
+                List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
+                for (Tilaus_rivi listobject : result) {
+                    if (listobject.getTilaus().getTilausId() == ((Tilaus) obj).getTilausId()) {
+                        istunto.delete(listobject);
+                    }
+                }
+                
+                //Poista tilauksen asiakas
+                istunto.delete(((Tilaus) obj).getAsiakas());
+            } else if (obj instanceof Paketti) {
+                //Hae ja poista paketin rivit
+                List<Paketti_rivi> result = istunto.createQuery("from Paketti_rivi").list();
+                for (Paketti_rivi listobject : result) {
+                    if (listobject.getPaketti().getPakettiId() == ((Paketti) obj).getPakettiId()) {
+                        istunto.delete(listobject);
+                    }
+                }
+            }
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Tallentaa objektin ja sen alirivit
+    public void objectSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            
+            //Tallenna yksittäinen objekti
+            if (obj != null) {
+                istunto.saveOrUpdate(obj);
+            }
+            
+            //Tallenna objekti lista jos niitä on annettu
+            if (obj_rows != null) {
+                for (Object row : obj_rows) {
+                    istunto.saveOrUpdate(row);
+                }
+            }
+            
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Tallentaa yksittäisen objektin
+    public void objectSaveOrUpdate(Object obj) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            istunto.saveOrUpdate(obj);
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Tallentaa listan objekteja
+    public void objectListSaveOrUpdate(ArrayList<Object> obj_list) {
+        try (Session istunto = istuntotehdas.openSession()) {
+            istunto.beginTransaction();
+            for(Object obj : obj_list) {
+                istunto.save(obj);
+            }
+            istunto.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public double[] getSalesYear(Integer year) {
+        double[] sales = new double[12];
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction ta = istunto.beginTransaction();
+            List<Tilaus> tilausList = istunto.createQuery("from Tilaus").list();
+            for (Tilaus dt :
+                    tilausList) {
 
+                switch (dt.getTilausPvm().getMonth()) {
+                    case Calendar.JANUARY:
+                        sales[0] += dt.getYhteishinta();
+                        break;
+                    case Calendar.FEBRUARY:
+                        sales[1] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MARCH:
+                        sales[2] += dt.getYhteishinta();
+                        break;
+                    case Calendar.APRIL:
+                        sales[3] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MAY:
+                        sales[4] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JUNE:
+                        sales[5] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JULY:
+                        sales[6] += dt.getYhteishinta();
+                        break;
+                    case Calendar.AUGUST:
+                        sales[7] += dt.getYhteishinta();
+                        break;
+                    case Calendar.SEPTEMBER:
+                        sales[8] += dt.getYhteishinta();
+                        break;
+                    case Calendar.OCTOBER:
+                        sales[9] += dt.getYhteishinta();
+                        break;
+                    case Calendar.NOVEMBER:
+                        sales[10] += dt.getYhteishinta();
+                        break;
+                    case Calendar.DECEMBER:
+                        sales[11] += dt.getYhteishinta();
+
+                }
+            }
+            ta.commit();
+        }
+        return sales;
+    }
 }

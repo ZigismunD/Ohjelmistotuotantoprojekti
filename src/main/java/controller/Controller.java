@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -125,6 +126,7 @@ public class Controller {
         }
         return paketit;
     }
+     
      public ArrayList<Osa> getAllOsat() {
         ArrayList<Osa> osat = new ArrayList<>();
         
@@ -133,26 +135,23 @@ public class Controller {
         }
         return osat;
     }
-    
-    
+
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
     
-    public void createOrder() {
+    public void createOrder(Double hinta) {
         Tab1 tab1 = Tab1.getInstance();
 
         //Luo Tilaus_rivi lista productista
-        List<Tilaus_rivi> tilaukset = tab1.getTilaukset();
-        List<Asiakas> asiakas = tab1.getCustomer();
-        System.out.println(tilaukset);
-        System.out.println(asiakas);
+        List<Tilaus_rivi> tilaukset = tab1.getTilausrivit();
+        Asiakas asiakas = tab1.getCustomer();
         //Tarkista että listassa on ainakin yksi tilaus
         if (tilaukset.isEmpty() == true) {
             //Ilmoita viewille että tilausrivejä ei ole yhtään
             //gui.setMessagebox("Tilaus lista on tyhjä!");
         } else {
-            dao.luoTilaus(tilaukset);
+            dao.luoTilaus(tilaukset,asiakas,hinta);
         }
     }
     
@@ -173,8 +172,9 @@ public class Controller {
         ArrayList<Osa> osat = new ArrayList<>();
         
         for (Osa osa : dao.getOsat(tyyppi)) {
-            osat.add(new Osa(osa.getOsaNimi(), osa.getOsaHinta(), osa.getVarastoMaara(), osa.getTyyppi(), osa.getHyllynNumero()));
+            osat.add(osa);
         }
+        
         return osat;
     }
     
@@ -190,9 +190,36 @@ public class Controller {
         }
         return tilaukset;
     }
+    
+     public ArrayList<Tilaus> getOrderRows(Tilaus tilaus) {
+         return dao.tilausGetTilausRivit(tilaus);
+    }
+    
 
     public void luoOsa(Osa osa) {
         dao.luoOsa(osa);
+    }
+    
+    public ArrayList<Object> getObjectRows(Object obj) {
+        return dao.getObjectRows(obj);
+    }
+    
+    public void objectSaveOrUpdate(Object obj) {
+        dao.objectSaveOrUpdate(obj, null);
+    }
+    
+    public void objectAndRowsSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
+        //dao.objectSaveOrUpdate(obj, obj_rows);
+        dao.objectSaveOrUpdate(obj);
+        dao.objectListSaveOrUpdate(obj_rows);
+    }
+    
+    public void objectDelete(Object obj) {
+        dao.objectDelete(obj);
+    }
+
+    public double[] getSalesOfYear(Integer vuosi) {
+        return dao.getSalesYear(vuosi);
     }
     
 }

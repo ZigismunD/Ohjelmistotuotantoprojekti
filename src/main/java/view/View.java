@@ -17,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -78,10 +77,17 @@ public class View extends Application {
     Localization localization = Localization.getInstance();
 
     // 
-    Text text1 = new Text();
-    Text text2 = new Text();
+    Text textWelcome = new Text();
+    Text textTime = new Text();
     public Text textField1 = new Text();
-    
+    public Text textField2 = new Text();
+    Label lblLanguageFI = new Label();
+    Label lblLanguageRUS = new Label();
+    Label lblLanguageEN = new Label();
+    Label lblLogOut = new Label();
+    HBox hEmpty = new HBox();
+    GridPane gridPane = new GridPane();
+
     public View() {
     }
 
@@ -116,17 +122,16 @@ public class View extends Application {
             tabPane.getTabs().add(tab4);
 
             //Creating Text Filed for Tervetuloa        
-            
-
             //Creating Text Filed for Kirjautumisaika
             Date date = new Date();
-            Text textField2 = new Text(date.toLocaleString());
+
+            textField2.setText(date.toLocaleString());
 
             //Creating Buttons 
             Image image = new Image("Finland-icon.png");
-            Label button1 = new Label();
-            button1.setGraphic(new ImageView(image));
-            button1.setOnMouseClicked(e -> {
+
+            lblLanguageFI.setGraphic(new ImageView(image));
+            lblLanguageFI.setOnMouseClicked(e -> {
                 localization.changeLocale("FI");
                 localizationSetText();
                 Tab1.getInstance().localizationSetText();
@@ -134,32 +139,30 @@ public class View extends Application {
             });
 
             Image image2 = new Image("Russia-icon.png");
-            Label button2 = new Label();
-            button2.setGraphic(new ImageView(image2));
-            button2.setOnMouseClicked(e -> {
+
+            lblLanguageRUS.setGraphic(new ImageView(image2));
+            lblLanguageRUS.setOnMouseClicked(e -> {
                 localization.changeLocale("RUS");
                 localizationSetText();
                 Tab1.getInstance().localizationSetText();
             });
 
             Image image3 = new Image("United-Kingdom-icon.png");
-            Label button3 = new Label();
 
-            button3.setGraphic(new ImageView(image3));
-            button3.setOnMouseClicked(e -> {
+            lblLanguageEN.setGraphic(new ImageView(image3));
+            lblLanguageEN.setOnMouseClicked(e -> {
                 localization.changeLocale("US");
                 localizationSetText();
                 Tab1.getInstance().localizationSetText();
 
             });
             Image image4 = new Image("logout-icon.png");
-            Label button4 = new Label();
-            button4.setGraphic(new ImageView(image4));
-            button4.setOnMouseClicked(e -> {
+
+            lblLogOut.setGraphic(new ImageView(image4));
+            lblLogOut.setOnMouseClicked(e -> {
                 controller.logOut(primaryStage);
             });
 
-            GridPane gridPane = new GridPane();
             //Setting size for the pane  
             gridPane.setMinSize(1900, 140);
             //Setting the vertical and horizontal gaps between the columns 
@@ -168,19 +171,18 @@ public class View extends Application {
             //Setting the padding  
             gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-            HBox hEmpty = new HBox();
             hEmpty.setMinSize(900, 30);
 
             //Arranging all the nodes in the grid 
-            gridPane.add(text1, 0, 0);
+            gridPane.add(textWelcome, 0, 0);
             gridPane.add(textField1, 1, 0);
-            gridPane.add(text2, 0, 1);
+            gridPane.add(textTime, 0, 1);
             gridPane.add(textField2, 1, 1);
             gridPane.add(hEmpty, 2, 0);
-            gridPane.add(button1, 4, 0);
-            gridPane.add(button2, 5, 0);
-            gridPane.add(button3, 6, 0);
-            gridPane.add(button4, 7, 0);
+            gridPane.add(lblLanguageFI, 3, 0);
+            gridPane.add(lblLanguageRUS, 4, 0);
+            gridPane.add(lblLanguageEN, 5, 0);
+            gridPane.add(lblLogOut, 6, 0);
 
             VBox vBox = new VBox();
             vBox.getChildren().add(gridPane);
@@ -216,45 +218,7 @@ public class View extends Application {
     }
 
     ;
-
-    private void showSalesChart() {
-
-    }
-
-    private void showPurchasesChart() {
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Month");
-
-        final LineChart<String, Number> lineChart
-                = new LineChart<String, Number>(xAxis, yAxis);
-
-        lineChart.setTitle("Ostotiedot");
-
-        XYChart.Series series = new XYChart.Series();
-        series.setName("Ostot");
-
-        series.getData().add(new XYChart.Data("Jan", 2));
-        series.getData().add(new XYChart.Data("Feb", 3));
-        series.getData().add(new XYChart.Data("Mar", 4));
-        series.getData().add(new XYChart.Data("Apr", 5));
-        series.getData().add(new XYChart.Data("May", 6));
-        series.getData().add(new XYChart.Data("Jun", 7));
-        series.getData().add(new XYChart.Data("Jul", 8));
-        series.getData().add(new XYChart.Data("Aug", 9));
-        series.getData().add(new XYChart.Data("Sep", 10));
-        series.getData().add(new XYChart.Data("Oct", 11));
-        series.getData().add(new XYChart.Data("Nov", 12));
-        series.getData().add(new XYChart.Data("Dec", 13));
-
-        lineChart.setPrefHeight(700);
-        lineChart.setPrefWidth(1600);
-        lineChart.getData().add(series);
-        lineChart.setPadding(new Insets(20, 20, 20, 20));
-        grid4.add(lineChart, 1, 1, 7, 7);
-        tab4.setContent(grid4);
-    }
-
+    
     public void localizationSetText() {
         //Aseta tekstikenttien teksti uudelleen
 
@@ -264,8 +228,8 @@ public class View extends Application {
         tab3.setText(localization.getBundle().getString("tab_orders"));
         tab4.setText(localization.getBundle().getString("tab_finance"));
 
-        text1.setText(localization.getBundle().getString("welcome_text"));
-        text2.setText(localization.getBundle().getString("time_text"));
+        textWelcome.setText(localization.getBundle().getString("welcome_text"));
+        textTime.setText(localization.getBundle().getString("time_text"));
 
         //Myyntisivu
 //        lblSales.setText(localization.getBundle().getString("lbl_page_header"));  // ("MYYNTISIVU");

@@ -6,10 +6,13 @@
 package view;
 
 import controller.Controller;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,13 +22,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Asiakas;
 import model.Localization;
 import model.Osa;
+import model.Paketti;
 import model.Product;
 import model.Tilaus;
+import model.Tilaus_rivi;
 
 /**
  *
@@ -41,19 +48,20 @@ import model.Tilaus;
 
 public class Tab3 extends Tab {
     
-    private Controller controller = Controller.getInstance();
-    private Scene scene;
-    private TabPane tabPane;
-    private ObservableList<Product> data;
-    private List<Product> tilausrivit;
-    private List<Osa> osaLista;
-    private ObservableList<Osa> osaData;
-    private List<Tilaus> tilausLista;
-    private ObservableList<Tilaus> tilausData;
-    
+    //Yleiset
+    Controller controller = Controller.getInstance();
+    Scene scene;
+    TabPane tabPane;
     private final GridPane grid3 = new GridPane();
-    private final Tab tab3 = new Tab();
+    
+    List<Tilaus> tilausLista = new ArrayList<Tilaus>();
+    ObservableList<Tilaus> tilausData;
+    
+    //ObservableList<Tilaus> rividata; 
+    //List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
+    
     private final TableView tableOrders = new TableView();
+    private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
     private final Button btnPurchases = new Button();
     private final Button btnAllEvents = new Button();
@@ -64,9 +72,7 @@ public class Tab3 extends Tab {
         createTab3();
     }
     
-    
-    
-     private void createTab3() {
+    private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
         //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
@@ -94,12 +100,14 @@ public class Tab3 extends Tab {
         TableColumn brand = new TableColumn("Tilaus ID");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
-        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("id"));
+        brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("tilausId"));
 
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
         client.setMinWidth(500);
+        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas >("asiakas"));
 
+        
         TableColumn orderDate = new TableColumn("Tilauspvm");
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
@@ -108,38 +116,110 @@ public class Tab3 extends Tab {
         TableColumn amount = new TableColumn("Summa (€)");
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
+        amount.setCellValueFactory(new PropertyValueFactory<Tilaus, Double>("yhteishinta"));
+
 
         TableColumn additionalInfo = new TableColumn("HUOM");
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
 
         tableOrders.getColumns().addAll(brand, client, orderDate, amount, additionalInfo);
-        tableOrders.setPrefHeight(700);
+        tableOrders.setPrefHeight(500);
         tableOrders.setPrefWidth(1600);
 
         final VBox vboxOrders = new VBox();
         vboxOrders.setSpacing(5);
         vboxOrders.setPadding(new Insets(0, 0, 0, 20));
         vboxOrders.getChildren().addAll(tableOrders);
+        
+        tableDetails.setEditable(true);
 
-        grid3.add(vboxOrders, 1, 0, 7, 7);
+        TableColumn products = new TableColumn("Osa");
+        products.setStyle("-fx-font-size: 14pt;");
+        products.setMinWidth(250);
+        products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
+
+        TableColumn productamount = new TableColumn("Paketti");
+        productamount.setStyle("-fx-font-size: 14pt;");
+        productamount.setMinWidth(500);
+       productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
+
+        TableColumn ordersum = new TableColumn("Määrä");
+        ordersum.setStyle("-fx-font-size: 14pt;");
+        ordersum.setMinWidth(150);
+        ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Integer>("maara"));
+        
+        TableColumn itemPrice = new TableColumn("Tuotehinta");
+        itemPrice.setStyle("-fx-font-size: 14pt;");
+        itemPrice.setMinWidth(150);
+        itemPrice.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Double>("hinta"));
+
+        tableDetails.getColumns().addAll(products, productamount, ordersum,itemPrice);
+        tableDetails.setPrefHeight(300);
+        tableDetails.setPrefWidth(1600);
+
+        final VBox vboxDetails = new VBox();
+        vboxDetails.setSpacing(5);
+        vboxDetails.setPadding(new Insets(0, 0, 0, 20));
+        vboxDetails.getChildren().addAll(tableDetails);
 
         btnAlterOrder.setId("alterOrder");
         btnAlterOrder.setPrefSize(200, 100);
-
-        btnRemoveOrder.setPrefSize(200, 100);
+        
+        btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (tableOrders.getSelectionModel().getSelectedItem() != null) {
+                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
+                    tableOrders.getItems().remove(removeItem);
+                    controller.objectDelete(removeItem);
+                    tableDetails.getItems().clear();
+                } else {
+                }
+            }
+        });
         
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
         buttonsBox.getChildren().addAll(btnAlterOrder, btnRemoveOrder);
-        grid3.add(buttonsBox, 7, 8, 7, 10);
         
+        grid3.add(vboxOrders, 1, 0, 7, 7);
+        grid3.add(vboxDetails,1, 10, 7, 2);
+        grid3.add(buttonsBox, 7, 12, 7, 10);
+
         this.setContent(grid3);
         
         localizationSetText();
+        
+        tableOrders.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    showRows();
+                }
+            });
     }
+
+
+    
+    public void showRows(){
+        Tilaus valittuTilaus =(Tilaus)tableOrders.getSelectionModel().getSelectedItem(); 
+        
+        List<Object> tilausriviLista = new ArrayList<>();
+        tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
+        //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
+        ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
+        
+        //tilausriviLista = controller.getOrderRows(valittuTilaus);
+        ////tilausriviLista.add(controller.getOrderRows(valittuTilaus));
+        //rividata = FXCollections.observableArrayList(tilausriviLista);
+        
+        tableDetails.setItems(rividata);
+        System.out.println(rividata);
+        System.out.println(valittuTilaus.getAsiakas());
+    }
+    
      
     public void localizationSetText() {
         Localization localization = Localization.getInstance();

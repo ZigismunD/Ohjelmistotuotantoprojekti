@@ -145,7 +145,7 @@ public class Osa {
      *
      * @return hyllynNumero palauttaa osan hyllyn numero
      */
-    @Column(name = "hylly")
+    @Column(name = "hyllyNumero")
     public String getHyllynNumero() {
         return hyllynNumero;
     }
@@ -157,9 +157,10 @@ public class Osa {
         this.hyllynNumero = hyllynNumero;
     }
     
-        public String toString(){
+    public String toString(){
         return this.osaNimi;
     }
-   
+    
+    
    
 }

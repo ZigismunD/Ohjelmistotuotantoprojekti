@@ -7,6 +7,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import model.Asiakas;
 import model.Henkilosto;
 import javax.persistence.Column;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,11 +35,14 @@ public class Tilaus {
     /**
      * luodaan olion muuttujat
      */
-    private int id;
+    private int tilausId;
     private Asiakas asiakas;
     private Henkilosto henkilosto;
     private Date tilausPvm;
-    private ArrayList<Tilaus_rivi> tilausRivit = new ArrayList<>();
+    private Double yhteishinta;
+
+
+//private List<Tilaus_rivi> tilausRivit = new ArrayList<Tilaus_rivi>();
     
 
     /**
@@ -47,10 +53,16 @@ public class Tilaus {
      * @param tilausPvm luo tilauksen päivämäärän
      */
     public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm) {
-
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
+    }
+
+    public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm, Double yhteishinta) {
+        this.asiakas = asiakas;
+        this.henkilosto = henkilosto;
+        this.tilausPvm = tilausPvm;
+        this.yhteishinta = yhteishinta;
     }
 
     /**
@@ -68,7 +80,7 @@ public class Tilaus {
     @GeneratedValue
     @Column(name = "id")
     public int getTilausId() {
-        return id;
+        return tilausId;
     }
 
     /**
@@ -76,7 +88,7 @@ public class Tilaus {
      * @param Id asentaa tietokannan generoiman id olioon
      */
     public void setTilausId(int Id) {
-        this.id = Id;
+        this.tilausId = Id;
     }
 
     /**
@@ -85,7 +97,7 @@ public class Tilaus {
      *
      * @return asikkaan parametrit Asiakas-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "Asiakas")
     public Asiakas getAsiakas() {
         return asiakas;
@@ -105,7 +117,7 @@ public class Tilaus {
      *
      * @return työntekijan parametrit Henkilosto-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "henkilosto")
     public Henkilosto getHenkilosto() {
         return henkilosto;
@@ -138,10 +150,19 @@ public class Tilaus {
         this.tilausPvm = tilausPvm;
     }
 
+    /*
+    @Column(name = "TilausRivit")
+    public List<Tilaus_rivi> getTilausRivit() {
+        return tilausRivit;
+    }
+    
+    public void setTilausRivit(ArrayList<Tilaus_rivi> tilausRivit) {
+        this.tilausRivit = tilausRivit;
+    }
+    
     // tällä lisätään tilaus_rivi objektina arrayListaan
     public void lisääTilausRivi(Tilaus_rivi tilausrivi) {
-        tilausRivit.add(tilausrivi);
-
+        this.tilausRivit.add(tilausrivi);
     }
     
     public double getYhtHinta(){
@@ -151,8 +172,15 @@ public class Tilaus {
           yhtHinta += hinta;
         }
         return yhtHinta;
+    }
+    */
 
- 
+    @Column(name = "Yhteishinta")
+    public Double getYhteishinta() {
+        return yhteishinta;
     }
 
+    public void setYhteishinta(Double yhteishinta) {
+        this.yhteishinta = yhteishinta;
+    }
 }

@@ -38,6 +38,7 @@ public class loginView extends Application {
     Label lblMessage = new Label();
     Label userlabel = new Label();
     Label passlabel = new Label();
+    
     public TextField user = new TextField();
     public PasswordField password = new PasswordField();
     
@@ -84,7 +85,7 @@ public class loginView extends Application {
                     controller = Controller.getInstance();
                 }}
             );
-                    
+            
             GridPane grid = new GridPane();
             grid.setAlignment(Pos.CENTER);
             grid.setVgap(20);
@@ -126,7 +127,7 @@ public class loginView extends Application {
         user.setText("");
         password.setText("");
     }
-        
+    
     public static void main(String[] args) {
         launch(args);
         
