@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -36,6 +37,7 @@ public class UserCreation extends Application {
     private Button createUser = new Button("Lähetä");
     private Controller cont = Controller.getInstance();
     private Encryption enc = Encryption.getInstance();
+    private InputValidator iv = InputValidator.getINSTANCE();
 
    public void createUserPopUp() {
        Stage newStage = new Stage();
@@ -53,7 +55,47 @@ public class UserCreation extends Application {
         comp.add(createUser, 2, 3);
 
         createUser.setOnAction(event -> {
-            cont.createUser(new Henkilosto(nimi.getText(), null, enc.encrypt(salasana.getText()), tunnus.getText()));
+            if (iv.isInputLongEnough(nimi.getText()) && iv.isInputLongEnough(salasana.getText()) && iv.isInputNotEmpty(tunnus.getText())) {
+                cont.createUser(new Henkilosto(nimi.getText(), null, enc.encrypt(salasana.getText()), tunnus.getText()));
+            } else {
+                if (!iv.isInputNotEmpty(nimi.getText())) {
+                    ContextMenu nimiValidator = new ContextMenu();
+                    nimiValidator.setAutoHide(true);
+                    nimiValidator.getItems().add(
+                            new MenuItem("Syötä nimi")
+                    );
+                    nimiValidator.show(nimi, Side.RIGHT, 10, 10);
+                    nimi.setOnMouseClicked(eventi ->  {
+                        nimiValidator.hide();
+                    });
+                }
+
+                if (!iv.isInputLongEnough(tunnus.getText())) {
+                    ContextMenu tunnusValidator = new ContextMenu();
+                    tunnusValidator.setAutoHide(true);
+                    tunnusValidator.getItems().add(
+                            new MenuItem("Vähintään 8 merkkiä")
+                    );
+                    tunnusValidator.show(tunnus, Side.RIGHT, 10, 10);
+                    tunnus.setOnMouseClicked(eventi ->  {
+                        tunnusValidator.hide();
+                    });
+                }
+
+                if (!iv.isInputLongEnough(salasana.getText())) {
+                    ContextMenu passuValidator = new ContextMenu();
+                    passuValidator.setAutoHide(true);
+                    passuValidator.getItems().add(
+                            new MenuItem("Vähintään 8 merkkiä")
+                    );
+                    passuValidator.show(salasana, Side.RIGHT, 10, 10);
+                    salasana.setOnMouseClicked(eventi ->  {
+                        passuValidator.hide();
+                    });
+                }
+
+            }
+
         });
 
        Scene stageScene = new Scene(comp, 450, 300);
