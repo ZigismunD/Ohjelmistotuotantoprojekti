@@ -470,6 +470,7 @@ public class Tab1 extends Tab {
         lblUnitPrice.setText(localization.getBundle().getString("lbl_product_unit_price"));  //  ("YKSIKKÖHINTA:");
         lblPrice.setText(localization.getBundle().getString("lbl_order_total_price"));  //  ("HINTA YHTEENSÄ:");
         btnAddproduct.setText(localization.getBundle().getString("btn_add_product"));  // = ("Lisää");
+        btnDelproduct.setText(localization.getBundle().getString("btn_delete_product"));  // = ("Poista");
         btnSend.setText(localization.getBundle().getString("btn_send_order"));  // = ("Luo tilaus");
         lblAddproduct.setText(localization.getBundle().getString("lbl_product_add"));  // = ("LISÄÄ TUOTE:");
         lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");

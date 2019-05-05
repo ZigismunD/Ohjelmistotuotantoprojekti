@@ -7,6 +7,11 @@ package model;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.scene.control.Tab;
+import view.Tab1;
+import view.Tab2;
+import view.Tab3;
+import view.Tab4;
 
 /**
  *
@@ -53,4 +58,15 @@ public class Localization {
     public ResourceBundle getBundle() {
         return mybundle;
     }
+    public void translateAll(Tab1 tab1, Tab2 tab2, Tab3 tab3, Tab4 tab4) {
+        tab1.localizationSetText();
+        tab2.localizationSetText();
+        tab3.localizationSetText();
+        //tab4.localizationSetText();
+        
+    }
+
+    
+
+   
 }

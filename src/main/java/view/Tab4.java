@@ -33,6 +33,10 @@ import model.Tilaus;
 */
 
 public class Tab4 extends Tab {
+
+    public void localizationSetText() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /*
     Scene scene;
     TabPane tabPane;

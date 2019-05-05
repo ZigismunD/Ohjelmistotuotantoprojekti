@@ -31,9 +31,10 @@ import view.loginView;
 public class Controller {
     private static Controller INSTANCE = null;
     /**
-     * Käyttöliittymä
+     * Käyttöliittymät
      */
     View gui;
+    loginView lv;
     /**
      * Tietokannan kanssa asioiva DataAccesObject
      */
@@ -64,7 +65,9 @@ public class Controller {
     public void setGui(View gui) {
         this.gui = gui;
     }
-    
+    public void setGui2(loginView gui) {
+        this.lv = gui;
+    }
     public void reconnectDAO() {
         this.dao = new TietokonekauppaDAO();
     }
@@ -91,10 +94,22 @@ public class Controller {
             View v = new View();
             setGui(v);
             v.start(Viewclass);
+            
+            v.textField1.setText(user.getHenkiloNimi());
+            
             primaryStage.close();
+            
         }
+        
     }
-    
+    public void logOut(Stage primaryStage){
+            // luo loginView ja sulje View
+            Stage loginViewclass = new Stage();
+            lv = new loginView();
+            setGui2(lv);
+            lv.start(loginViewclass);
+            primaryStage.close();
+    }
     /**
      * Hae tietokoneiden nimet ComboBoxiin
      * @param box ComboBox, johon nimet halutaan tuoda

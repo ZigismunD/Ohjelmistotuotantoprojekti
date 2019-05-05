@@ -16,8 +16,6 @@ Button {
 btnSend{
     -fx-font-size: 25px;
 }
-
-
 Button:hover {
     -fx-background-color: #383838;
     -fx-scale-y: 1.1;
