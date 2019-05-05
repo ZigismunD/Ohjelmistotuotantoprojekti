@@ -50,7 +50,6 @@ public class loginView extends Application {
     
     //Localisation
     Localization localization = Localization.getInstance();
-    ComboBox localeList = new ComboBox(); 
     
     Stage loginPrimaryStage;
     
@@ -67,16 +66,6 @@ public class loginView extends Application {
             
             lblMessage.setId("fail");
             lblMessage.setTextFill(Color.RED);
-            
-//            ComboBox<String> localeList = new ComboBox();
-//            localeList.getItems().addAll(
-//                localization.getLocaleList()
-//            );
-//            localeList.getSelectionModel().selectFirst();
-//            localeList.setOnAction(e-> {
-//                localization.changeLocale(localeList.getValue());
-//                localizationSetText();
-//            });
             
             loginBtn.setId("login");
             loginBtn.setDefaultButton(true); 
@@ -111,7 +100,6 @@ public class loginView extends Application {
             grid.add(createUser, 2, 2);
             grid.add(lblMessage, 2, 2);
             grid.add(reconnectBtn, 3, 0);
-//            grid.add(localeList, 3, 1);
             grid.add(createLanguageButtons(), 1, 4);
             
             Scene scene = new Scene(grid, 750, 400);
