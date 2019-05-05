@@ -43,7 +43,7 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:4444/Tietokonekauppa_TEST?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:4444/Tietokonekauppa?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">Kouhia</property>
     <property name="hibernate.connection.password">84EltB</property>
     <property name="hbm2ddl.auto">validate</property>

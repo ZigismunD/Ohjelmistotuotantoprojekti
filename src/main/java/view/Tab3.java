@@ -56,8 +56,8 @@ public class Tab3 extends Tab {
     List<Tilaus> tilausLista = new ArrayList<Tilaus>();
     ObservableList<Tilaus> tilausData;
     
-    ObservableList<Tilaus> rividata; 
-    List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
+    //ObservableList<Tilaus> rividata; 
+    //List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
     
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
@@ -202,15 +202,22 @@ public class Tab3 extends Tab {
         localizationSetText();
         
         btnAllEvents.setOnAction(e -> {;
-        showRows();
+            showRows();
         });
     }
     
     public void showRows(){
         Tilaus valittuTilaus =(Tilaus)tableOrders.getSelectionModel().getSelectedItem(); 
-        tilausriviLista = controller.getOrderRows(valittuTilaus);
+        
+        List<Object> tilausriviLista = new ArrayList<>();
+        tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
         //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
-        rividata = FXCollections.observableArrayList(tilausriviLista);
+        ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
+        
+        //tilausriviLista = controller.getOrderRows(valittuTilaus);
+        ////tilausriviLista.add(controller.getOrderRows(valittuTilaus));
+        //rividata = FXCollections.observableArrayList(tilausriviLista);
+        
         tableDetails.setItems(rividata);
         System.out.println(rividata);
         System.out.println(valittuTilaus.getAsiakas());

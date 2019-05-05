@@ -445,4 +445,56 @@ public class TietokonekauppaDAO {
             e.printStackTrace();
         }
     }
+    
+    public double[] getSalesYear(Integer year) {
+        double[] sales = new double[12];
+        try (Session istunto = istuntotehdas.openSession()) {
+            Transaction ta = istunto.beginTransaction();
+            List<Tilaus> tilausList = istunto.createQuery("from Tilaus").list();
+            for (Tilaus dt :
+                    tilausList) {
+
+                switch (dt.getTilausPvm().getMonth()) {
+                    case Calendar.JANUARY:
+                        sales[0] += dt.getYhteishinta();
+                        break;
+                    case Calendar.FEBRUARY:
+                        sales[1] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MARCH:
+                        sales[2] += dt.getYhteishinta();
+                        break;
+                    case Calendar.APRIL:
+                        sales[3] += dt.getYhteishinta();
+                        break;
+                    case Calendar.MAY:
+                        sales[4] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JUNE:
+                        sales[5] += dt.getYhteishinta();
+                        break;
+                    case Calendar.JULY:
+                        sales[6] += dt.getYhteishinta();
+                        break;
+                    case Calendar.AUGUST:
+                        sales[7] += dt.getYhteishinta();
+                        break;
+                    case Calendar.SEPTEMBER:
+                        sales[8] += dt.getYhteishinta();
+                        break;
+                    case Calendar.OCTOBER:
+                        sales[9] += dt.getYhteishinta();
+                        break;
+                    case Calendar.NOVEMBER:
+                        sales[10] += dt.getYhteishinta();
+                        break;
+                    case Calendar.DECEMBER:
+                        sales[11] += dt.getYhteishinta();
+
+                }
+            }
+            ta.commit();
+        }
+        return sales;
+    }
 }
