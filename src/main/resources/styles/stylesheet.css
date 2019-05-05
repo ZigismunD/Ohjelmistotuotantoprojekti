@@ -49,3 +49,6 @@ LineChart {
     -fx-text-fill: white;
 }
 
+#ylapalkki {
+    -fx-background-color: #CDCDCD;
+}
