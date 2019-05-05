@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -135,7 +136,7 @@ public class Tab3 extends Tab {
 
         TableColumn products = new TableColumn("Osa");
         products.setStyle("-fx-font-size: 14pt;");
-        products.setMinWidth(200);
+        products.setMinWidth(250);
         products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
         TableColumn productamount = new TableColumn("Paketti");
@@ -145,11 +146,15 @@ public class Tab3 extends Tab {
 
         TableColumn ordersum = new TableColumn("Määrä");
         ordersum.setStyle("-fx-font-size: 14pt;");
-        ordersum.setMinWidth(200);
+        ordersum.setMinWidth(150);
         ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Integer>("maara"));
+        
+        TableColumn itemPrice = new TableColumn("Tuotehinta");
+        itemPrice.setStyle("-fx-font-size: 14pt;");
+        itemPrice.setMinWidth(150);
+        itemPrice.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Double>("hinta"));
 
-
-        tableDetails.getColumns().addAll(products, productamount, ordersum);
+        tableDetails.getColumns().addAll(products, productamount, ordersum,itemPrice);
         tableDetails.setPrefHeight(300);
         tableDetails.setPrefWidth(1600);
 
@@ -188,10 +193,15 @@ public class Tab3 extends Tab {
         
         localizationSetText();
         
-        btnAllEvents.setOnAction(e -> {;
-            showRows();
-        });
+        tableOrders.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    showRows();
+                }
+            });
     }
+
+
     
     public void showRows(){
         Tilaus valittuTilaus =(Tilaus)tableOrders.getSelectionModel().getSelectedItem(); 

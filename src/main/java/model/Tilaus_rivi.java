@@ -65,7 +65,7 @@ public class Tilaus_rivi {
      * @param paketti luo paketin parametrit Paketti oliosta
      * @param orderAmount lou tilauksen pakettien ja osien yhteisen määrän
      */
-    public Tilaus_rivi(Object objekti, int orderAmount) {
+    public Tilaus_rivi(Object objekti, int orderAmount, double price) {
         if (objekti instanceof Paketti) {
             this.paketti = (Paketti) objekti;
         }
@@ -73,6 +73,7 @@ public class Tilaus_rivi {
             this.osa = (Osa) objekti;
         }
         this.maara = orderAmount;
+        this.hinta = price;
     }
     /**
      * luodaan Tilaus_rivi tauluun perusavaimen ja sen kenttä Id

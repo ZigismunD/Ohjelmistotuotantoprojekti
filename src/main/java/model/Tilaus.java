@@ -8,6 +8,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import model.Asiakas;
 import model.Henkilosto;
 import javax.persistence.Column;
@@ -96,7 +97,7 @@ public class Tilaus {
      *
      * @return asikkaan parametrit Asiakas-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "Asiakas")
     public Asiakas getAsiakas() {
         return asiakas;
@@ -116,7 +117,7 @@ public class Tilaus {
      *
      * @return työntekijan parametrit Henkilosto-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name = "henkilosto")
     public Henkilosto getHenkilosto() {
         return henkilosto;
