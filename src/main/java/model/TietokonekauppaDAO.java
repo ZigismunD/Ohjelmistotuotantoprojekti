@@ -290,14 +290,18 @@ public class TietokonekauppaDAO {
                     istunto.save(osa);
                 } else {
                     //Hae paketti rivit
-                    List<Paketti_rivi> paketti_rivit = istunto.createQuery("from Paketti_rivi where paketti = " + tilaus_rivi.getPaketti().getPakettiId()).list();
-                    //Käy paketin osat läpi
-                    for (Paketti_rivi pak_riv : paketti_rivit) {
-                        List<Osa> osaList = istunto.createQuery("from Osa where id = " + pak_riv.getOsa().getOsaId()).list();
-                        Osa osa = osaList.get(0);
-                        osa.setVarastoMaara(osa.getVarastoMaara() - tilaus_rivi.getMaara());
-                        istunto.save(osa);
-                    }
+                    List<Paketti> pakettiList = istunto.createQuery("from Paketti where id = " + tilaus_rivi.getOsa().getOsaId()).list();
+                    Paketti paketti = pakettiList.get(0);
+                    paketti.setVarastoMaara(paketti.getVarastoMaara() - tilaus_rivi.getMaara());
+                    istunto.save(paketti);
+//                    List<Paketti_rivi> paketti_rivit = istunto.createQuery("from Paketti_rivi where paketti = " + tilaus_rivi.getPaketti().getPakettiId()).list();
+//                    //Käy paketin osat läpi
+//                    for (Paketti_rivi pak_riv : paketti_rivit) {
+//                        List<Osa> osaList = istunto.createQuery("from Osa where id = " + pak_riv.getOsa().getOsaId()).list();
+//                        Osa osa = osaList.get(0);
+//                        osa.setVarastoMaara(osa.getVarastoMaara() - tilaus_rivi.getMaara());
+//                        istunto.save(osa);
+//                    }
                 }
             }
             istunto.getTransaction().commit();
