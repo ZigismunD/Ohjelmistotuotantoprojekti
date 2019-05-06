@@ -39,36 +39,44 @@ import model.Tilaus_rivi;
  * @author RJulin
  */
 
-  /*
+/*
      * Rakentaa käyttöliittymän Tilaukset sivun
      * Sivulla tarkastellaan luotuja tilauksia ja niiden tilaus rivejä.
      * Tilaukset näkyvät listassa. Listaa painamalla kaikki tilauksen tilaus rivit näytetään toisessa listassa.
      * Luotuja tilauksia ja niiden tilaus rivejä voi muuttaa tai poistaa.
-     */
-
+ */
 public class Tab3 extends Tab {
-    
+
     //Yleiset
     Controller controller = Controller.getInstance();
     Scene scene;
     TabPane tabPane;
     private final GridPane grid3 = new GridPane();
-    
+
     List<Tilaus> tilausLista = new ArrayList<Tilaus>();
     ObservableList<Tilaus> tilausData;
-    
+
     //ObservableList<Tilaus> rividata; 
     //List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
-    
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
     private final Button btnRemoveOrder = new Button();
-    
-    public Tab3(){
+
+    private final TableColumn brand = new TableColumn("Tilaus ID");
+    private final TableColumn client = new TableColumn("Asiakas");
+    private final TableColumn orderDate = new TableColumn("Tilauspvm");
+    private final TableColumn amount = new TableColumn("Summa (€)");
+    private final TableColumn additionalInfo = new TableColumn("HUOM");
+    private final TableColumn products = new TableColumn("Osa");
+    private final TableColumn productamount = new TableColumn("Paketti");
+    private final TableColumn ordersum = new TableColumn("Määrä");
+    private final TableColumn itemPrice = new TableColumn("Tuotehinta");
+
+    public Tab3() {
         createTab3();
     }
-    
+
     private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
@@ -76,13 +84,12 @@ public class Tab3 extends Tab {
 
         btnOrders.setPrefSize(200, 100);
         btnOrders.setPadding(new Insets(10, 10, 10, 10));
-        btnOrders.setOnAction(e-> {
+        btnOrders.setOnAction(e -> {
             tilausLista = controller.getTilaukset();
             tilausData = FXCollections.observableArrayList(tilausLista);
             tableOrders.setItems(tilausData);
-        });        
+        });
         grid3.add(btnOrders, 0, 0);
-
 
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
@@ -90,29 +97,22 @@ public class Tab3 extends Tab {
 
         tableOrders.setEditable(true);
 
-        TableColumn brand = new TableColumn("Tilaus ID");
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
         brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("tilausId"));
 
-        TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
         client.setMinWidth(500);
-        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas >("asiakas"));
+        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas>("asiakas"));
 
-        
-        TableColumn orderDate = new TableColumn("Tilauspvm");
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
         orderDate.setCellValueFactory(new PropertyValueFactory<Tilaus, Date>("tilausPvm"));
-        
-        TableColumn amount = new TableColumn("Summa (€)");
+
         amount.setStyle("-fx-font-size: 14pt;");
         amount.setMinWidth(200);
         amount.setCellValueFactory(new PropertyValueFactory<Tilaus, Double>("yhteishinta"));
 
-
-        TableColumn additionalInfo = new TableColumn("HUOM");
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
 
@@ -124,30 +124,26 @@ public class Tab3 extends Tab {
         vboxOrders.setSpacing(5);
         vboxOrders.setPadding(new Insets(10, 10, 10, 20));
         vboxOrders.getChildren().addAll(tableOrders);
-        
+
         tableDetails.setEditable(true);
 
-        TableColumn products = new TableColumn("Osa");
         products.setStyle("-fx-font-size: 14pt;");
         products.setMinWidth(250);
         products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
-        TableColumn productamount = new TableColumn("Paketti");
         productamount.setStyle("-fx-font-size: 14pt;");
         productamount.setMinWidth(500);
-        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti >("paketti"));
+        productamount.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Paketti>("paketti"));
 
-        TableColumn ordersum = new TableColumn("Määrä");
         ordersum.setStyle("-fx-font-size: 14pt;");
         ordersum.setMinWidth(150);
         ordersum.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Integer>("maara"));
-        
-        TableColumn itemPrice = new TableColumn("Tuotehinta");
+
         itemPrice.setStyle("-fx-font-size: 14pt;");
         itemPrice.setMinWidth(150);
         itemPrice.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Double>("hinta"));
 
-        tableDetails.getColumns().addAll(products, productamount, ordersum,itemPrice);
+        tableDetails.getColumns().addAll(products, productamount, ordersum, itemPrice);
         tableDetails.setPrefHeight(300);
         tableDetails.setPrefWidth(1600);
 
@@ -158,12 +154,12 @@ public class Tab3 extends Tab {
 
         btnRemoveOrder.setPrefSize(200, 100);
         btnRemoveOrder.setText("Poista");
-        
+
         btnRemoveOrder.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 if (tableOrders.getSelectionModel().getSelectedItem() != null) {
-                    Tilaus removeItem =(Tilaus) tableOrders.getSelectionModel().getSelectedItem();
+                    Tilaus removeItem = (Tilaus) tableOrders.getSelectionModel().getSelectedItem();
                     tableOrders.getItems().remove(removeItem);
                     controller.objectDelete(removeItem);
                     tableDetails.getItems().clear();
@@ -171,52 +167,59 @@ public class Tab3 extends Tab {
                 }
             }
         });
-        
+
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
         buttonsBox.getChildren().addAll(btnRemoveOrder);
-        
+
         grid3.add(vboxOrders, 1, 0, 7, 7);
-        grid3.add(vboxDetails,1, 10, 7, 2);
+        grid3.add(vboxDetails, 1, 10, 7, 2);
         grid3.add(buttonsBox, 7, 12, 7, 10);
 
         this.setContent(grid3);
-        
+
         localizationSetText();
-        
+
         tableOrders.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    showRows();
-                }
-            });
+            @Override
+            public void handle(MouseEvent event) {
+                showRows();
+            }
+        });
     }
 
+    public void showRows() {
+        Tilaus valittuTilaus = (Tilaus) tableOrders.getSelectionModel().getSelectedItem();
 
-    
-    public void showRows(){
-        Tilaus valittuTilaus =(Tilaus)tableOrders.getSelectionModel().getSelectedItem(); 
-        
         List<Object> tilausriviLista = new ArrayList<>();
         tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
         //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
         ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
-        
+
         //tilausriviLista = controller.getOrderRows(valittuTilaus);
         ////tilausriviLista.add(controller.getOrderRows(valittuTilaus));
         //rividata = FXCollections.observableArrayList(tilausriviLista);
-        
         tableDetails.setItems(rividata);
         System.out.println(rividata);
         System.out.println(valittuTilaus.getAsiakas());
     }
-    
-     
+
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
-        
+
         btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
+        btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));
+
+        brand.setText(localization.getBundle().getString("lbl_orderId"));
+        client.setText(localization.getBundle().getString("lbl_client"));
+        orderDate.setText(localization.getBundle().getString("lbl_order_date"));
+        amount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        additionalInfo.setText(localization.getBundle().getString("lbl_additionalInfo"));
+        products.setText(localization.getBundle().getString("lbl_product"));
+        productamount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        ordersum.setText(localization.getBundle().getString("lbl_order_total_price"));
+        itemPrice.setText(localization.getBundle().getString("lbl_price"));
     }
 }

@@ -62,13 +62,13 @@ public class Localization {
         tab1.localizationSetText();
         tab2.localizationSetText();
         tab3.localizationSetText();
-        //tab4.localizationSetText();
+        tab4.localizationSetText();
         
     }
 
-    public void translateAll(Tab tab1, Tab tab2, Tab tab3, Tab tab4) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public void translateAll(Tab tab1, Tab tab2, Tab tab3, Tab tab4) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     
 
