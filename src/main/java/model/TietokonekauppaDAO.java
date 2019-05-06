@@ -290,7 +290,7 @@ public class TietokonekauppaDAO {
                     istunto.save(osa);
                 } else {
                     //Hae paketti rivit
-                    List<Paketti> pakettiList = istunto.createQuery("from Paketti where id = " + tilaus_rivi.getOsa().getOsaId()).list();
+                    List<Paketti> pakettiList = istunto.createQuery("from Paketti where id = " + tilaus_rivi.getPaketti().getPakettiId()).list();
                     Paketti paketti = pakettiList.get(0);
                     paketti.setVarastoMaara(paketti.getVarastoMaara() - tilaus_rivi.getMaara());
                     istunto.save(paketti);
