@@ -24,7 +24,7 @@ public class InputValidator {
     }
 
     public boolean isInputLongEnough(String syote) {
-        return syote.length() >= 8;
+        return syote.length() >= 7;
     }
 }
 

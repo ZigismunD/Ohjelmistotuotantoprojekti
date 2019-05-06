@@ -85,15 +85,13 @@ public class UserCreation extends Application {
                         passuValidator.hide();
                     });
                 }
-
             }
-
+            newStage.close();
         });
-
+       createUser.setDefaultButton(true); 
        Scene stageScene = new Scene(comp, 450, 300);
        newStage.setScene(stageScene);
        newStage.show();
-
    }
     @Override
     public void start(Stage primaryStage) throws Exception {
