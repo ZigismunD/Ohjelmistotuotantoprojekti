@@ -209,7 +209,8 @@ public class packagePopUp extends Application {
         
         //Tyhjennä product combobox ja aseta sisällöksi vain valitun tyypin osat
         cboType.setOnAction(e-> {
-            String sType = cboType.getSelectionModel().getSelectedItem();
+            String sType = getValittuTietokantaTyyppi(cboType.getSelectionModel().getSelectedIndex());
+//            String sType = cboType.getSelectionModel().getSelectedItem();
             cboSelectProduct.getItems().clear();
             cboSelectProduct.getItems().addAll(Controller.getInstance().getOsat(sType));
         });
@@ -266,7 +267,12 @@ public class packagePopUp extends Application {
                 } else {
                     //Rakenna paketti olio
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
-                    tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
+                    try {
+                        Integer.parseInt(txtPackageCost.getText());
+                        tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
+                    } catch (NumberFormatException ex) {
+                        tmpPackage.setVarastoMaara(0);
+                    }
                 }
                 //Looppaa HBoxit ja lisää niiden Osat pakettiin
                 ArrayList<Object> package_rows = new ArrayList<>();
@@ -297,6 +303,20 @@ public class packagePopUp extends Application {
         //Paketin yhteishinta = osien hinta + (2% osien hinnasta)
         Double dPackageCost = dProductCost + (dProductCost / 100 * 2);
         txtPackageCost.setText(Double.toString(dPackageCost));
+    }
+    
+    private String getValittuTietokantaTyyppi(int i) {
+        String[] osat = new String[8];
+        osat[0] = "Prosessori";
+        osat[1] = "Emolevy";
+        osat[2] = "Näytönohjain";
+        osat[3] = "RAM";
+        osat[4] = "Virtalähde";
+        osat[5] = "SSD";
+        osat[6] = "HDD";
+        osat[7] = "Kotelo";
+        
+        return osat[i];
     }
     
     public void localizationSetText() {
