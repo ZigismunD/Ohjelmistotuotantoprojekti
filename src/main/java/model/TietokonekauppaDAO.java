@@ -282,10 +282,24 @@ public class TietokonekauppaDAO {
                 tilaus_rivi.setTilaus(tilaus);
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
+                //Vähennä osan lukumäärää
+                if (tilaus_rivi.getOsa() != null) {
+                    List<Osa> osaList = istunto.createQuery("from Osa where id = " + tilaus_rivi.getOsa().getOsaId()).list();
+                    Osa osa = osaList.get(0);
+                    osa.setVarastoMaara(osa.getVarastoMaara() - tilaus_rivi.getMaara());
+                    istunto.save(osa);
+                } else {
+                    //Hae paketti rivit
+                    List<Paketti_rivi> paketti_rivit = istunto.createQuery("from Paketti_rivi where paketti = " + tilaus_rivi.getPaketti().getPakettiId()).list();
+                    //Käy paketin osat läpi
+                    for (Paketti_rivi pak_riv : paketti_rivit) {
+                        List<Osa> osaList = istunto.createQuery("from Osa where id = " + pak_riv.getOsa().getOsaId()).list();
+                        Osa osa = osaList.get(0);
+                        osa.setVarastoMaara(osa.getVarastoMaara() - tilaus_rivi.getMaara());
+                        istunto.save(osa);
+                    }
+                }
             }
-                        
-
-
             istunto.getTransaction().commit();
 
         } catch (Exception e) {
