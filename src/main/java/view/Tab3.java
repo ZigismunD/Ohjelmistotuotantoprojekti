@@ -213,11 +213,11 @@ public class Tab3 extends Tab {
         brand.setText(localization.getBundle().getString("lbl_orderId"));
         client.setText(localization.getBundle().getString("lbl_client"));
         orderDate.setText(localization.getBundle().getString("lbl_order_date"));
-        amount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        amount.setText(localization.getBundle().getString("lbl_price"));
         additionalInfo.setText(localization.getBundle().getString("lbl_additionalInfo"));
         products.setText(localization.getBundle().getString("lbl_product"));
         productamount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
-        ordersum.setText(localization.getBundle().getString("lbl_order_total_price"));
+        ordersum.setText(localization.getBundle().getString("lbl_amount"));
         itemPrice.setText(localization.getBundle().getString("lbl_price"));
     }
 }
