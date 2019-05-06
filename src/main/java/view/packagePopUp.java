@@ -51,6 +51,8 @@ public class packagePopUp extends Application {
     Text lblPackageCost;
     Button btnSave;
     
+    Stage newStage;
+    
     public packagePopUp() {
     }
     
@@ -147,7 +149,7 @@ public class packagePopUp extends Application {
         
         localizationSetText();
         
-        Stage newStage = new Stage();
+        newStage = new Stage();
         newStage.setTitle("Luo uusi paketti");
         Scene stageScene = new Scene(grid, 720, 300);
         newStage.setScene(stageScene);
@@ -267,12 +269,12 @@ public class packagePopUp extends Application {
                 } else {
                     //Rakenna paketti olio
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
-                    try {
-                        Integer.parseInt(txtPackageCost.getText());
+//                    try {
+//                        Integer.parseInt(txtPackageCost.getText());
                         tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
-                    } catch (NumberFormatException ex) {
-                        tmpPackage.setVarastoMaara(0);
-                    }
+//                    } catch (NumberFormatException ex) {
+//                        tmpPackage.setVarastoMaara(0);
+//                    }
                 }
                 //Looppaa HBoxit ja lisää niiden Osat pakettiin
                 ArrayList<Object> package_rows = new ArrayList<>();
@@ -286,10 +288,8 @@ public class packagePopUp extends Application {
                         }
                     }
                 }
-//                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
                 Controller.getInstance().objectAndRowsSaveOrUpdate(tmpPackage, package_rows);
-//                Controller.getInstance().objectSaveOrUpdate(tmpPackage);
-                
+//                newStage.close();
             }}
         );
         return btnSave;

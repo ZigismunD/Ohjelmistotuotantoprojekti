@@ -73,8 +73,9 @@ public class Tab4 extends Tab {
         xAxis.setLabel("Month");
 
         final BarChart<String, Number> lineChart = new BarChart<String, Number>(xAxis, yAxis);
-
+        
         lineChart.setTitle("Myyntitiedot");
+//        lineChart.setTitle(Localization.getInstance().getBundle().getString("title_sales_chart"));
 
         XYChart.Series series = new XYChart.Series();
         series.setName("2018");
@@ -123,7 +124,7 @@ public class Tab4 extends Tab {
         
         btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
         
-        //lineChart.setTitle("Myyntitiedot");
+        //lineChart.setTitle(localization.getBundle().getString("btn_sales"));
         //series.setName("Myynnit");
         
         //series.setName("Ostot");
