@@ -57,7 +57,6 @@ public class Tab2 extends Tab {
     private final Button btnCase = new Button();
     private final Button btnPackage = new Button();
     private final Button btnAddProduct = new Button();
-    private final Button btnDeleteProduct = new Button();
     private final Button btnAlterProduct = new Button();
     private final Button btnAddPackage = new Button();
     private final Text merkki = new Text();
@@ -215,7 +214,6 @@ public class Tab2 extends Tab {
             newProductPopup();
         });
         
-        btnDeleteProduct.setPrefSize(200, 100);
         btnAddPackage.setOnAction(event -> {
             //Tarkista mikä on valittuna tableviewissä
             
@@ -232,7 +230,7 @@ public class Tab2 extends Tab {
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
-        buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct, btnAddPackage);
+        buttonsBox.getChildren().addAll(btnAddProduct, btnAddPackage);
         
         grid2.add(buttonsBox, 7, 11, 7, 10);
         
@@ -347,7 +345,6 @@ public class Tab2 extends Tab {
         btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
         btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
         btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
-        btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
         merkki.setText(localization.getBundle().getString("lbl_brand_name"));
         name.setText(localization.getBundle().getString("lbl_product_name"));
         type.setText(localization.getBundle().getString("lbl_product_type"));

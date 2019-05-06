@@ -109,7 +109,7 @@ public class Asiakas {
         this.email = email;
     }
 
-        public String toString() {
-        return this.nimi;
+     public String toString() {
+        return this.nimi+ " , " + this.email +" , "+ this.osoite;
     }
 }

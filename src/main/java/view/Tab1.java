@@ -223,7 +223,7 @@ public class Tab1 extends Tab {
                     nameCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, String>("paketinNimi"));
                     amountCol1.setCellValueFactory(
-                            new PropertyValueFactory<Product, Integer>("paketinMaara"));
+                            new PropertyValueFactory<Product, Integer>("varastoMaara"));
                     filterList();
                 }
                 
