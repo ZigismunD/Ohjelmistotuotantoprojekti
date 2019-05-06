@@ -97,7 +97,7 @@ public class Tab3 extends Tab {
 
         TableColumn client = new TableColumn("Asiakas");
         client.setStyle("-fx-font-size: 14pt;");
-        client.setMinWidth(500);
+        client.setMinWidth(1000);
         client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas >("asiakas"));
 
         
@@ -112,11 +112,7 @@ public class Tab3 extends Tab {
         amount.setCellValueFactory(new PropertyValueFactory<Tilaus, Double>("yhteishinta"));
 
 
-        TableColumn additionalInfo = new TableColumn("HUOM");
-        additionalInfo.setStyle("-fx-font-size: 14pt;");
-        additionalInfo.setMinWidth(500);
-
-        tableOrders.getColumns().addAll(brand, client, orderDate, amount, additionalInfo);
+        tableOrders.getColumns().addAll(brand, client, orderDate, amount);
         tableOrders.setPrefHeight(500);
         tableOrders.setPrefWidth(1600);
 
@@ -129,7 +125,7 @@ public class Tab3 extends Tab {
 
         TableColumn products = new TableColumn("Osa");
         products.setStyle("-fx-font-size: 14pt;");
-        products.setMinWidth(250);
+        products.setMinWidth(500);
         products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
         TableColumn productamount = new TableColumn("Paketti");
