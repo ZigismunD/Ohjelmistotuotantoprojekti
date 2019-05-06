@@ -43,7 +43,7 @@ public class loginView extends Application {
     Label userlabel = new Label();
     Label passlabel = new Label();
     private Encryption encryption = Encryption.getInstance();
-    private Button createUser = new Button("Create User");
+    private Button createUser = new Button();
     
     public TextField user = new TextField();
     public PasswordField password = new PasswordField();
@@ -155,6 +155,7 @@ public class loginView extends Application {
         passlabel.setText(localization.getBundle().getString("lbl_password"));
         loginBtn.setText(localization.getBundle().getString("btn_login"));
         reconnectBtn.setText(localization.getBundle().getString("btn_reconnect"));
+        createUser.setText(localization.getBundle().getString("btn_creatUser"));
     }
     
     public void setErrorMessage(String message) {
