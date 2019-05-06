@@ -81,11 +81,11 @@ public class Tab2 extends Tab {
     private Text SSD = new Text();
     private Text HDD = new Text();
     private Text cases = new Text();
-    private TableColumn brand = new TableColumn("Hylly");
-    private TableColumn product = new TableColumn("Tuote");
-    private TableColumn arriveDate = new TableColumn("Hinta (€)");
-    private TableColumn amountTable = new TableColumn("Määrä");
-    private TableColumn additionalInfo = new TableColumn("HUOM");
+    private TableColumn brand = new TableColumn();
+    private TableColumn product = new TableColumn();
+    private TableColumn arriveDate = new TableColumn();
+    private TableColumn amountTable = new TableColumn();
+    private TableColumn additionalInfo = new TableColumn();
     String[] osat = osienTietokantaTyypit();
     /*"Prosessori",
             "Emolevy",
@@ -354,17 +354,25 @@ public class Tab2 extends Tab {
         price.setText(localization.getBundle().getString("lbl_product_price"));
         warehouseLocation.setText(localization.getBundle().getString("lbl_warehouse_location"));
         amount.setText(localization.getBundle().getString("lbl_product_amount"));
-        addProduct.setText(localization.getBundle().getString("btn_add"));
+        addProduct.setText(localization.getBundle().getString("btn_add_product"));
         btnPackage.setText(localization.getBundle().getString("btn_packages"));
-        processor.setText(localization.getBundle().getString("lbl_processor"));
-        graphics.setText(localization.getBundle().getString("lbl_graphics"));
-        graphics.setText(localization.getBundle().getString("lbl_graphics"));
-        motherboard.setText(localization.getBundle().getString("lbl_motherboard"));
-        RAM.setText(localization.getBundle().getString("lbl_RAM"));
-        SSD.setText(localization.getBundle().getString("lbl_SSD"));
-        HDD.setText(localization.getBundle().getString("lbl_HDD"));
-        cases.setText(localization.getBundle().getString("lbl_cases"));
-        powersupply.setText(localization.getBundle().getString("lbl_powersupply"));
+        processor.setText(localization.getBundle().getString("btn_processor"));
+        graphics.setText(localization.getBundle().getString("btn_graphics_card"));
+        
+        motherboard.setText(localization.getBundle().getString("btn_motherboard"));
+        RAM.setText(localization.getBundle().getString("btn_ram"));
+        SSD.setText(localization.getBundle().getString("btn_ssd"));
+        HDD.setText(localization.getBundle().getString("btn_hhd"));
+        cases.setText(localization.getBundle().getString("btn_casing"));
+        powersupply.setText(localization.getBundle().getString("btn_power_source"));
+
+        brand.setText(localization.getBundle().getString("lbl_warehouse_location"));
+        product.setText(localization.getBundle().getString("tbl_col_order_name"));
+        arriveDate.setText(localization.getBundle().getString("tbl_col_order_unit_price"));
+        amountTable.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        additionalInfo.setText(localization.getBundle().getString("tbl_extra")); 
+        btnAddPackage.setText(localization.getBundle().getString("btn_add_package")); 
+
 
         //tbl_col_type
         //tbl_col_name
