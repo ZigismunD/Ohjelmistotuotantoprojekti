@@ -98,7 +98,7 @@ public class loginView extends Application {
             grid.add(password, 2, 1);
             grid.add(loginBtn,1, 2);
             grid.add(createUser, 2, 2);
-            grid.add(lblMessage, 2, 2);
+            grid.add(lblMessage, 2, 3);
             grid.add(reconnectBtn, 3, 0);
             grid.add(createLanguageButtons(), 1, 4);
             
