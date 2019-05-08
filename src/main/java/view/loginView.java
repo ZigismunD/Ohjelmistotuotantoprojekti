@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -32,6 +33,8 @@ import model.Localization;
  * @author RJulin
  */
 public class loginView extends Application {
+    
+    //HK 29.3.2019 tietokantayhteyden luominen jo kirjautumisessa
     Controller controller = Controller.getInstance();
     loginView loginscreen = this;
     public Button loginBtn = new Button();
@@ -87,6 +90,7 @@ public class loginView extends Application {
             grid.setAlignment(Pos.CENTER);
             grid.setVgap(20);
             grid.setHgap(10);
+
 
             grid.add(userlabel, 1, 0);
             grid.add(passlabel, 2, 0);

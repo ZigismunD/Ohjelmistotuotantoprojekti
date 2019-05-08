@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Asiakas;
@@ -46,6 +47,12 @@ public class Controller {
      * Konstruktori
      * @param gui Ohjemiston käyttöliittymäluokka
      */
+    /*
+    public Controller(View gui) {
+        this.gui = gui;
+        this.dao = new TietokonekauppaDAO();
+    }
+    */
     
     public static synchronized Controller getInstance() {
         if (INSTANCE == null) {
@@ -66,11 +73,15 @@ public class Controller {
     
     public void enableLoginScreen(loginView loginscreen) {
         Boolean bTemp = this.dao.isSessionFactoryConnected();
+        //Disabloi painikkeet jos tietokantayhteyttä ei ole luotu
+        //btnLogin.setEnabled(bTemp);
     }
     
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
         Henkilosto user = dao.haeKayttaja(nimi, encryption.encrypt(salasana));
 
+        //user.getRooli();
+        
         //Kirjautuminen epäonnistui
         if (user == null) {
             //Ilmoita virheestä ja tyhjennä tekstikentät

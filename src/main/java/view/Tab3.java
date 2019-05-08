@@ -30,7 +30,6 @@ import model.Asiakas;
 import model.Localization;
 import model.Osa;
 import model.Paketti;
-import model.Product;
 import model.Tilaus;
 import model.Tilaus_rivi;
 
@@ -84,7 +83,7 @@ public class Tab3 extends Tab {
     private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
-        
+
         btnOrders.setPrefSize(200, 100);
         btnOrders.setPadding(new Insets(10, 10, 10, 10));
         btnOrders.setOnAction(e -> {
@@ -197,16 +196,13 @@ public class Tab3 extends Tab {
         List<Object> tilausriviLista = new ArrayList<>();
         tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
         ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
-
         tableDetails.setItems(rividata);
-        System.out.println(rividata);
-        System.out.println(valittuTilaus.getAsiakas());
     }
 
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
 
-        btnOrders.setText(localization.getBundle().getString("btn_orders"));
+        btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
         btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));
 
         brand.setText(localization.getBundle().getString("lbl_orderId"));

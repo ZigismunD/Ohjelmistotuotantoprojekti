@@ -7,6 +7,7 @@ package model;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.scene.control.Tab;
 import view.Tab1;
 import view.Tab2;
 import view.Tab3;
