@@ -35,15 +35,21 @@ import model.Tilaus;
 public class Tab4 extends Tab {
     
     //Yleiset
-    Controller controller = Controller.getInstance();
-    Scene scene;
-    TabPane tabPane;
+    private static Tab4 INSTANCE = null;
+    private final Controller controller = Controller.getInstance();
     private final GridPane grid4 = new GridPane();
     
     private final Button btnSales = new Button();
     
-    public Tab4(){
+    private Tab4(){
        createTab4();
+    }
+    
+    public static Tab4 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Tab4();
+        }
+        return INSTANCE;
     }
     
     private void createTab4() {

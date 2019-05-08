@@ -82,9 +82,9 @@ public class View extends Application {
             
             //Luo View sivulle välilehdet sovelluksen eri sivuja varten
             tab1 = Tab1.getInstance();
-            tab2 = new Tab2();
-            tab3 = new Tab3();
-            tab4 = new Tab4();
+            tab2 = Tab2.getInstance();
+            tab3 = Tab3.getInstance();
+            tab4 = Tab4.getInstance();;
             
             tab1.styleProperty().set("-fx-pref-width: 100");
             tab2.styleProperty().set("-fx-pref-width: 100");

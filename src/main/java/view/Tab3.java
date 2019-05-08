@@ -48,6 +48,7 @@ import model.Tilaus_rivi;
 public class Tab3 extends Tab {
 
     //Yleiset
+    private static Tab3 INSTANCE = null;
     Controller controller = Controller.getInstance();
     Scene scene;
     TabPane tabPane;
@@ -55,9 +56,6 @@ public class Tab3 extends Tab {
 
     List<Tilaus> tilausLista = new ArrayList<Tilaus>();
     ObservableList<Tilaus> tilausData;
-
-    //ObservableList<Tilaus> rividata; 
-    //List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
@@ -73,8 +71,14 @@ public class Tab3 extends Tab {
     private final TableColumn ordersum = new TableColumn("Määrä");
     private final TableColumn itemPrice = new TableColumn("Tuotehinta");
 
-    public Tab3() {
+    private Tab3() {
         createTab3();
+    }
+        public static Tab3 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Tab3();
+        }
+        return INSTANCE;
     }
 
     private void createTab3() {
