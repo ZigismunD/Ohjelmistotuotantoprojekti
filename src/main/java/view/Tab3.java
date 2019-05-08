@@ -80,8 +80,7 @@ public class Tab3 extends Tab {
     private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
-        //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
-
+        
         btnOrders.setPrefSize(200, 100);
         btnOrders.setPadding(new Insets(10, 10, 10, 10));
         btnOrders.setOnAction(e -> {
@@ -193,12 +192,8 @@ public class Tab3 extends Tab {
 
         List<Object> tilausriviLista = new ArrayList<>();
         tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
-        //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
         ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
 
-        //tilausriviLista = controller.getOrderRows(valittuTilaus);
-        ////tilausriviLista.add(controller.getOrderRows(valittuTilaus));
-        //rividata = FXCollections.observableArrayList(tilausriviLista);
         tableDetails.setItems(rividata);
         System.out.println(rividata);
         System.out.println(valittuTilaus.getAsiakas());
@@ -207,7 +202,7 @@ public class Tab3 extends Tab {
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
 
-        btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
+        btnOrders.setText(localization.getBundle().getString("btn_orders"));
         btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));
 
         brand.setText(localization.getBundle().getString("lbl_orderId"));

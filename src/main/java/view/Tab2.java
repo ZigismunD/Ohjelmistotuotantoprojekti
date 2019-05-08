@@ -245,8 +245,7 @@ public class Tab2 extends Tab {
         GridPane comp = new GridPane();
         comp.setHgap(15); // Horizontal gap
         comp.setVgap(15); // Vertical gap
-
-
+        
         comp.add(name,0, 1);
 
         productName.setPrefWidth(350);
@@ -335,16 +334,15 @@ public class Tab2 extends Tab {
         
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
-        //Varastosivu
-        btnProcessors.setText(localization.getBundle().getString("btn_processor"));  // = .setText("Prosessorit");
-        btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));  // = .setText("Emolevyt");
-        btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));  // = .setText("Näytönohjaimet");
-        btnRam.setText(localization.getBundle().getString("btn_ram"));  // = .setText("RAM");
-        btnPower.setText(localization.getBundle().getString("btn_power_source"));  // = .setText("Virtalähteet");
-        btnSsd.setText(localization.getBundle().getString("btn_ssd"));  // = .setText("SSD");
-        btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
-        btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
-        btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
+        btnProcessors.setText(localization.getBundle().getString("btn_processor"));
+        btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));
+        btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));
+        btnRam.setText(localization.getBundle().getString("btn_ram"));
+        btnPower.setText(localization.getBundle().getString("btn_power_source"));
+        btnSsd.setText(localization.getBundle().getString("btn_ssd"));
+        btnHdd.setText(localization.getBundle().getString("btn_hhd"));
+        btnCase.setText(localization.getBundle().getString("btn_casing"));
+        btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));
         merkki.setText(localization.getBundle().getString("lbl_brand_name"));
         name.setText(localization.getBundle().getString("lbl_product_name"));
         type.setText(localization.getBundle().getString("lbl_product_type"));
@@ -355,27 +353,18 @@ public class Tab2 extends Tab {
         btnPackage.setText(localization.getBundle().getString("btn_packages"));
         processor.setText(localization.getBundle().getString("btn_processor"));
         graphics.setText(localization.getBundle().getString("btn_graphics_card"));
-        
         motherboard.setText(localization.getBundle().getString("btn_motherboard"));
         RAM.setText(localization.getBundle().getString("btn_ram"));
         SSD.setText(localization.getBundle().getString("btn_ssd"));
         HDD.setText(localization.getBundle().getString("btn_hhd"));
         cases.setText(localization.getBundle().getString("btn_casing"));
         powersupply.setText(localization.getBundle().getString("btn_power_source"));
-
         brand.setText(localization.getBundle().getString("lbl_warehouse_location"));
         product.setText(localization.getBundle().getString("tbl_col_order_name"));
         arriveDate.setText(localization.getBundle().getString("tbl_col_order_unit_price"));
         amountTable.setText(localization.getBundle().getString("tbl_col_order_quantity"));
         additionalInfo.setText(localization.getBundle().getString("tbl_extra")); 
         btnAddPackage.setText(localization.getBundle().getString("btn_add_package")); 
-
-
-        //tbl_col_type
-        //tbl_col_name
-        //tbl_col_unit_price
-        //tbl_col_quantity
-        //tbl_extra
     }
 
     private String[] osienTietokantaTyypit() {

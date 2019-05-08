@@ -48,8 +48,8 @@ public class Tab4 extends Tab {
     
     private void createTab4() {
 
-        grid4.setHgap(20); // Horizontal gap
-        grid4.setVgap(0); // Vertical gap
+        grid4.setHgap(20);
+        grid4.setVgap(0);
 
         btnSales.setPrefSize(200, 100);
         btnSales.setOnAction((event) -> {
@@ -57,11 +57,6 @@ public class Tab4 extends Tab {
         });
         grid4.add(btnSales, 0, 0);
         
-     
-        //btnSalesPurchases.setOnAction((event) -> {
-        //    showPurchasesChart();
-        //});
-
         this.setContent(grid4);
         
         localizationSetText();
@@ -75,7 +70,6 @@ public class Tab4 extends Tab {
         final BarChart<String, Number> lineChart = new BarChart<String, Number>(xAxis, yAxis);
         
         lineChart.setTitle("Myyntitiedot");
-//        lineChart.setTitle(Localization.getInstance().getBundle().getString("title_sales_chart"));
 
         XYChart.Series series = new XYChart.Series();
         series.setName("2018");
@@ -121,13 +115,6 @@ public class Tab4 extends Tab {
     
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
-        
         btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
-        
-        //lineChart.setTitle(localization.getBundle().getString("btn_sales"));
-        //series.setName("Myynnit");
-        
-        //series.setName("Ostot");
-        //lineChart.setTitle("Ostotiedot");
     }
 }

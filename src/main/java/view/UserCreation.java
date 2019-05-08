@@ -35,8 +35,8 @@ public class UserCreation extends Application {
        Stage newStage = new Stage();
        newStage.setTitle("Luo uusi tuote");
        GridPane comp = new GridPane();
-       comp.setHgap(50); // Horizontal gap
-       comp.setVgap(50); // Vertical gap
+       comp.setHgap(50);
+       comp.setVgap(50);
 
         comp.add(name, 1, 0);
         comp.add(nimi, 2, 0);

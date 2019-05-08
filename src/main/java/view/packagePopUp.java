@@ -272,12 +272,6 @@ public class packagePopUp extends Application {
                 } else {
                     //Rakenna paketti olio
                     tmpPackage = new Paketti(txtPackage.getText(), Double.parseDouble(txtPackageCost.getText()));
-                    /*      try {
-                        Integer.parseInt(txtPackageCost.getText());
-                        tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
-                    } catch (NumberFormatException ex) {
-                        tmpPackage.setVarastoMaara(0);
-                    }*/
                     tmpPackage.setVarastoMaara(Integer.parseInt(txtPackageAmount.getText()));
 
                 }

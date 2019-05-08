@@ -13,9 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import model.Osa;
-import model.Paketti;
-import org.hibernate.annotations.Cascade;
 
 /**
  *
