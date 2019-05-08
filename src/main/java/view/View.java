@@ -178,7 +178,7 @@ public class View extends Application {
             //Setting the padding  
             gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-            hEmpty.setMinSize(1450, 30);
+            hEmpty.setMinSize(1400, 30);
 
             //Arranging all the nodes in the grid 
             gridPane.add(textWelcome, 0, 0);
