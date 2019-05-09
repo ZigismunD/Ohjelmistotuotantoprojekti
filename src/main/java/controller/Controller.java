@@ -71,12 +71,6 @@ public class Controller {
         this.dao = new TietokonekauppaDAO();
     }
     
-    public void enableLoginScreen(loginView loginscreen) {
-        Boolean bTemp = this.dao.isSessionFactoryConnected();
-        //Disabloi painikkeet jos tietokantayhteyttä ei ole luotu
-        //btnLogin.setEnabled(bTemp);
-    }
-    
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
         Henkilosto user = dao.haeKayttaja(nimi, encryption.encrypt(salasana));
 
@@ -135,7 +129,6 @@ public class Controller {
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
      */
-    
     public void createOrder(Double hinta) {
         Tab1 tab1 = Tab1.getInstance();
 
@@ -200,11 +193,6 @@ public class Controller {
     
      public ArrayList<Tilaus> getOrderRows(Tilaus tilaus) {
          return dao.tilausGetTilausRivit(tilaus);
-    }
-    
-
-    public void luoOsa(Osa osa) {
-        dao.luoOsa(osa);
     }
     
     public ArrayList<Object> getObjectRows(Object obj) {

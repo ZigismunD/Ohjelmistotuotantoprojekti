@@ -265,7 +265,7 @@ public class Tab2 extends Tab {
     }
 
     public void luoOsa(Osa osa) {
-        controller.luoOsa(osa);
+        controller.objectSaveOrUpdate(osa);
     }
 
     public void haeOsat(String tyyppi) {
