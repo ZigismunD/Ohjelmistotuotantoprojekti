@@ -5,8 +5,15 @@
  */
 package testicles;
 
+import java.util.ArrayList;
+import java.util.Date;
+import model.Asiakas;
 import model.Henkilosto;
+import model.Osa;
+import model.Paketti;
 import model.TietokonekauppaDAO;
+import model.Tilaus;
+import model.Tilaus_rivi;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import view.View;
@@ -18,47 +25,65 @@ import view.View;
 public class TestDAO {
     
     public static void main(String[] args) {
-        TietokonekauppaDAO dao = new TietokonekauppaDAO();
+//        TietokonekauppaDAO dao = new TietokonekauppaDAO();
         
-        /*
-        //1.Luo henkilö
-        Henkilosto henkilo1 = new Henkilosto();
-        int henkiloId;
-        henkilo1.setHenkiloNimi("pekka");
-        henkilo1.setRooli("varasto");
-        henkiloId = dao.luoHenkilo(henkilo1);
+        //Luo Tilaus
+        //Osa osa1 = (Osa) dao.getObjectById(1, new Osa());
+        //dao.objectSaveOrUpdate(osa1);
+        //Osa osa2 = (Osa) dao.getObjectById(1, new Osa());
+        //dao.objectSaveOrUpdate(osa1);
+        //Osa osa3 = (Osa) dao.getObjectById(1, new Osa());
+        //dao.objectSaveOrUpdate(osa1);
+
+//        Paketti paketti1 = new Paketti("testpaket", 1000); //(Paketti) dao.getObjectById(1, new Paketti());
+//        dao.objectSaveOrUpdate(paketti1);
         
-        //2.Tarkista että henkilö on luotu
-        System.out.println("Henkilön id: " + henkiloId);  
-        */
-                
-        //Hae henkilön rooli
-        String nimi = "pekka";
-        Henkilosto haeHenkilo = dao.haeKayttaja(nimi);
+//        Asiakas asiakas = (Asiakas) dao.getObjectById(9, new Asiakas()); //new Asiakas("nimi", "osoite", "email");
+        //dao.objectSaveOrUpdate(asiakas);
         
-        if (haeHenkilo == null) {
-            System.out.println("Henkilö " + nimi + " ei löytynyt");
-        } else {
-            System.out.println("Henkilön " + nimi + " rooli on " + haeHenkilo.getRooli());
-        }
+//        Henkilosto henkilosto = (Henkilosto) dao.getObjectById(10, new Henkilosto()); //new Henkilosto();
+        //dao.objectSaveOrUpdate(henkilosto);
         
+//        Tilaus tilaus = new Tilaus(asiakas, henkilosto, new Date());
+//        dao.objectSaveUpdateDelete(tilaus, true);
+//        Tilaus_rivi til1 = new Tilaus_rivi(tilaus, null, null, 10, 10);
+//        dao.objectSaveUpdateDelete(til1, true);
+//        Tilaus_rivi til2 = new Tilaus_rivi(tilaus, null, osa1, 20, 100);
+//        dao.objectSaveUpdateDelete(til2, true);
+//        Tilaus_rivi til3 = new Tilaus_rivi(tilaus, paketti1, null, 3, 15);
+//        dao.objectSaveUpdateDelete(til3, true);
         
-        //Poista henkilö
-        dao.poistaHenkilo(haeHenkilo);
+//        dao.objectSaveUpdateDelete(til1, false);
+//        dao.objectSaveUpdateDelete(til2, false);
+//        dao.objectSaveUpdateDelete(til3, false);
+
+//        Tilaus_rivi til1 = (Tilaus_rivi) dao.getObjectById(16, new Tilaus_rivi());
+//        dao.objectSaveUpdateDelete(til1, false);
+//        Tilaus_rivi til2 = (Tilaus_rivi) dao.getObjectById(17, new Tilaus_rivi());
+//        dao.objectSaveUpdateDelete(til2, false);
+//        Tilaus_rivi til3 = (Tilaus_rivi) dao.getObjectById(18, new Tilaus_rivi());
+//        dao.objectSaveUpdateDelete(til3, false);
+//        Tilaus tilaus = (Tilaus) dao.getObjectById(23, new Tilaus());
+//        dao.objectDelete(tilaus);
         
-        if (haeHenkilo == null) {
-            System.out.println("Henkilö " + nimi + " ei löytynyt");
-        } else {
-            System.out.println("Henkilön " + nimi + " rooli on " + haeHenkilo.getRooli());
-        }
+//        Paketti paketti = (Paketti) dao.getObjectById(33, new Paketti());
+//        dao.objectDelete(paketti);
         
-        haeHenkilo = dao.haeKayttaja(nimi);
-        
-        if (haeHenkilo == null) {
-            System.out.println("Henkilö " + nimi + " ei löytynyt");
-        } else {
-            System.out.println("Henkilön " + nimi + " rooli on " + haeHenkilo.getRooli());
-        }
-        
+//        Osa osa1 = new Osa("1", 1);//(Osa) dao.getObjectById(30, new Osa());
+//        dao.objectSaveOrUpdate(osa1, null);
+//        Osa osa2 = new Osa("2", 2);//(Osa) dao.getObjectById(31, new Osa());
+//        Osa osa3 = new Osa("3", 3);//(Osa) dao.getObjectById(32, new Osa());
+//        
+//        ArrayList<Object> list = new ArrayList<>();
+//        list.add(osa1);
+//        list.add(osa2);
+//        list.add(osa3);
+//        dao.objectListSaveOrUpdate(list);
+
+
+
+//        Tilaus til1 = (Tilaus) dao.getObjectById(37, new Tilaus());
+//        dao.objectDelete(til1);
+//        ArrayList<Object> rivit = dao.getSubRowOfObject(til1);
     }
 }

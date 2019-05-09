@@ -5,12 +5,15 @@
  */
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import model.Osa;
 import model.Paketti;
@@ -35,6 +38,7 @@ public class Tilaus_rivi {
     private int maara;
     private Tilaus tilaus;
     private double hinta;
+    private Object tavara;
     /**
      * luodaan konstruktorin 5-lla parametrilla
      * @param tilaus luo tilauksen parametrit Tilaus oliosta
@@ -49,6 +53,7 @@ public class Tilaus_rivi {
         this.osa = osa;
         this.maara = maara;
         this.hinta = hinta;
+        
     }
     /**
      * luodaan parametriton konstruktorin 
@@ -60,9 +65,15 @@ public class Tilaus_rivi {
      * @param paketti luo paketin parametrit Paketti oliosta
      * @param orderAmount lou tilauksen pakettien ja osien yhteisen määrän
      */
-    public Tilaus_rivi(Paketti paketti, int orderAmount) {
-        this.paketti = paketti;
+    public Tilaus_rivi(Object objekti, int orderAmount, double price) {
+        if (objekti instanceof Paketti) {
+            this.paketti = (Paketti) objekti;
+        }
+        if (objekti instanceof Osa) {
+            this.osa = (Osa) objekti;
+        }
         this.maara = orderAmount;
+        this.hinta = price;
     }
     /**
      * luodaan Tilaus_rivi tauluun perusavaimen ja sen kenttä Id
@@ -87,7 +98,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Paketti-olioon
      * @return paketin parametrit Paketti-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.DETACH)
     @JoinColumn(name = "Paketti")
     public Paketti getPaketti() {
         return paketti;
@@ -105,7 +116,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Osa-olioon
      * @return osan parametrit Osa-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.DETACH)
     @JoinColumn(name = "Osa")
     public Osa getOsa() {
         return osa;
@@ -139,7 +150,7 @@ public class Tilaus_rivi {
      * tuottaa viiteavaimen Tilaus-olioon
      * @return tilaus palauttaa tilauksen parametrit Tilaus-oliosta
      */
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.REMOVE)
     @JoinColumn(name = "tilaus")
     public Tilaus getTilaus() {
         return tilaus;

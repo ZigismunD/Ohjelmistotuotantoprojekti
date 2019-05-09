@@ -16,11 +16,6 @@ Button {
 btnSend{
     -fx-font-size: 25px;
 }
-
-GridPane {
-    -fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png');
-}
-
 Button:hover {
     -fx-background-color: #383838;
     -fx-scale-y: 1.1;
@@ -31,12 +26,35 @@ Button:pressed {
     -fx-scale-x: 0.9;
 }
 
-TableView {
-    -fx-background-color: #A5FFDC;
-}
-
 LineChart {
     -fx-background-color: #A5FFDC;
 }
-    
+
+.context-menu {
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+}
+
+.context-menu:hover {
+    -fx-background-color: #006699;
+    -fx-text-fill: white;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+}
+
+#ylapalkki {
+    -fx-background-color: #CDCDCD;
+}
+.table-view .column-header {
+    -fx-font-size: 12pt;
+    -fx-alignment: left;
+
+}
 
