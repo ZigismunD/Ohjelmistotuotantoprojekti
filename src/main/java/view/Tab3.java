@@ -211,7 +211,7 @@ public class Tab3 extends Tab {
         amount.setText(localization.getBundle().getString("lbl_price"));
         additionalInfo.setText(localization.getBundle().getString("lbl_additionalInfo"));
         products.setText(localization.getBundle().getString("lbl_product"));
-        productamount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        productamount.setText(localization.getBundle().getString("btn_package"));
         ordersum.setText(localization.getBundle().getString("lbl_amount"));
         itemPrice.setText(localization.getBundle().getString("lbl_price"));
     }
