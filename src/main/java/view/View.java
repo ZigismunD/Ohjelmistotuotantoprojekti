@@ -82,9 +82,9 @@ public class View extends Application {
             
             //Luo View sivulle välilehdet sovelluksen eri sivuja varten
             tab1 = Tab1.getInstance();
-            tab2 = new Tab2();
-            tab3 = new Tab3();
-            tab4 = new Tab4();
+            tab2 = Tab2.getInstance();
+            tab3 = Tab3.getInstance();
+            tab4 = Tab4.getInstance();;
             
             tab1.styleProperty().set("-fx-pref-width: 100");
             tab2.styleProperty().set("-fx-pref-width: 100");
@@ -178,7 +178,7 @@ public class View extends Application {
             //Setting the padding  
             gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-            hEmpty.setMinSize(900, 30);
+            hEmpty.setMinSize(1400, 30);
 
             //Arranging all the nodes in the grid 
             gridPane.add(textWelcome, 0, 0);

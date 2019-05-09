@@ -223,7 +223,7 @@ public class Tab1 extends Tab {
                     nameCol1.setCellValueFactory(
                             new PropertyValueFactory<Product, String>("paketinNimi"));
                     amountCol1.setCellValueFactory(
-                            new PropertyValueFactory<Product, Integer>("paketinMaara"));
+                            new PropertyValueFactory<Product, Integer>("varastoMaara"));
                     filterList();
                 }
                 
@@ -549,14 +549,12 @@ public class Tab1 extends Tab {
         pakettiLista = controller.getAllComputerNames();
         pakettiData = FXCollections.observableArrayList(pakettiLista);
         productsTable.setItems(pakettiData);
-        System.out.println(pakettiData);
     }
 
     public void haeOsat() {
         osaLista = controller.getAllOsat();
         osaData = FXCollections.observableArrayList(osaLista);
         productsTable.setItems(osaData);
-        System.out.println(osaData);
     }
 
     public void updatePrice(Double priceChange) {

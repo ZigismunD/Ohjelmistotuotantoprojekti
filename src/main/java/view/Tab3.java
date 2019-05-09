@@ -30,7 +30,6 @@ import model.Asiakas;
 import model.Localization;
 import model.Osa;
 import model.Paketti;
-import model.Product;
 import model.Tilaus;
 import model.Tilaus_rivi;
 
@@ -48,6 +47,7 @@ import model.Tilaus_rivi;
 public class Tab3 extends Tab {
 
     //Yleiset
+    private static Tab3 INSTANCE = null;
     Controller controller = Controller.getInstance();
     Scene scene;
     TabPane tabPane;
@@ -55,9 +55,6 @@ public class Tab3 extends Tab {
 
     List<Tilaus> tilausLista = new ArrayList<Tilaus>();
     ObservableList<Tilaus> tilausData;
-
-    //ObservableList<Tilaus> rividata; 
-    //List<Tilaus> tilausriviLista  = new ArrayList<Tilaus>();
     private final TableView tableOrders = new TableView();
     private final TableView tableDetails = new TableView();
     private final Button btnOrders = new Button();
@@ -73,14 +70,19 @@ public class Tab3 extends Tab {
     private final TableColumn ordersum = new TableColumn("Määrä");
     private final TableColumn itemPrice = new TableColumn("Tuotehinta");
 
-    public Tab3() {
+    private Tab3() {
         createTab3();
+    }
+        public static Tab3 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Tab3();
+        }
+        return INSTANCE;
     }
 
     private void createTab3() {
         grid3.setHgap(0); // Horizontal gap
         grid3.setVgap(0); // Vertical gap
-        //grid3.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
 
         btnOrders.setPrefSize(200, 100);
         btnOrders.setPadding(new Insets(10, 10, 10, 10));
@@ -102,8 +104,8 @@ public class Tab3 extends Tab {
         brand.setCellValueFactory(new PropertyValueFactory<Tilaus, Integer>("tilausId"));
 
         client.setStyle("-fx-font-size: 14pt;");
-        client.setMinWidth(500);
-        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas>("asiakas"));
+        client.setMinWidth(1000);
+        client.setCellValueFactory(new PropertyValueFactory<Tilaus, Asiakas >("asiakas"));
 
         orderDate.setStyle("-fx-font-size: 14pt;");
         orderDate.setMinWidth(200);
@@ -113,10 +115,8 @@ public class Tab3 extends Tab {
         amount.setMinWidth(200);
         amount.setCellValueFactory(new PropertyValueFactory<Tilaus, Double>("yhteishinta"));
 
-        additionalInfo.setStyle("-fx-font-size: 14pt;");
-        additionalInfo.setMinWidth(500);
 
-        tableOrders.getColumns().addAll(brand, client, orderDate, amount, additionalInfo);
+        tableOrders.getColumns().addAll(brand, client, orderDate, amount);
         tableOrders.setPrefHeight(500);
         tableOrders.setPrefWidth(1600);
 
@@ -128,7 +128,7 @@ public class Tab3 extends Tab {
         tableDetails.setEditable(true);
 
         products.setStyle("-fx-font-size: 14pt;");
-        products.setMinWidth(250);
+        products.setMinWidth(500);
         products.setCellValueFactory(new PropertyValueFactory<Tilaus_rivi, Osa>("osa"));
 
         productamount.setStyle("-fx-font-size: 14pt;");
@@ -195,15 +195,8 @@ public class Tab3 extends Tab {
 
         List<Object> tilausriviLista = new ArrayList<>();
         tilausriviLista.addAll(controller.getObjectRows(valittuTilaus));
-        //tilausriviLista.add(controller.getOrderRows(valittuTilaus));
         ObservableList<Object> rividata = FXCollections.observableArrayList(tilausriviLista);
-
-        //tilausriviLista = controller.getOrderRows(valittuTilaus);
-        ////tilausriviLista.add(controller.getOrderRows(valittuTilaus));
-        //rividata = FXCollections.observableArrayList(tilausriviLista);
         tableDetails.setItems(rividata);
-        System.out.println(rividata);
-        System.out.println(valittuTilaus.getAsiakas());
     }
 
     public void localizationSetText() {
@@ -215,14 +208,11 @@ public class Tab3 extends Tab {
         brand.setText(localization.getBundle().getString("lbl_orderId"));
         client.setText(localization.getBundle().getString("lbl_client"));
         orderDate.setText(localization.getBundle().getString("lbl_order_date"));
-        amount.setText(localization.getBundle().getString("lbl_order_total_price"));
+        amount.setText(localization.getBundle().getString("lbl_price"));
         additionalInfo.setText(localization.getBundle().getString("lbl_additionalInfo"));
         products.setText(localization.getBundle().getString("lbl_product"));
-        productamount.setText(localization.getBundle().getString("btn_packages"));
-        ordersum.setText(localization.getBundle().getString("lbl_product_amount"));
-        itemPrice.setText(localization.getBundle().getString("tbl_col_order_unit_price"));
-        
-  
-
+        productamount.setText(localization.getBundle().getString("btn_package"));
+        ordersum.setText(localization.getBundle().getString("lbl_amount"));
+        itemPrice.setText(localization.getBundle().getString("lbl_price"));
     }
 }

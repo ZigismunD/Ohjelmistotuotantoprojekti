@@ -26,7 +26,6 @@ public class Paketti {
     private int id;
     private String paketinNimi;
     private double paketinHinta;
-    //private ArrayList<Paketti_rivi> pakettiRivit = new ArrayList<>();
     private int varastoMaara;
 
     /**
@@ -37,24 +36,29 @@ public class Paketti {
     }
 
     /**
-     * luodaan konstruktorin 2-lla parametrilla
+     * luodaan konstruktorin 3-lla parametrilla
      *
      * @param pakettiNimi luo paketin nimen
      * @param pakettiHinta luo paketin hinnan
+     * @param varastoMaara luo paketin hinnan
      */
-    public Paketti(String pakettiNimi, int varastoMaara,  double pakettiHinta) {
+    public Paketti(String pakettiNimi, int varastoMaara, double pakettiHinta) {
         this.paketinNimi = pakettiNimi;
         this.paketinHinta = pakettiHinta;
         this.varastoMaara = varastoMaara;
 
     }
 
+    /**
+     * luodaan konstruktorin 2-lla parametrilla
+     *
+     * @param pakettiNimi luo paketin nimen
+     * @param pakettiHinta luo paketin hinnan
+     */
     public Paketti(String paketinNimi, double paketinHinta) {
         this.paketinNimi = paketinNimi;
         this.paketinHinta = paketinHinta;
     }
-    
-    
 
     /**
      * luodaan tauluun perusavaimen ja sen kentän Id
@@ -111,6 +115,7 @@ public class Paketti {
     public void setPaketinHinta(double paketinHinta) {
         this.paketinHinta = paketinHinta;
     }
+
     /**
      * luodaan tauluun kentän "maara"
      *
@@ -120,31 +125,15 @@ public class Paketti {
     public int getVarastoMaara() {
         return varastoMaara;
     }
+
     /**
-     * 
+     *
      * @param varastoMaara asentaa pakettien maara olioon
      */
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
     }
 
-//    /**
-//     * luodaan tauluun kentän "paketin osat"
-//     *
-//     * @return paketiRivit palauttaa paketin osat
-//     */
-//    @Column(name = "paketinOsat")
-//    public ArrayList<Paketti_rivi> getPakettiRivit() {
-//        return pakettiRivit;
-//    }
-//    /**
-//     * 
-//     * @param pakettiRivit asentaa uusi paketti paketti-taulukkoon
-//     */
-//    public void setPakettiRivit(ArrayList<Paketti_rivi> pakettiRivit) {
-//        this.pakettiRivit = pakettiRivit;
-//
-//    }
     /**
      *
      * @return paketin nimen
@@ -152,24 +141,5 @@ public class Paketti {
     public String toString() {
         return this.paketinNimi;
     }
-
-//    // luodaan Paketti_rivit ArrayListaan 
-//    public void lisaaPakettiRivi(Paketti_rivi pakettiRivi) {
-//        this.pakettiRivit.add(pakettiRivi);
-//    }
-    
-    /**
-     * luodaan tauluun kentän "yhteishinta"
-     *
-     * @return yhtPakettiHinta palauttaa kaikkin pakettien yhteishinnan
-     */
-//    public double getYhtPakettiHinta() {
-//        double yhtPakettiHinta = 0;
-//        for (int i = 0; i < this.pakettiRivit.size(); i++) {
-//            double hinta = this.pakettiRivit.get(i).getOsa().getOsaHinta();
-//            yhtPakettiHinta += hinta;
-//        }
-//        return yhtPakettiHinta;
-//    }
 
 }

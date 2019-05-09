@@ -6,6 +6,8 @@
 package model;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,10 +16,12 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+
 public class TietokonekauppaDAO {
 
     SessionFactory istuntotehdas = null;
     final StandardServiceRegistry registry;
+    private static final Logger LOGGER = Logger.getLogger(TietokonekauppaDAO.class.getName());
 
     /**
      * Konstruktori
@@ -26,7 +30,7 @@ public class TietokonekauppaDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println("JDBC-ajurin lataaminen epäonnistui");
+            LOGGER.log(Level.FINE, "Tietokanta-ajurin luonti epäonnistui");
             System.exit(-1);
         }
 
@@ -35,9 +39,8 @@ public class TietokonekauppaDAO {
         try {
             istuntotehdas = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         } catch (Exception e) {
-            System.out.println("Istuntotehtaan luonti epäonnistui");
             StandardServiceRegistryBuilder.destroy(registry);
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Istuntotehtaan luonti epäonnistui", e);
         }
     }
 
@@ -65,12 +68,9 @@ public class TietokonekauppaDAO {
             }
             transaction.commit();
 
-            for (Paketti paketti : result) {
-                System.out.println(paketti.getPaketinNimi());
-            }
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
 
             return null;
         } finally {
@@ -95,7 +95,7 @@ public class TietokonekauppaDAO {
 
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
 
             return null;
         } finally {
@@ -120,7 +120,7 @@ public class TietokonekauppaDAO {
 
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
 
             return null;
         } finally {
@@ -140,6 +140,7 @@ public class TietokonekauppaDAO {
             istunto.load(pak, id);
             return new Paketti(pak.getPaketinNimi(), pak.getVarastoMaara(), pak.getPaketinHinta());
         } catch (Exception e) {
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         }
     }
@@ -155,6 +156,7 @@ public class TietokonekauppaDAO {
             istunto.load(pak, id);
             return pak.getPaketinHinta();
         } catch (Exception e) {
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         }
     }
@@ -176,7 +178,7 @@ public class TietokonekauppaDAO {
             transaction.commit();
             return henkilosto;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         } finally {
             istunto.close();
@@ -199,7 +201,7 @@ public class TietokonekauppaDAO {
 
             return henkilo;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
 
             return null;
         } finally {
@@ -225,7 +227,7 @@ public class TietokonekauppaDAO {
 
             transaktio.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
         return id;
     }
@@ -236,7 +238,7 @@ public class TietokonekauppaDAO {
             istunto.save(osa);
             transaktio.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
 
@@ -248,13 +250,11 @@ public class TietokonekauppaDAO {
     public void poistaHenkilo(Henkilosto henkilo) {
         try (Session istunto = istuntotehdas.openSession()) {
             Transaction transaktio = istunto.beginTransaction();
-            //henkilo = istunto.find(Henkilosto.class, henkilo.getHenkiloId());
-            //assertThat(henkilo, notNullValue());
             istunto.delete(henkilo);
 
             transaktio.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
 
@@ -282,14 +282,24 @@ public class TietokonekauppaDAO {
                 tilaus_rivi.setTilaus(tilaus);
                 //Tallenna olio
                 istunto.save(tilaus_rivi);
+                //Vähennä osan lukumäärää
+                if (tilaus_rivi.getOsa() != null) {
+                    List<Osa> osaList = istunto.createQuery("from Osa where id = " + tilaus_rivi.getOsa().getOsaId()).list();
+                    Osa osa = osaList.get(0);
+                    osa.setVarastoMaara(osa.getVarastoMaara() - tilaus_rivi.getMaara());
+                    istunto.save(osa);
+                } else {
+                    //Hae paketti rivit
+                    List<Paketti> pakettiList = istunto.createQuery("from Paketti where id = " + tilaus_rivi.getPaketti().getPakettiId()).list();
+                    Paketti paketti = pakettiList.get(0);
+                    paketti.setVarastoMaara(paketti.getVarastoMaara() - tilaus_rivi.getMaara());
+                    istunto.save(paketti);
+                }
             }
-                        
-
-
             istunto.getTransaction().commit();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
 
@@ -307,6 +317,9 @@ public class TietokonekauppaDAO {
             transaktio.commit();
             return result;
 
+        } catch (Exception e) {
+            LOGGER.log(Level.FINE, e.toString(), e);
+            return null;
         }
     }
     
@@ -326,7 +339,7 @@ public class TietokonekauppaDAO {
             
             return rivit;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         }
     }
@@ -339,7 +352,7 @@ public class TietokonekauppaDAO {
             istunto.load(object, id);
             return object;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         }    
     }
@@ -362,7 +375,7 @@ public class TietokonekauppaDAO {
             }
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
             return null;
         }    
     }
@@ -398,7 +411,7 @@ public class TietokonekauppaDAO {
             }
             istunto.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
     
@@ -421,7 +434,7 @@ public class TietokonekauppaDAO {
             
             istunto.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
     
@@ -432,7 +445,7 @@ public class TietokonekauppaDAO {
             istunto.saveOrUpdate(obj);
             istunto.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
     
@@ -445,7 +458,7 @@ public class TietokonekauppaDAO {
             }
             istunto.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
     }
     
@@ -497,6 +510,8 @@ public class TietokonekauppaDAO {
                 }
             }
             ta.commit();
+        } catch (Exception e) {
+            LOGGER.log(Level.FINE, e.toString(), e);
         }
         return sales;
     }

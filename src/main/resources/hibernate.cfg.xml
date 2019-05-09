@@ -46,7 +46,7 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:4444/Tietokonekauppa?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">Kouhia</property>
     <property name="hibernate.connection.password">84EltB</property>
-    <property name="hbm2ddl.auto">update</property>
+    <property name="hbm2ddl.auto">validate</property>
     <property name="show_sql">true</property>
     <property name="hibernate.jdbc.batch_size">20</property>
     <mapping class="model.Asiakas"/>

@@ -9,8 +9,6 @@ import controller.Controller;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,32 +18,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
-
 
 /**
  *
  * @author RJulin
  */
-
-    /**
-     * Rakentaa käyttöliittymän Varasto sivun
-     * Sivulla tarkastellaan varaston paketteja ja osia.
-     * Painiketta painamalla voi näyttää tietokannasta paketit tai halutun tyyppisen osan
-     */
-
-
+/**
+ * Rakentaa käyttöliittymän Varasto sivun Sivulla tarkastellaan varaston
+ * paketteja ja osia. Painiketta painamalla voi näyttää tietokannasta paketit
+ * tai halutun tyyppisen osan
+ */
 public class Tab2 extends Tab {
-    
-    //private Tab tab2;
-    private Scene scene;
-    private TabPane tabPane;
-    private ObservableList<Product> data;
-    private List<Osa> osaLista;
-    private ObservableList<Osa> osaData;
-    private Controller controller = Controller.getInstance();
+
+    private static Tab2 INSTANCE = null;
+    private final Controller controller = Controller.getInstance();
     private final int BUTTONWIDTH = 200;
     private final int BUTTONHEIGHT = 75;
     private final GridPane grid2 = new GridPane();
@@ -60,8 +48,6 @@ public class Tab2 extends Tab {
     private final Button btnCase = new Button();
     private final Button btnPackage = new Button();
     private final Button btnAddProduct = new Button();
-    private final Button btnDeleteProduct = new Button();
-    private final Button btnAlterProduct = new Button();
     private final Button btnAddPackage = new Button();
     private final Text merkki = new Text();
     private TextField productBrand = new TextField();
@@ -90,28 +76,26 @@ public class Tab2 extends Tab {
     private TableColumn amountTable = new TableColumn();
     private TableColumn additionalInfo = new TableColumn();
     String[] osat = osienTietokantaTyypit();
-    /*"Prosessori",
-            "Emolevy",
-            "Näytönohjain",
-            "RAM",
-            "Virtalähde",
-            "SSD",
-            "HDD",
-            "Kotelo"
-    */
-    public Tab2(){
+
+    private Tab2() {
         createTab2();
     }
-    
+
+    public static Tab2 getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Tab2();
+        }
+        return INSTANCE;
+    }
+
     private void createTab2() {
         grid2.setId("Varasto");
         grid2.setHgap(0); // Horizontal gap
         grid2.setVgap(0); // Vertical gap
-        //grid2.setStyle("-fx-background-image: url('https://effiasoft.com/wp-content/uploads/app-background.png')");
-        
+
         // Nappula, josta saa prosessorit näkyviin
         btnProcessors.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        btnProcessors.setOnAction(e-> {
+        btnProcessors.setOnAction(e -> {
             haeOsat("Prosessori");
         });
         grid2.add(btnProcessors, 0, 0);
@@ -119,7 +103,7 @@ public class Tab2 extends Tab {
         // Nappula, josta saa emolevyt näkyviin
         btnMotherboard.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnMotherboard, 0, 1);
-        btnMotherboard.setOnAction(e-> {
+        btnMotherboard.setOnAction(e -> {
             haeOsat("Emolevy");
         });
 
@@ -129,34 +113,34 @@ public class Tab2 extends Tab {
         btnGraphics.setOnAction(e -> {
             haeOsat("Näytönohjain");
         });
-        
+
         // Nappula, josta saa muistit näkyviin
         btnRam.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnRam, 0, 3);
-		btnRam.setOnAction(e -> {
+        btnRam.setOnAction(e -> {
             haeOsat("RAM");
-        });						 
+        });
 
         // Nappula, josta saa virtalähteet näkyviin
         btnPower.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnPower, 0, 4);
-		btnPower.setOnAction(e -> {
+        btnPower.setOnAction(e -> {
             haeOsat("Virtalähde");
-        });						   
+        });
 
         // Nappula, josta saa SSD:t näkyviin
         btnSsd.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnSsd, 0, 5);
-		btnSsd.setOnAction(e -> {
+        btnSsd.setOnAction(e -> {
             haeOsat("SSD");
-        });						 
+        });
 
         // Nappula, josta saa HDD:t näkyviin
         btnHdd.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         grid2.add(btnHdd, 0, 6);
-		btnHdd.setOnAction(e -> {
+        btnHdd.setOnAction(e -> {
             haeOsat("HDD");
-        });						 
+        });
 
         // Nappula, josta saa HDD:t näkyviin
         btnCase.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
@@ -166,41 +150,31 @@ public class Tab2 extends Tab {
         });
 
         btnPackage.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        grid2.add(btnPackage,0, 8);
+        grid2.add(btnPackage, 0, 8);
         btnPackage.setOnAction(e -> {
             haeOsat("Paketti");
         });
-        
+
         InnerShadow is = new InnerShadow();
         is.setOffsetX(4.0f);
         is.setOffsetY(4.0f);
 
         tableVarasto.setEditable(true);
 
-
         brand.setStyle("-fx-font-size: 14pt;");
         brand.setMinWidth(200);
-
-
 
         product.setStyle("-fx-font-size: 14pt;");
         product.setMinWidth(500);
 
-
-
         arriveDate.setStyle("-fx-font-size: 14pt;");
         arriveDate.setMinWidth(200);
-
-
 
         amountTable.setStyle("-fx-font-size: 14pt;");
         amountTable.setMinWidth(200);
 
-
-
         additionalInfo.setStyle("-fx-font-size: 14pt;");
         additionalInfo.setMinWidth(500);
-
 
         tableVarasto.getColumns().addAll(brand, product, arriveDate, amountTable, additionalInfo);
         tableVarasto.setPrefHeight(700);
@@ -211,49 +185,40 @@ public class Tab2 extends Tab {
         vboxVarasto.setPadding(new Insets(0, 0, 0, 20));
         vboxVarasto.getChildren().addAll(tableVarasto);
 
-		// gridin paikka
+        // gridin paikka
         grid2.add(vboxVarasto, 1, 0, 7, 10);
         btnAddProduct.setPrefSize(200, 100);
         btnAddProduct.setOnAction(event -> {
             newProductPopup();
         });
-        
-        btnDeleteProduct.setPrefSize(200, 100);
-        btnAddPackage.setOnAction(event -> {
-            //Tarkista mikä on valittuna tableviewissä
-            
-        });
-        
+
         //Uusi paketti painike
         btnAddPackage.setPrefSize(200, 100);
         btnAddPackage.setOnAction(event -> {
             packagePopUp pop = new packagePopUp();
             pop.newPackagePopup(null);
         });
-        
+
         HBox buttonsBox = new HBox();
         buttonsBox.setSpacing(30);
         buttonsBox.setPadding(new Insets(20, 20, 20, 20));
 
-        buttonsBox.getChildren().addAll(btnAddProduct, btnDeleteProduct, btnAddPackage);
-        
+        buttonsBox.getChildren().addAll(btnAddProduct, btnAddPackage);
+
         grid2.add(buttonsBox, 7, 11, 7, 10);
-        
+
         this.setContent(grid2);
-        
+
         localizationSetText();
     }
 
-    public void newProductPopup(){
+    public void newProductPopup() {
         Stage newStage = new Stage();
         newStage.setTitle("Luo uusi tuote");
         GridPane comp = new GridPane();
         comp.setHgap(15); // Horizontal gap
         comp.setVgap(15); // Vertical gap
-
-
-        comp.add(name,0, 1);
-
+        comp.add(name, 0, 1);
         productName.setPrefWidth(350);
         comp.add(productName, 1, 1);
 
@@ -272,41 +237,27 @@ public class Tab2 extends Tab {
         );
         selectType.getSelectionModel().selectFirst();
 
-
         comp.add(selectType, 1, 2);
-        comp.add(price, 0,3);
+        comp.add(price, 0, 3);
 
         productPrice.setPrefWidth(350);
         comp.add(productPrice, 1, 3);
-        comp.add(amount, 0 ,4);
+        comp.add(amount, 0, 4);
 
         warehouseAmount.setPrefWidth(350);
         comp.add(warehouseAmount, 1, 4);
-        
 
         comp.add(warehouseLocation, 0, 5);
         comp.add(warehouseLoca, 1, 5);
-        
+
         addProduct.setOnAction(e -> {
-            luoOsa(new Osa(productName.getText(), 
-                    Double.parseDouble(productPrice.getText()), 
-                    Integer.parseInt(warehouseAmount.getText()), 
+            luoOsa(new Osa(productName.getText(),
+                    Double.parseDouble(productPrice.getText()),
+                    Integer.parseInt(warehouseAmount.getText()),
                     osat[selectType.getSelectionModel().getSelectedIndex()],
                     warehouseLoca.getText()));
         });
         comp.add(addProduct, 1, 6);
-        
-        /*
-        Button addProduct = new Button("Lisää");
-        addProduct.setOnAction(e -> {
-            luoOsa(new Osa(productName.getText(), 
-                    Double.parseDouble(productPrice.getText()), 
-                    Integer.parseInt(warehouseAmount.getText()), 
-                    selectType.getSelectionModel().getSelectedItem().toString(),
-                    ""));
-        });
-        comp.add(addProduct, 1, 5);
-        */
 
         Scene stageScene = new Scene(comp, 500, 350);
         newStage.setScene(stageScene);
@@ -314,7 +265,7 @@ public class Tab2 extends Tab {
     }
 
     public void luoOsa(Osa osa) {
-        controller.luoOsa(osa);
+        controller.objectSaveOrUpdate(osa);
     }
 
     public void haeOsat(String tyyppi) {
@@ -330,14 +281,11 @@ public class Tab2 extends Tab {
             amountTable.setCellValueFactory(new PropertyValueFactory<Osa, Integer>("varastoMaara"));
             additionalInfo.setCellValueFactory(new PropertyValueFactory<Osa, String>("tyyppi"));
             tableVarasto.setItems(FXCollections.observableArrayList(controller.getOsat(tyyppi)));
-            /*
-            osaLista = controller.getOsat(tyyppi);
-            osaData = FXCollections.observableArrayList(osaLista);
-            tableVarasto.setItems(osaData);*/
+
         }
 
     }
-        
+
     public void localizationSetText() {
         Localization localization = Localization.getInstance();
         //Varastosivu
@@ -350,7 +298,6 @@ public class Tab2 extends Tab {
         btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
         btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
         btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
-        btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
         merkki.setText(localization.getBundle().getString("lbl_brand_name"));
         name.setText(localization.getBundle().getString("lbl_product_name"));
         type.setText(localization.getBundle().getString("lbl_product_type"));
@@ -376,12 +323,6 @@ public class Tab2 extends Tab {
         additionalInfo.setText(localization.getBundle().getString("tbl_extra")); 
         btnAddPackage.setText(localization.getBundle().getString("btn_add_package")); 
 
-
-        //tbl_col_type
-        //tbl_col_name
-        //tbl_col_unit_price
-        //tbl_col_quantity
-        //tbl_extra
     }
 
     private String[] osienTietokantaTyypit() {
@@ -398,8 +339,9 @@ public class Tab2 extends Tab {
     }
 
     private class Item {
-    int id;
-    String desc;
+
+        int id;
+        String desc;
 
         private Item(int id, String desc) {
             this.id = id;

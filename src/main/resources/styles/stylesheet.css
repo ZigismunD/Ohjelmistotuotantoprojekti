@@ -52,3 +52,9 @@ LineChart {
 #ylapalkki {
     -fx-background-color: #CDCDCD;
 }
+.table-view .column-header {
+    -fx-font-size: 12pt;
+    -fx-alignment: left;
+
+}
+

@@ -6,19 +6,11 @@
 package view;
 
 import controller.Controller;
-import java.util.ArrayList;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
@@ -55,8 +47,9 @@ public class UserCreation extends Application {
         comp.add(createUser, 2, 3);
 
         createUser.setOnAction(event -> {
-            if (iv.isInputLongEnough(nimi.getText()) && iv.isInputLongEnough(salasana.getText()) && iv.isInputNotEmpty(tunnus.getText())) {
+            if (iv.isInputNotEmpty(nimi.getText()) && iv.isInputLongEnough(salasana.getText()) && iv.isInputNotEmpty(tunnus.getText())) {
                 cont.createUser(new Henkilosto(nimi.getText(), null, enc.encrypt(salasana.getText()), tunnus.getText()));
+                 newStage.close();
             } else {
                 if (!iv.isInputNotEmpty(nimi.getText())) {
                     ContextMenu nimiValidator = new ContextMenu();
@@ -70,7 +63,7 @@ public class UserCreation extends Application {
                     });
                 }
 
-                if (!iv.isInputLongEnough(tunnus.getText())) {
+                if (!iv.isInputNotEmpty(tunnus.getText())) {
                     ContextMenu tunnusValidator = new ContextMenu();
                     tunnusValidator.setAutoHide(true);
                     tunnusValidator.getItems().add(
@@ -94,13 +87,12 @@ public class UserCreation extends Application {
                     });
                 }
             }
-
+           
         });
-
+       createUser.setDefaultButton(true); 
        Scene stageScene = new Scene(comp, 450, 300);
        newStage.setScene(stageScene);
        newStage.show();
-
    }
     @Override
     public void start(Stage primaryStage) throws Exception {
