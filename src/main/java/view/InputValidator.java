@@ -6,7 +6,10 @@ public class InputValidator {
     private InputValidator() {
 
     }
-
+    /**
+     * Singleton malli palauttaa luokan olion vain yhteenä ilmentymänä
+     * @return INSTANCE parametrit Lokalization-oliosta
+     */
     public static InputValidator getINSTANCE(){
         if (INSTANCE == null) {
             INSTANCE = new InputValidator();

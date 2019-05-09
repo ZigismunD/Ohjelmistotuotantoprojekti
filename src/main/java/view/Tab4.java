@@ -5,22 +5,14 @@
  */
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import controller.Controller;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import model.Localization;
-import model.Osa;
-import model.Product;
-import model.Tilaus;
 
 /**
  *
@@ -63,11 +55,6 @@ public class Tab4 extends Tab {
         });
         grid4.add(btnSales, 0, 0);
         
-     
-        //btnSalesPurchases.setOnAction((event) -> {
-        //    showPurchasesChart();
-        //});
-
         this.setContent(grid4);
         
         localizationSetText();
@@ -81,7 +68,7 @@ public class Tab4 extends Tab {
         final BarChart<String, Number> lineChart = new BarChart<String, Number>(xAxis, yAxis);
         
         lineChart.setTitle("Myyntitiedot");
-//        lineChart.setTitle(Localization.getInstance().getBundle().getString("title_sales_chart"));
+
 
         XYChart.Series series = new XYChart.Series();
         series.setName("2018");
@@ -129,11 +116,6 @@ public class Tab4 extends Tab {
         Localization localization = Localization.getInstance();
         
         btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
-        
-        //lineChart.setTitle(localization.getBundle().getString("btn_sales"));
-        //series.setName("Myynnit");
-        
-        //series.setName("Ostot");
-        //lineChart.setTitle("Ostotiedot");
+ 
     }
 }

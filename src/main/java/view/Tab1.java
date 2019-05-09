@@ -6,10 +6,8 @@
 package view;
 
 import controller.Controller;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,14 +16,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,7 +34,6 @@ import model.Paketti;
 import model.Product;
 import model.Tilaus;
 import model.Tilaus_rivi;
-
 
 /**
  *
@@ -131,8 +126,7 @@ public class Tab1 extends Tab {
         // SIVUSTON KOMPONENTIT
         radio1.setToggleGroup(group);
         radio1.setSelected(true);
-//        radio1.setText("Paketti");
-//        radio2.setText("Osa");
+
         radio2.setToggleGroup(group);
 
         lblProduct.setFont(Font.font(null, 15));
@@ -149,19 +143,15 @@ public class Tab1 extends Tab {
         emailTxt.setPromptText("jarmo@jarmonkauppa.com");
         addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
 
-        
         productCol1.setStyle("-fx-font-size: 12pt;");
         productCol1.setMinWidth(100);
 
-        
         nameCol1.setStyle("-fx-font-size: 12pt;");
         nameCol1.setMinWidth(300);
 
-        
         amountCol1.setStyle("-fx-font-size: 12pt;");
         amountCol1.setMinWidth(150);
 
-        
         priceCol1.setStyle("-fx-font-size: 12pt;");
         priceCol1.setMinWidth(150);
 
@@ -173,7 +163,7 @@ public class Tab1 extends Tab {
         vboxProcuctsTable.setSpacing(5);
         vboxProcuctsTable.getChildren().addAll(lblWarning, productsTable);
 
-        txtOrderAmount.setText(""+1);
+        txtOrderAmount.setText("" + 1);
         txtOrderAmount.setPrefWidth(40);
         txtOrderAmount.setEditable(false);
         btnPlusOrderAmount.setText("+");
@@ -187,7 +177,7 @@ public class Tab1 extends Tab {
                 plusOrminusamount(-1);
             }
         });
-        
+
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle old_toggle, Toggle new_toggle) {
@@ -201,7 +191,7 @@ public class Tab1 extends Tab {
                             new PropertyValueFactory<Product, Integer>("varastoMaara"));
                     filterList();
                 }
-                
+
                 if (group.getSelectedToggle() == radio2) {
                     haeOsat();
                     productCol1.setCellValueFactory(
@@ -218,14 +208,12 @@ public class Tab1 extends Tab {
             }
         });
 
-
         lblAddproduct.setFont(Font.font(null, 15));
         lblAddproduct.setFill(Color.BLACK);
 
         btnAddproduct.setPrefSize(150, 50);
         btnDelproduct.setPrefSize(150, 50);
-//        btnDelproduct.setText("Poista tuote");
-        //btnAddproduct.setStyle("-fx-background-image: url('')");
+
         btnSend.setId("btnSend");
         btnSend.setPrefSize(250, 50);
 
@@ -241,24 +229,21 @@ public class Tab1 extends Tab {
         lblWarning2.setFont(Font.font(null, FontWeight.BOLD, 15));
         lblWarning2.setFill(Color.rgb(255, 0, 0));
         lblWarning3.setFont(Font.font(null, FontWeight.BOLD, 15));
-        PriceTxt.setText(""+0);
+        PriceTxt.setText("" + 0);
         PriceTxt.setEditable(false);
 
         tableTemp.setEditable(true);
 
-        
         productCol.setStyle("-fx-font-size: 12pt;");
         productCol.setMinWidth(400);
         productCol.setCellValueFactory(
                 new PropertyValueFactory<Product, String>("name"));
 
-        
         amountCol.setStyle("-fx-font-size: 12pt;");
         amountCol.setMinWidth(200);
         amountCol.setCellValueFactory(
                 new PropertyValueFactory<Product, Integer>("amount"));
 
-        
         priceCol.setStyle("-fx-font-size: 12pt;");
         priceCol.setMinWidth(150);
         priceCol.setCellValueFactory(
@@ -280,16 +265,16 @@ public class Tab1 extends Tab {
                     if (group.getSelectedToggle() == radio1) {
                         product = new Product(getValittuPaketti(), getOrderAmount());
                         tilausrivit.add(product);
-                        updatePrice(product.getPrice()*getOrderAmount());
+                        updatePrice(product.getPrice() * getOrderAmount());
                     }
-                    
+
                     if (group.getSelectedToggle() == radio2) {
                         product = new Product(getValittuOsa(), getOrderAmount());
                         tilausrivit.add(product);
-                        updatePrice(product.getPrice()* product.getAmount());
+                        updatePrice(product.getPrice() * product.getAmount());
                     }
-                    
-                    txtOrderAmount.setText(""+1);
+
+                    txtOrderAmount.setText("" + 1);
                     data = FXCollections.observableArrayList(tilausrivit);
                     tableTemp.setItems(data);
                     clearWarnings();
@@ -297,16 +282,16 @@ public class Tab1 extends Tab {
                     //TÄHÄN lokalisointi lennossa
                     lblWarning.setText(Localization.getInstance().getBundle().getString("lbl_choose_warning"));
                     //lblWarning.setText("Valitse ensin tuote");
-                }   
+                }
             }
         });
         btnDelproduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 if (tableTemp.getSelectionModel().getSelectedItem() != null) {
-                    Product removeItem =(Product)tableTemp.getSelectionModel().getSelectedItem();
+                    Product removeItem = (Product) tableTemp.getSelectionModel().getSelectedItem();
                     tableTemp.getItems().remove(removeItem);
-                    updatePrice(-(removeItem.getPrice()* removeItem.getAmount()));
+                    updatePrice(-(removeItem.getPrice() * removeItem.getAmount()));
                     tilausrivit.remove(removeItem);
                     clearWarnings();
                 } else {
@@ -324,7 +309,7 @@ public class Tab1 extends Tab {
             if (iv.isEmailValid(emailTxt.getText()) && iv.isInputNotEmpty(companyTxt.getText()) && iv.isInputNotEmpty(addressTxt.getText())) {
                 controller.createOrder(Double.parseDouble(PriceTxt.getText()));
                 tilausrivit.clear();
-                PriceTxt.setText(""+0);
+                PriceTxt.setText("" + 0);
             } else {
                 if (!iv.isInputNotEmpty(companyTxt.getText())) {
                     ContextMenu yritysValidator = new ContextMenu();
@@ -333,7 +318,7 @@ public class Tab1 extends Tab {
                             new MenuItem("Syötä nimi")
                     );
                     yritysValidator.show(companyTxt, Side.RIGHT, 10, 10);
-                    companyTxt.setOnMouseClicked(event ->  {
+                    companyTxt.setOnMouseClicked(event -> {
                         yritysValidator.hide();
                     });
                 }
@@ -345,7 +330,7 @@ public class Tab1 extends Tab {
                             new MenuItem("Syötä osoite")
                     );
                     osoiteValidator.show(addressTxt, Side.RIGHT, 10, 10);
-                    addressTxt.setOnMouseClicked(event ->  {
+                    addressTxt.setOnMouseClicked(event -> {
                         osoiteValidator.hide();
                     });
                 }
@@ -357,12 +342,11 @@ public class Tab1 extends Tab {
                             new MenuItem("Syötä email")
                     );
                     emailValidator.show(emailTxt, Side.RIGHT, 10, 10);
-                    emailTxt.setOnMouseClicked(event ->  {
+                    emailTxt.setOnMouseClicked(event -> {
                         emailValidator.hide();
                     });
                 }
             }
-
 
             //Product taulun tyhjennys ja ilmoitus että homma onnistui
         });
@@ -380,9 +364,9 @@ public class Tab1 extends Tab {
         grid1.add(btnAddproduct, 12, 9, 3, 1);
         grid1.add(btnDelproduct, 12, 10, 3, 1);
         grid1.add(vboxTempTable, 15, 7, 8, 4);
-        grid1.add(lblPrice, 12, 11,2,1);
+        grid1.add(lblPrice, 12, 11, 2, 1);
         grid1.add(PriceTxt, 15, 11);
-        grid1.add(lblWarning3,16,11);
+        grid1.add(lblWarning3, 16, 11);
         grid1.add(btnSend, 15, 14, 6, 6);
         //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
@@ -404,7 +388,7 @@ public class Tab1 extends Tab {
     private void filterList() {
         if (group.getSelectedToggle() == radio1) {
             FilteredList<Paketti> filteredData = new FilteredList<>(pakettiData, p -> true);
-            searchField.textProperty().addListener(((observable, oldValue, newValue) ->  {
+            searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(Paketti -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
@@ -423,10 +407,10 @@ public class Tab1 extends Tab {
             sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
             productsTable.setItems(sortedData);
         }
-            
+
         if (group.getSelectedToggle() == radio2) {
             FilteredList<Osa> filteredData = new FilteredList<>(osaData, p -> true);
-            searchField.textProperty().addListener(((observable, oldValue, newValue) ->  {
+            searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(Osa -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
@@ -504,7 +488,7 @@ public class Tab1 extends Tab {
         lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
         lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
         lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
-        
+
         radio1.setText(localization.getBundle().getString("btn_package"));
         radio2.setText(localization.getBundle().getString("btn_component"));
         lblEmail.setText(localization.getBundle().getString("lbl_email"));
@@ -517,7 +501,7 @@ public class Tab1 extends Tab {
         productCol.setText(localization.getBundle().getString("lbl_product"));
         amountCol.setText(localization.getBundle().getString("lbl_amount"));
         priceCol.setText(localization.getBundle().getString("lbl_price"));
-        
+
     }
 
     public void haePaketit() {
@@ -537,13 +521,14 @@ public class Tab1 extends Tab {
         totalPrice = priceChange + totalPrice;
         PriceTxt.setText(Double.toString(totalPrice));
     }
-    
+
     public void plusOrminusamount(int amountChange) {
         int tAmount = Integer.parseInt(txtOrderAmount.getText());
         tAmount = amountChange + tAmount;
         txtOrderAmount.setText(Integer.toString(tAmount));
     }
-    public void clearWarnings(){
+
+    public void clearWarnings() {
         lblWarning.setText("");
         lblWarning2.setText("");
         lblWarning3.setText("");
