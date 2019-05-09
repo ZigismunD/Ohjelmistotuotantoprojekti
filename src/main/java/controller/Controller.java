@@ -23,7 +23,7 @@ import view.View;
 import view.loginView;
 
 /**
- * 
+ * Sovelluksen toiminnallisuutta ohjaava luokka
  * @author Sami Sikkilä
  */
 public class Controller {
@@ -36,24 +36,24 @@ public class Controller {
     /**
      * Tietokannan kanssa asioiva DataAccesObject
      */
-    TietokonekauppaDAO dao;
+    private TietokonekauppaDAO dao;
+    /**
+     * Hakee salaukseen käytettävän Encryption olion
+     */
     private Encryption encryption = Encryption.getInstance();
-    
+
+    /**
+     * Luo Controller olion
+     */
     private Controller() {
         this.dao = new TietokonekauppaDAO();
     }
-    
+
+
     /**
-     * Konstruktori
-     * @param gui Ohjemiston käyttöliittymäluokka
+     * Luo Controllerista olion, ellei sitä ole vielä aikaisemmin luotu
+     * @return Controller olio
      */
-    /*
-    public Controller(View gui) {
-        this.gui = gui;
-        this.dao = new TietokonekauppaDAO();
-    }
-    */
-    
     public static synchronized Controller getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Controller();
@@ -67,10 +67,21 @@ public class Controller {
     public void setGui2(loginView gui) {
         this.lv = gui;
     }
+
+    /**
+     * Luo TietokonekauppaDAO sekä tietokantayhteys uudelleen
+     */
     public void reconnectDAO() {
         this.dao = new TietokonekauppaDAO();
     }
-    
+
+    /**
+     * Kirjaudu sisään
+     * @param loginscreen LoginView
+     * @param primaryStage Stage, jolla sisäänkirjautuminen on
+     * @param nimi Käyttäjän syöttämä käyttäjänimi
+     * @param salasana Käyttäjän syöttämä salasana
+     */
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
         Henkilosto user = dao.haeKayttaja(nimi, encryption.encrypt(salasana));
 
@@ -93,6 +104,11 @@ public class Controller {
         }
         
     }
+
+    /**
+     * Kirjautuu ulos, sulkee View'n ja avaa LoginView
+     * @param primaryStage Stage, joka on auki näppäintä painettaessa.
+     */
     public void logOut(Stage primaryStage){
             // luo loginView ja sulje View
             Stage loginViewclass = new Stage();
@@ -102,12 +118,9 @@ public class Controller {
             primaryStage.close();
     }
     /**
-     * Hae tietokoneiden nimet ComboBoxiin
-     * @param box ComboBox, johon nimet halutaan tuoda
+     * Hae tietokannasta kaikki Paketti oliot
+     * @return Lista kaikista tietokannassa olevista Paketti olioista
      */
-    
-
-    
      public ArrayList<Paketti> getAllComputerNames() {
         ArrayList<Paketti> paketit = new ArrayList<>();
         
@@ -128,6 +141,7 @@ public class Controller {
 
     /**
      * Funktio hakee käyttöliittymässä olevista tietokentistä tarvittavat tiedot ja luo niiden perusteella tilauksen
+     * @param hinta Tilaukselle myyntisivulla laskettu kokonaishinta
      */
     public void createOrder(Double hinta) {
         Tab1 tab1 = Tab1.getInstance();
@@ -190,29 +204,57 @@ public class Controller {
         }
         return tilaukset;
     }
-    
+
+    /**
+     * Hae valitulle tilaukselle osoitetut tilausrivit tietokannasta
+     * @param tilaus Tilaus, jonka tilausrivit haluat hakea
+     * @return ArrayList tilauksen tilausriveistä
+     */
      public ArrayList<Tilaus> getOrderRows(Tilaus tilaus) {
          return dao.tilausGetTilausRivit(tilaus);
     }
-    
+
+    /**
+     * Hae oliolle osoiteteut rivit
+     * @param obj Olio, jolle osoitetut rivit jotka haluat hakea
+     * @return ArrayList oliolle osoitetuista olioriveistä
+     */
     public ArrayList<Object> getObjectRows(Object obj) {
         return dao.getObjectRows(obj);
     }
-    
+
+    /**
+     * Tallenna tai päivitä olio tietokantaan
+     * @param obj Tallennettava tai päivitettävä olio
+     */
     public void objectSaveOrUpdate(Object obj) {
         dao.objectSaveOrUpdate(obj, null);
     }
-    
+
+    /**
+     * Päivitä tai tallenna tableviewssä valittu olio
+     * @param obj Tallennettava olio
+     * @param obj_rows Tallennettavat oliorivit
+     */
     public void objectAndRowsSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
         //dao.objectSaveOrUpdate(obj, obj_rows);
         dao.objectSaveOrUpdate(obj);
         dao.objectListSaveOrUpdate(obj_rows);
     }
-    
+
+    /**
+     * Poista olio tietokannasta
+     * @param obj Tietokannasta poistettava olio
+     */
     public void objectDelete(Object obj) {
         dao.objectDelete(obj);
     }
 
+    /**
+     * Hae tietyn vuoden myyntitilastot tietokannasta
+     * @param vuosi vuosi, jonka myyntitilastot haluat hakea
+     * @return Array myyntilastoista
+     */
     public double[] getSalesOfYear(Integer vuosi) {
         return dao.getSalesYear(vuosi);
     }
