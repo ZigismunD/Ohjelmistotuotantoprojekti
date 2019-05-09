@@ -23,12 +23,20 @@ public class Localization {
     ResourceBundle mybundle;
     Locale locale;
     
+    /**
+     * Konstruktori
+     */
     private Localization() {
         //Suomi oletuskieli
         Locale.setDefault(new Locale("fi", "FI"));
         mybundle = ResourceBundle.getBundle("MyLabels");
     }
     
+    /**
+     * Singleton
+     * 
+     * @return jos Localization on jo luotu niin palauta se
+     */
     public static synchronized Localization getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Localization();
@@ -36,6 +44,12 @@ public class Localization {
         return INSTANCE;
     }
     
+    /**
+     * Vaihtaa järjestelmälle asetetun kielen.
+     * Ottaa vastaan "FI", "US" tai "RUS" parametrin
+     * 
+     * @param language valitun kielen parametri
+     */
     public void changeLocale(String language) {
         switch(language) { 
             case "FI": 
@@ -51,13 +65,23 @@ public class Localization {
         mybundle = ResourceBundle.getBundle("MyLabels");
     }
     
-    public String[] getLocaleList() {
-        return new String[] {"FI", "US", "RUS"};
-    }
-    
+    /**
+     * Palauttaa asetetun kielipaketin
+     * 
+     * @return palauttaa kielipaketin
+     */
     public ResourceBundle getBundle() {
         return mybundle;
     }
+    
+    /**
+     * Vaihtaa View luokan jokaisen tabin kielen valituksi
+     * 
+     * @param tab1 ensimmäinen tab
+     * @param tab2 toinen tab
+     * @param tab3 kolmas tab
+     * @param tab4 neljäs tab
+     */
     public void translateAll(Tab1 tab1, Tab2 tab2, Tab3 tab3, Tab4 tab4) {
         tab1.localizationSetText();
         tab2.localizationSetText();
@@ -66,11 +90,4 @@ public class Localization {
         
     }
 
-//    public void translateAll(Tab tab1, Tab tab2, Tab tab3, Tab tab4) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-
-    
-
-   
 }

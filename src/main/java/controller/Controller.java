@@ -191,10 +191,6 @@ public class Controller {
         return tilaukset;
     }
     
-     public ArrayList<Tilaus> getOrderRows(Tilaus tilaus) {
-         return dao.tilausGetTilausRivit(tilaus);
-    }
-    
     public ArrayList<Object> getObjectRows(Object obj) {
         return dao.getObjectRows(obj);
     }

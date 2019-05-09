@@ -43,20 +43,12 @@ public class TietokonekauppaDAO {
             LOGGER.log(Level.SEVERE, "Istuntotehtaan luonti epäonnistui", e);
         }
     }
-
-    public boolean isSessionFactoryConnected() {
-        if (istuntotehdas != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    
     /**
      * @return result palauttaa listan kaikista Paketti riveistä
      */
     public List<Paketti> readPaketit() {
-        // TODO Auto-generated method stub
+        
         ArrayList<Paketti> paketit = new ArrayList<>();
         Session istunto = istuntotehdas.openSession();
         try {
@@ -78,20 +70,21 @@ public class TietokonekauppaDAO {
         }
 
     }
-
+    
+    /**
+     * @return result palauttaa listan kaikista Osa riveistä
+     */
     public List<Osa> readOsat() {
-        // TODO Auto-generated method stub
         ArrayList<Osa> osat = new ArrayList<>();
         Session istunto = istuntotehdas.openSession();
         try {
             Transaction transaction = istunto.beginTransaction();
-            //@SuppressWarnings("unchecked")
+            
             List<Osa> result = istunto.createQuery("from Osa").list();
             for (Osa v : result) {
                 osat.add(new Osa(v.getOsaNimi(), v.getOsaHinta()));
             }
             transaction.commit();
-
 
             return result;
         } catch (Exception e) {
@@ -108,14 +101,11 @@ public class TietokonekauppaDAO {
      * @return result palauttaa listan kaikista Tilaus riveistä
      */
     public List<Tilaus> readTilaukset() {
-        // TODO Auto-generated method stub
         ArrayList<Tilaus> tilaukset = new ArrayList<>();
         Session istunto = istuntotehdas.openSession();
         try {
             Transaction transaction = istunto.beginTransaction();
-            //@SuppressWarnings("unchecked")
             List<Tilaus> result = istunto.createQuery("from Tilaus").list();
-
             transaction.commit();
 
             return result;
@@ -130,7 +120,7 @@ public class TietokonekauppaDAO {
     }
 
     /**
-     * @param id - olion haetun id
+     * @param id - haetun olion id
      * @return result palauttaa paketti olion haetun id:n perusteella
      */
     public Paketti readPaketti(int id) {
@@ -165,7 +155,7 @@ public class TietokonekauppaDAO {
      * @return henkilosto palauttaa listan Henkilosto taulun riveistä
      */
     public List<Henkilosto> haeHenkilosto() {
-        // TODO Auto-generated method stub
+        
         ArrayList<Henkilosto> henkilosto = new ArrayList<>();
         Session istunto = istuntotehdas.openSession();
         try {
@@ -194,7 +184,6 @@ public class TietokonekauppaDAO {
         Session istunto = istuntotehdas.openSession();
         try {
             Transaction transaction = istunto.beginTransaction();
-            //@SuppressWarnings("unchecked")
             List<Henkilosto> result = istunto.createQuery("from Henkilosto where Kirjautumistunnus = '" + nimi + "' AND Salasana = '" + salasana + "'").list();
             henkilo = result.get(0);
             transaction.commit();
@@ -231,17 +220,7 @@ public class TietokonekauppaDAO {
         }
         return id;
     }
-
-    public void luoOsa(Osa osa) {
-        try (Session istunto = istuntotehdas.openSession()) {
-            Transaction transaktio = istunto.beginTransaction();
-            istunto.save(osa);
-            transaktio.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.FINE, e.toString(), e);
-        }
-    }
-
+    
     /**
      * Poistaa rivin Henkilosto taulusta annetun Henkilosto olion perusteella
      *
@@ -268,11 +247,10 @@ public class TietokonekauppaDAO {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
             
-         //  Tallenna asiakas
+            //Tallenna asiakas
             istunto.save(asiakas);
                         
             //Luo Tilaus olio
-            
             Tilaus tilaus = new Tilaus(asiakas, null, new Date(),hinta);
             istunto.saveOrUpdate(tilaus);
 
@@ -323,32 +301,15 @@ public class TietokonekauppaDAO {
         }
     }
     
-    public ArrayList tilausGetTilausRivit(Tilaus tilaus) {
-        // TODO Auto-generated method stub
-        ArrayList<Tilaus_rivi> rivit = new ArrayList<>();
-        try (Session istunto = istuntotehdas.openSession()) {
-            Transaction transaction = istunto.beginTransaction();
-            //@SuppressWarnings("unchecked")
-            List<Tilaus_rivi> result = istunto.createQuery("from Tilaus_rivi").list();
-            for (Tilaus_rivi v : result) {
-                if (v.getTilaus() == tilaus) {
-                    rivit.add(v);
-                }
-            }
-            transaction.commit();
-            
-            return rivit;
-        } catch (Exception e) {
-            LOGGER.log(Level.FINE, e.toString(), e);
-            return null;
-        }
-    }
-    
-    //Ottaa vastaan id:n ja objektityypin, palauttaa objektin jolla sama id
+    /**
+     * Hakee objektin id:n perusteella.
+     * 
+     * @param id haettava id numero
+     * @param object haettavan objektin tyyppi
+     * @return haettu objekti
+     */
     public Object getObjectById(int id, Object object) {
         try (Session istunto = istuntotehdas.openSession()) {
-            Transaction transaction = istunto.beginTransaction();
-            
             istunto.load(object, id);
             return object;
         } catch (Exception e) {
@@ -357,7 +318,13 @@ public class TietokonekauppaDAO {
         }    
     }
     
-    //Hakee ja palauttaa objektin alirivit
+    /**
+     * Hakee ja palauttaa objektin alirivit.
+     * Vain Tilaus ja Paketti objekteilla on alirivejä.
+     * 
+     * @param obj objekti jonka alirivit haetaan
+     * @return objektin alirivit
+     */
     public ArrayList<Object> getObjectRows(Object obj) {
         try (Session istunto = istuntotehdas.openSession()) {
             if (obj instanceof Tilaus) {
@@ -380,7 +347,12 @@ public class TietokonekauppaDAO {
         }    
     }
     
-    //Poistaa objektin tietokannasta. Jos objektilla on alirivejä se poistaa ne myös
+    /**
+     * Poistaa objektin tietokannasta. 
+     * Jos objektilla on alirivejä ne poistetaan myös. 
+     * 
+     * @param obj poistettava objekti
+     */
     public void objectDelete(Object obj) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -415,6 +387,14 @@ public class TietokonekauppaDAO {
         }
     }
     
+    /**
+     * Tallenna objekti ja sen alirivit.
+     *
+     * Hyödyllinen metodi tilauksen/paketin ja jokaisen sen rivin tallennukseen.
+     * 
+     * @param obj tallennettava objekti
+     * @param obj_rows tallennettavan objektin alirivit
+     */
     //Tallentaa objektin ja sen alirivit
     public void objectSaveOrUpdate(Object obj, ArrayList<Object> obj_rows) {
         try (Session istunto = istuntotehdas.openSession()) {
@@ -438,7 +418,12 @@ public class TietokonekauppaDAO {
         }
     }
     
-    //Tallentaa yksittäisen objektin
+    /**
+     * Tallenna yksi objekti.
+     * Metodia voi käyttää minkä tahansa taulun tallentamiseen.
+     * 
+     * @param obj tallennettava objekti
+     */
     public void objectSaveOrUpdate(Object obj) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -449,7 +434,12 @@ public class TietokonekauppaDAO {
         }
     }
     
-    //Tallentaa listan objekteja
+    /**
+     * Tallenna joukko objekteja samalla kertaa.
+     * 
+     * @param obj_list lista tallennettavista objekteista
+     * 
+     */
     public void objectListSaveOrUpdate(ArrayList<Object> obj_list) {
         try (Session istunto = istuntotehdas.openSession()) {
             istunto.beginTransaction();
@@ -462,6 +452,12 @@ public class TietokonekauppaDAO {
         }
     }
     
+    /**
+     * Hakee tietokannasta halutun vuoden kuukausitiedot
+     * 
+     * @param year etsittävä vuosi
+     * @return palauttaa listan vuosien myyntitiedoista
+     */
     public double[] getSalesYear(Integer year) {
         double[] sales = new double[12];
         try (Session istunto = istuntotehdas.openSession()) {
