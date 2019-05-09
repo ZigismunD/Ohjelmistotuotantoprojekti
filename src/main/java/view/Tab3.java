@@ -63,9 +63,9 @@ public class Tab3 extends Tab {
     private final Button btnOrders = new Button();
     private final Button btnRemoveOrder = new Button();
 
-    private final TableColumn brand = new TableColumn("Tilaus ID");
-    private final TableColumn client = new TableColumn("Asiakas");
-    private final TableColumn orderDate = new TableColumn("Tilauspvm");
+    private final TableColumn brand = new TableColumn();
+    private final TableColumn client = new TableColumn();
+    private final TableColumn orderDate = new TableColumn();
     private final TableColumn amount = new TableColumn("Summa (€)");
     private final TableColumn additionalInfo = new TableColumn("HUOM");
     private final TableColumn products = new TableColumn("Osa");
@@ -215,11 +215,14 @@ public class Tab3 extends Tab {
         brand.setText(localization.getBundle().getString("lbl_orderId"));
         client.setText(localization.getBundle().getString("lbl_client"));
         orderDate.setText(localization.getBundle().getString("lbl_order_date"));
-        amount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
+        amount.setText(localization.getBundle().getString("lbl_order_total_price"));
         additionalInfo.setText(localization.getBundle().getString("lbl_additionalInfo"));
         products.setText(localization.getBundle().getString("lbl_product"));
-        productamount.setText(localization.getBundle().getString("tbl_col_order_quantity"));
-        ordersum.setText(localization.getBundle().getString("lbl_order_total_price"));
-        itemPrice.setText(localization.getBundle().getString("lbl_price"));
+        productamount.setText(localization.getBundle().getString("btn_packages"));
+        ordersum.setText(localization.getBundle().getString("lbl_product_amount"));
+        itemPrice.setText(localization.getBundle().getString("tbl_col_order_unit_price"));
+        
+  
+
     }
 }
