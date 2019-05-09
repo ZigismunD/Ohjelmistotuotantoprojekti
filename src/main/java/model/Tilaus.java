@@ -47,7 +47,14 @@ public class Tilaus {
         this.henkilosto = henkilosto;
         this.tilausPvm = tilausPvm;
     }
-
+    /**
+     * luodaan konstruktorin 4-parametrilla
+     *
+     * @param asiakas luo asiakkaan parametrit Asiakas-oliosta
+     * @param henkilosto luo työntekijän parametrit Henkilosto-oliosta
+     * @param tilausPvm luo tilauksen päivämäärän
+     * @param yhteishinta luo tilauksen päivämäärän
+     */
     public Tilaus(Asiakas asiakas, Henkilosto henkilosto, Date tilausPvm, Double yhteishinta) {
         this.asiakas = asiakas;
         this.henkilosto = henkilosto;
@@ -114,7 +121,6 @@ public class Tilaus {
     }
 
     /**
-     *
      * @param henkilosto asentaa työntekijan parametrit Henkilosto-oliosta
      * Tilaus-olioon
      */
@@ -139,37 +145,17 @@ public class Tilaus {
     public void setTilausPvm(Date tilausPvm) {
         this.tilausPvm = tilausPvm;
     }
-
-    /*
-    @Column(name = "TilausRivit")
-    public List<Tilaus_rivi> getTilausRivit() {
-        return tilausRivit;
-    }
-    
-    public void setTilausRivit(ArrayList<Tilaus_rivi> tilausRivit) {
-        this.tilausRivit = tilausRivit;
-    }
-    
-    // tällä lisätään tilaus_rivi objektina arrayListaan
-    public void lisääTilausRivi(Tilaus_rivi tilausrivi) {
-        this.tilausRivit.add(tilausrivi);
-    }
-    
-    public double getYhtHinta(){
-        double yhtHinta = 0;
-        for (int i = 0; i < tilausRivit.size(); i++) {
-          double hinta = tilausRivit.get(i).getHinta();
-          yhtHinta += hinta;
-        }
-        return yhtHinta;
-    }
-    */
-
+    /**
+     * @return yhteishinta parametrit Asiakas-oliosta
+     */
     @Column(name = "Yhteishinta")
     public Double getYhteishinta() {
         return yhteishinta;
     }
-
+    /**
+     *
+     * @param yhteishinta asentaa tilauksen yhteishinnan Tilaus-olioon
+     */
     public void setYhteishinta(Double yhteishinta) {
         this.yhteishinta = yhteishinta;
     }

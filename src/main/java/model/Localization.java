@@ -18,59 +18,62 @@ import view.Tab4;
  * @author hannu.korhonen
  */
 public class Localization {
+
     private static Localization INSTANCE = null;
-    
+
     ResourceBundle mybundle;
     Locale locale;
-    
+
     private Localization() {
         //Suomi oletuskieli
         Locale.setDefault(new Locale("fi", "FI"));
         mybundle = ResourceBundle.getBundle("MyLabels");
     }
-    
+    /**
+     * Singleton malli palauttaa luokan olion vain yhteenä ilmentymänä
+     * @return INSTANCE parametrit Lokalization-oliosta
+     */
     public static synchronized Localization getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Localization();
         }
         return INSTANCE;
     }
-    
+    /**
+     * 
+     * @param language luo kielen tilan ja asentaa sen mukaisesti käyttöliitymän kielen
+     */
     public void changeLocale(String language) {
-        switch(language) { 
-            case "FI": 
+        switch (language) {
+            case "FI":
                 Locale.setDefault(new Locale("fi", "FI"));
-                break; 
-            case "US": 
+                break;
+            case "US":
                 Locale.setDefault(new Locale("en", "US"));
-                break; 
-            case "RUS": 
+                break;
+            case "RUS":
                 Locale.setDefault(new Locale("ru", "RU"));
                 break;
         }
         mybundle = ResourceBundle.getBundle("MyLabels");
     }
     
-    public String[] getLocaleList() {
-        return new String[] {"FI", "US", "RUS"};
-    }
-    
     public ResourceBundle getBundle() {
         return mybundle;
     }
+    /**
+     *  luodaan konstruktorin 4-lla parametrilla
+     * @param tab1 luo taulu 1 ja toteuttaa sen lokalisaation View luokassa
+     * @param tab2 luo taulu 1 ja toteuttaa sen lokalisaation View luokassa
+     * @param tab3 luo taulu 1 ja toteuttaa sen lokalisaation View luokassa
+     * @param tab4 luo taulu 1 ja toteuttaa sen lokalisaation View luokassa
+     */
     public void translateAll(Tab1 tab1, Tab2 tab2, Tab3 tab3, Tab4 tab4) {
         tab1.localizationSetText();
         tab2.localizationSetText();
         tab3.localizationSetText();
         tab4.localizationSetText();
-        
+
     }
 
-//    public void translateAll(Tab tab1, Tab tab2, Tab tab3, Tab tab4) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-
-    
-
-   
 }

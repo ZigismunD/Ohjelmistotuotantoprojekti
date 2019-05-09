@@ -145,35 +145,10 @@ public class Tab1 extends Tab {
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
 
-        //grid1.add(lblCompany, 2, 15);
-        //grid1.add(companyTxt, 3, 15,5,1);
-        //grid1.add(lblAddress, 2, 17);
-        //grid1.add(addressTxt, 3, 17,5,1);
-        //grid1.add(lblBilling, 2, 19);
-        //grid1.add(billingTxt, 3, 19,5,1);
-//        lblEmail.setText("Email:");
-//        lblPhone.setText("Phone:");
         companyTxt.setPromptText("Jarmonkauppa Oy");
         emailTxt.setPromptText("jarmo@jarmonkauppa.com");
         addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
-        /*
-      
-       final VBox VboxCustomer = new VBox();
-        VboxCustomer.setSpacing(5);
-        VboxCustomer.setPadding(new Insets(10, 10, 10, 10));
-      
-        final HBox hboxCompany = new HBox();
-        hboxCompany.getChildren().addAll(lblCompany,companyTxt);
-        final HBox hboxAddress = new HBox();
-        hboxAddress.getChildren().addAll(lblAddress,addressTxt);
-        final HBox hboxEmail = new HBox();
-        hboxEmail.getChildren().addAll(lblEmail,emailTxt);
-        final HBox hboxPhone = new HBox();
-        hboxPhone.getChildren().addAll(lblPhone,phoneTxt);
-        
 
-        VboxCustomer.getChildren().addAll(hboxCompany,hboxAddress,hboxEmail,hboxPhone);
-         */
         
         productCol1.setStyle("-fx-font-size: 12pt;");
         productCol1.setMinWidth(100);

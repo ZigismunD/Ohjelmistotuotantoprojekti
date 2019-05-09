@@ -51,11 +51,18 @@ public class Osa {
         this.tyyppi = tyyppi;
         this.hyllynNumero = hyllynNumero;
     }
+    /**
+     * luodaan konstruktorin 2-lla parametrilla
+     * @param nimi luo tuotteen nimen
+     * @param hinta luo tuotteen hinnan 
+     */
     public Osa(String nimi, double hinta){
         this.osaNimi = nimi;
         this.osaHinta = hinta;
     }
-
+    /**
+     * luodaan konstruktorin 4-lla parametrilla
+     */
     public Osa(String osaNimi, double osaHinta, int varastoMaara, String tyyppi) {
         this.osaNimi = osaNimi;
         this.osaHinta = osaHinta;
@@ -156,7 +163,10 @@ public class Osa {
     public void setHyllynNumero(String hyllynNumero) {
         this.hyllynNumero = hyllynNumero;
     }
-    
+    /**
+     * 
+     * @return this.osaNimi palauttaa osan nimen
+     */
     public String toString(){
         return this.osaNimi;
     }

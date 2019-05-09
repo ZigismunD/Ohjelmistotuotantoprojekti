@@ -13,10 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import model.Osa;
-import model.Paketti;
-import org.hibernate.annotations.Cascade;
-
 /**
  *
  * @author vadimzubchenko
@@ -104,7 +100,6 @@ public class Paketti_rivi {
     public Paketti getPaketti() {
         return paketti;
     }
-
     /**
      *
      * @param paketti asentaa paketin parametrit Paketti-oliosta Paketti_rivi
