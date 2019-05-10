@@ -6,10 +6,8 @@
 package view;
 
 import controller.Controller;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,14 +16,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -36,7 +32,6 @@ import model.Localization;
 import model.Osa;
 import model.Paketti;
 import model.Product;
-import model.Tilaus;
 import model.Tilaus_rivi;
 
 
@@ -55,28 +50,22 @@ import model.Tilaus_rivi;
 public class Tab1 extends Tab {
 
     private static Tab1 INSTANCE = null;
-    private Controller controller = Controller.getInstance();
-    private Button btnPlusOrderAmount = new Button();
-    private Button btnMinusOrderAmount = new Button();
+    private final Controller controller = Controller.getInstance();
+    private final Button btnPlusOrderAmount = new Button();
+    private final Button btnMinusOrderAmount = new Button();
     private final TextField txtOrderAmount = new TextField();
     private final TableView productsTable = new TableView();
     public TextField UnitPriceTxt;
-    private View gui;
 
     // yleiset
-    private Scene scene;
-    private TabPane tabPane = new TabPane();
     private ObservableList<Product> data;
     private List<Product> tilausrivit;
     private List<Paketti> pakettiLista;
     private ObservableList<Paketti> pakettiData;
     private List<Osa> osaLista;
     private ObservableList<Osa> osaData;
-    private List<Tilaus> tilausLista;
-    private ObservableList<Tilaus> tilausData;
 
     // ekasivu
-    private final Text lblSales = new Text();
     final Tab tab1 = new Tab();
     private final GridPane grid1 = new GridPane();
     public final TableView tableTemp = new TableView();
@@ -96,7 +85,6 @@ public class Tab1 extends Tab {
     public final TextField companyTxt = new TextField();
     public final TextField addressTxt = new TextField();
     public final TextField emailTxt = new TextField();
-    private final TextField phoneTxt = new TextField();
     private final Button btnAddproduct = new Button();
     private final Button btnDelproduct = new Button();
     private final Button btnSend = new Button();
@@ -131,8 +119,6 @@ public class Tab1 extends Tab {
         // SIVUSTON KOMPONENTIT
         radio1.setToggleGroup(group);
         radio1.setSelected(true);
-//        radio1.setText("Paketti");
-//        radio2.setText("Osa");
         radio2.setToggleGroup(group);
 
         lblProduct.setFont(Font.font(null, 15));
@@ -144,44 +130,15 @@ public class Tab1 extends Tab {
 
         lblUnitPrice.setFont(Font.font(null, 15));
         lblUnitPrice.setFill(Color.BLACK);
-
-        //grid1.add(lblCompany, 2, 15);
-        //grid1.add(companyTxt, 3, 15,5,1);
-        //grid1.add(lblAddress, 2, 17);
-        //grid1.add(addressTxt, 3, 17,5,1);
-        //grid1.add(lblBilling, 2, 19);
-        //grid1.add(billingTxt, 3, 19,5,1);
-//        lblEmail.setText("Email:");
-//        lblPhone.setText("Phone:");
         companyTxt.setPromptText("Jarmonkauppa Oy");
         emailTxt.setPromptText("jarmo@jarmonkauppa.com");
         addressTxt.setPromptText("Jarmonkuja 13A, 01666 Pekkala");
-        /*
-      
-       final VBox VboxCustomer = new VBox();
-        VboxCustomer.setSpacing(5);
-        VboxCustomer.setPadding(new Insets(10, 10, 10, 10));
-      
-        final HBox hboxCompany = new HBox();
-        hboxCompany.getChildren().addAll(lblCompany,companyTxt);
-        final HBox hboxAddress = new HBox();
-        hboxAddress.getChildren().addAll(lblAddress,addressTxt);
-        final HBox hboxEmail = new HBox();
-        hboxEmail.getChildren().addAll(lblEmail,emailTxt);
-        final HBox hboxPhone = new HBox();
-        hboxPhone.getChildren().addAll(lblPhone,phoneTxt);
-        
 
-        VboxCustomer.getChildren().addAll(hboxCompany,hboxAddress,hboxEmail,hboxPhone);
-         */
-        
         productCol1.setStyle("-fx-font-size: 12pt;");
         productCol1.setMinWidth(100);
 
-        
         nameCol1.setStyle("-fx-font-size: 12pt;");
         nameCol1.setMinWidth(300);
-
         
         amountCol1.setStyle("-fx-font-size: 12pt;");
         amountCol1.setMinWidth(150);
@@ -249,8 +206,6 @@ public class Tab1 extends Tab {
 
         btnAddproduct.setPrefSize(150, 50);
         btnDelproduct.setPrefSize(150, 50);
-//        btnDelproduct.setText("Poista tuote");
-        //btnAddproduct.setStyle("-fx-background-image: url('')");
         btnSend.setId("btnSend");
         btnSend.setPrefSize(250, 50);
 
@@ -319,9 +274,7 @@ public class Tab1 extends Tab {
                     tableTemp.setItems(data);
                     clearWarnings();
                 } else {
-                    //TÄHÄN lokalisointi lennossa
                     lblWarning.setText(Localization.getInstance().getBundle().getString("lbl_choose_warning"));
-                    //lblWarning.setText("Valitse ensin tuote");
                 }   
             }
         });
@@ -335,9 +288,7 @@ public class Tab1 extends Tab {
                     tilausrivit.remove(removeItem);
                     clearWarnings();
                 } else {
-                    //TÄHÄN lokalisointi lennossa
                     lblWarning2.setText(Localization.getInstance().getBundle().getString("lbl_del_warning"));
-                    //lblWarning2.setText("Valitse ensin poistettava tuote");
                 }
             }
         });
@@ -393,7 +344,6 @@ public class Tab1 extends Tab {
         });
 
         // LISÄYKSET GRIDII
-        // grid1.add(lblOrder, 3, 3);
         grid1.add(radio1, 3, 3);
         grid1.add(radio2, 5, 3);
         grid1.add(lblProduct, 2, 5);
@@ -409,7 +359,6 @@ public class Tab1 extends Tab {
         grid1.add(PriceTxt, 15, 11);
         grid1.add(lblWarning3,16,11);
         grid1.add(btnSend, 15, 14, 6, 6);
-        //  grid1.add(VboxCustomer, 2, 15,2,1);
         grid1.add(lblCompany, 2, 13);
         grid1.add(companyTxt, 3, 13, 4, 1);
         grid1.add(lblAddress, 2, 15);
