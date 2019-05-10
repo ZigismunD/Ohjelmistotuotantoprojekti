@@ -84,7 +84,7 @@ public class View extends Application {
             tab1 = Tab1.getInstance();
             tab2 = Tab2.getInstance();
             tab3 = Tab3.getInstance();
-            tab4 = Tab4.getInstance();;
+            tab4 = Tab4.getInstance();
             
             tab1.styleProperty().set("-fx-pref-width: 100");
             tab2.styleProperty().set("-fx-pref-width: 100");
@@ -101,19 +101,6 @@ public class View extends Application {
             VBox vBox = new VBox();
             vBox.getChildren().add(gridPane);
             vBox.getChildren().add(tabPane);
-
-            // KIRJAUTUMISTA
-            /*
-            if (checkUser.equals(user1) && checkPw.equals(pw1)){
-                tabPane.getTabs().add(tab1);
-            }           
-            else if(role.equals("varastomies")){
-                tabPane.getTabs().add(tab2);
-            }
-            else if (role.equals("staff")){
-                tabPane.getTabs().add(tab3);
-            }
-             */
             
             scene = new Scene(vBox, 1900, 1000);
             scene.getStylesheets().add(this.getClass().getResource("/styles/stylesheet.css").toExternalForm());
@@ -206,60 +193,6 @@ public class View extends Application {
 
         textWelcome.setText(localization.getBundle().getString("welcome_text"));
         textTime.setText(localization.getBundle().getString("time_text"));
-
-        //Myyntisivu
-//        lblSales.setText(localization.getBundle().getString("lbl_page_header"));  // ("MYYNTISIVU");
-//        lblOrder.setText(localization.getBundle().getString("lbl_page_order"));  // ("TILAUS");
-//        lblProduct.setText(localization.getBundle().getString("lbl_product"));  //  ("TUOTE:");
-//        lblOrderAmount.setText(localization.getBundle().getString("lbl_product_quantity"));  //  ("MÄÄRÄ:");
-//        lblUnitPrice.setText(localization.getBundle().getString("lbl_product_unit_price"));  //  ("YKSIKKÖHINTA:");
-//        lblPrice.setText(localization.getBundle().getString("lbl_order_total_price"));  //  ("HINTA YHTEENSÄ:");
-//        btnAddproduct.setText(localization.getBundle().getString("btn_add_product"));  // = ("Lisää");
-//        btnSend.setText(localization.getBundle().getString("btn_send_order"));  // = ("Luo tilaus");
-//        lblAddproduct.setText(localization.getBundle().getString("lbl_product_add"));  // = ("LISÄÄ TUOTE:");
-//        lblCompany.setText(localization.getBundle().getString("lbl_customer_company"));  //("Yritys:");
-//        lblCustomer.setText(localization.getBundle().getString("lbl_customer_contact_name"));  // = ("Yhteyshenkilö:");
-//        lblAddress.setText(localization.getBundle().getString("lbl_customer_address"));  // = ("Postiosoite:");
-//        lblBilling.setText(localization.getBundle().getString("lbl_customer_billing_address"));  // = ("Laskutusosoite:");
-//        lblOther.setText(localization.getBundle().getString("lbl_customer_extra"));  // = ("Erityishuomiot:");
-//        otsikko.setText(localization.getBundle().getString("lbl_order"));  // = ("TILAUKSESI:");
-//        //tbl_col_order_name
-        //tbl_col_order_quantity
-        //tbl_col_order_unit_price
-//        
-//        //Varastosivu
-//        btnProcessors.setText(localization.getBundle().getString("btn_processor"));  // = .setText("Prosessorit");
-//        btnMotherboard.setText(localization.getBundle().getString("btn_motherboard"));  // = .setText("Emolevyt");
-//        btnGraphics.setText(localization.getBundle().getString("btn_graphics_card"));  // = .setText("Näytönohjaimet");
-//        btnRam.setText(localization.getBundle().getString("btn_ram"));  // = .setText("RAM");
-//        btnPower.setText(localization.getBundle().getString("btn_power_source"));  // = .setText("Virtalähteet");
-//        btnSsd.setText(localization.getBundle().getString("btn_ssd"));  // = .setText("SSD");
-//        btnHdd.setText(localization.getBundle().getString("btn_hhd"));  // = .setText("HHD");
-//        btnCase.setText(localization.getBundle().getString("btn_casing"));  // = .setText("Kotelo");
-//        btnAddProduct.setText(localization.getBundle().getString("btn_create_product"));  // = .setText("Lisää Tuote");
-//        btnDeleteProduct.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Poista Tuote");
-//        //tbl_col_type
-//        //tbl_col_name
-//        //tbl_col_unit_price
-//        //tbl_col_quantity
-//        //tbl_extra
-//        
-//        //Tilaukset
-//        btnOrders.setText(localization.getBundle().getString("btn_orders"));  // = .setText("Tilaukset");
-//        btnPurchases.setText(localization.getBundle().getString("btn_purchases"));  // = .setText("Ostot");
-//        btnAllEvents.setText(localization.getBundle().getString("btn_all_transactions"));  // = .setText("Kaikki Tapahtumat");
-//        btnAlterOrder.setText(localization.getBundle().getString("btn_add_product"));  // = .setText("Lisää Tuote");
-//        btnRemoveOrder.setText(localization.getBundle().getString("btn_delete_product"));  // = .setText("Lisää Tuote");
-//        
-//        //Myynti
-//        btnSales.setText(localization.getBundle().getString("btn_sales"));  // = .setText("Myynti");
-//        btnSalesPurchases.setText(localization.getBundle().getString("btn_sales_purchases"));  // = .setText("Osto");
-//        btnSummary.setText(localization.getBundle().getString("btn_summary"));  // = .setText("Yhteenveto ja budjetti");
-//        
-        //lineChart.setTitle("Myyntitiedot");
-        //series.setName("Myynnit");
-        //series.setName("Ostot");
-        //lineChart.setTitle("Ostotiedot");
     }
 
     public static void main(String[] args) {
