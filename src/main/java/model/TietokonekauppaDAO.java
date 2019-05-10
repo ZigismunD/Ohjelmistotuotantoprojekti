@@ -209,7 +209,6 @@ public class TietokonekauppaDAO {
 
         try (Session istunto = istuntotehdas.openSession()) {
             Transaction transaktio = istunto.beginTransaction();
-            //Henkilosto henkilo = new Henkilosto(username, role);
             istunto.save(henkilo);
             //Ota id talteen
             id = henkilo.getHenkiloId();

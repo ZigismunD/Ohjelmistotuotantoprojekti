@@ -84,8 +84,6 @@ public class Controller {
      */
     public void loginUser(loginView loginscreen, Stage primaryStage, String nimi, String salasana) {
         Henkilosto user = dao.haeKayttaja(nimi, encryption.encrypt(salasana));
-
-        //user.getRooli();
         
         //Kirjautuminen epäonnistui
         if (user == null) {

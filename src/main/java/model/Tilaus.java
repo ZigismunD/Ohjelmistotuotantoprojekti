@@ -140,31 +140,6 @@ public class Tilaus {
         this.tilausPvm = tilausPvm;
     }
 
-    /*
-    @Column(name = "TilausRivit")
-    public List<Tilaus_rivi> getTilausRivit() {
-        return tilausRivit;
-    }
-    
-    public void setTilausRivit(ArrayList<Tilaus_rivi> tilausRivit) {
-        this.tilausRivit = tilausRivit;
-    }
-    
-    // tällä lisätään tilaus_rivi objektina arrayListaan
-    public void lisääTilausRivi(Tilaus_rivi tilausrivi) {
-        this.tilausRivit.add(tilausrivi);
-    }
-    
-    public double getYhtHinta(){
-        double yhtHinta = 0;
-        for (int i = 0; i < tilausRivit.size(); i++) {
-          double hinta = tilausRivit.get(i).getHinta();
-          yhtHinta += hinta;
-        }
-        return yhtHinta;
-    }
-    */
-
     @Column(name = "Yhteishinta")
     public Double getYhteishinta() {
         return yhteishinta;

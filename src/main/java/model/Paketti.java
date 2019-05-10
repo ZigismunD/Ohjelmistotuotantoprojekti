@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.util.ArrayList;
 import javax.persistence.*;
 
 /**
@@ -26,7 +25,6 @@ public class Paketti {
     private int id;
     private String paketinNimi;
     private double paketinHinta;
-    //private ArrayList<Paketti_rivi> pakettiRivit = new ArrayList<>();
     private int varastoMaara;
 
     /**
@@ -127,24 +125,6 @@ public class Paketti {
     public void setVarastoMaara(int varastoMaara) {
         this.varastoMaara = varastoMaara;
     }
-
-//    /**
-//     * luodaan tauluun kentän "paketin osat"
-//     *
-//     * @return paketiRivit palauttaa paketin osat
-//     */
-//    @Column(name = "paketinOsat")
-//    public ArrayList<Paketti_rivi> getPakettiRivit() {
-//        return pakettiRivit;
-//    }
-//    /**
-//     * 
-//     * @param pakettiRivit asentaa uusi paketti paketti-taulukkoon
-//     */
-//    public void setPakettiRivit(ArrayList<Paketti_rivi> pakettiRivit) {
-//        this.pakettiRivit = pakettiRivit;
-//
-//    }
     /**
      *
      * @return paketin nimen
@@ -152,24 +132,5 @@ public class Paketti {
     public String toString() {
         return this.paketinNimi;
     }
-
-//    // luodaan Paketti_rivit ArrayListaan 
-//    public void lisaaPakettiRivi(Paketti_rivi pakettiRivi) {
-//        this.pakettiRivit.add(pakettiRivi);
-//    }
-    
-    /**
-     * luodaan tauluun kentän "yhteishinta"
-     *
-     * @return yhtPakettiHinta palauttaa kaikkin pakettien yhteishinnan
-     */
-//    public double getYhtPakettiHinta() {
-//        double yhtPakettiHinta = 0;
-//        for (int i = 0; i < this.pakettiRivit.size(); i++) {
-//            double hinta = this.pakettiRivit.get(i).getOsa().getOsaHinta();
-//            yhtPakettiHinta += hinta;
-//        }
-//        return yhtPakettiHinta;
-//    }
 
 }

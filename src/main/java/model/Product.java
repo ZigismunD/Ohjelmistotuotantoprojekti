@@ -28,7 +28,6 @@ public class Product {
         }
         if (objekti instanceof Osa) {
             this.name = ((Osa) objekti).getOsaNimi();
-            //this.amount = ((Osa) objekti).getVarastoMaara();
             this.price = ((Osa) objekti).getOsaHinta();
         }
         this.amount = Samount;
