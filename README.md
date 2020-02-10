@@ -1,1 +1,1 @@
-# Ohjelmistotuotantoprojekti
+# Ohjelmistotuotantoprojekti: Easy warehouse management
